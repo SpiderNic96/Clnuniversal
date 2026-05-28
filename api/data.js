@@ -1,25 +1,25 @@
 const KEY = 'cleaning-data';
 
-function redis() {
+function getRedis() {
   return {
-    url:   process.env.KV_REST_API_URL      || process.env.UPSTASH_REDIS_REST_URL,
-    token: process.env.KV_REST_API_TOKEN    || process.env.UPSTASH_REDIS_REST_TOKEN,
+    url:   process.env.KV_REST_API_URL   || process.env.UPSTASH_REDIS_REST_URL,
+    token: process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN,
   };
 }
 
 async function redisCmd(...args) {
-  const { url, token } = redis();
-  const r = await fetch(url, {
-    method: 'POST',
+  const { url, token } = getRedis();
+  const res = await fetch(url, {
+    method:  'POST',
     headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify(args),
+    body:    JSON.stringify(args),
   });
-  const json = await r.json();
+  const json = await res.json();
   return json.result;
 }
 
-export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+module.exports = async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin',  '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
@@ -45,4 +45,4 @@ export default async function handler(req, res) {
   }
 
   return res.status(405).json({ error: 'Method not allowed' });
-}
+};
