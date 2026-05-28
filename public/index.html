@@ -967,81 +967,113 @@ function escHtml(str) {
 function getEmoji(name, type) {
   const n = (name || '').toLowerCase();
 
+  // ── ROOMS ───────────────────────────────────────────────────────────────────
   if (type === 'room') {
-    if (/kitchen|cook|bench|stove/.test(n))              return '🍳';
-    if (/bath|shower|toilet|loo|wc|ensuite/.test(n))     return '🚿';
-    if (/bedroom|bed room|master|guest room/.test(n))    return '🛏️';
-    if (/living|lounge|sitting|family|tv room/.test(n))  return '🛋️';
-    if (/garage|car|driveway/.test(n))                   return '🚗';
-    if (/laundry|washing|utility/.test(n))               return '🧺';
-    if (/office|study|desk|work/.test(n))                return '💻';
-    if (/dining|dinner room/.test(n))                    return '🍽️';
-    if (/hall|corridor|entry|foyer|stair/.test(n))       return '🚪';
-    if (/garden|yard|outdoor|outside|patio|deck/.test(n))return '🌿';
-    if (/basement|cellar/.test(n))                       return '🏚️';
-    if (/attic|loft|storage|spare/.test(n))              return '📦';
-    if (/kids|child|nursery|play/.test(n))               return '🧸';
-    if (/gym|workout|exercise/.test(n))                  return '🏋️';
-    if (/balcony|terrace/.test(n))                       return '🌇';
-    if (/pool|spa/.test(n))                              return '🏊';
-    if (/pantry|cupboard/.test(n))                       return '🗄️';
+    if (/kitchen|cook|stove/.test(n))                     return '🍳';
+    if (/bathroom|ensuite|toilet room|wc/.test(n))        return '🛁';
+    if (/bedroom|bed room|master|guest room/.test(n))     return '🛏️';
+    if (/living|lounge|sitting|family/.test(n))           return '🛋️';
+    if (/girls|girl/.test(n))                             return '🧸';
+    if (/boys|boy/.test(n))                               return '🎮';
+    if (/kids|child|nursery|play/.test(n))                return '🧸';
+    if (/garage|car|driveway/.test(n))                    return '🚗';
+    if (/laundry|washing|utility/.test(n))                return '🫧';
+    if (/office|study|work/.test(n))                      return '💻';
+    if (/dining|dinner room/.test(n))                     return '🍽️';
+    if (/hall|corridor|entry|foyer|stair/.test(n))        return '🚪';
+    if (/garden|yard|outdoor|outside|patio|deck/.test(n)) return '🌿';
+    if (/basement|cellar/.test(n))                        return '🏚️';
+    if (/attic|loft|storage|spare/.test(n))               return '📦';
+    if (/gym|workout|exercise/.test(n))                   return '🏋️';
+    if (/balcony|terrace/.test(n))                        return '🌇';
+    if (/pool|spa/.test(n))                               return '🏊';
+    if (/pantry|cupboard/.test(n))                        return '🗄️';
     return '🏠';
   }
 
+  // ── ZONES ───────────────────────────────────────────────────────────────────
   if (type === 'zone') {
-    if (/floor|carpet|rug|tile/.test(n))                 return '🧹';
-    if (/counter|bench|surface|benchtop/.test(n))        return '🧽';
-    if (/window|glass|sliding door/.test(n))             return '🪟';
-    if (/shelf|shelv|cabinet|cupboard/.test(n))          return '📚';
-    if (/sink|basin|tap/.test(n))                        return '💧';
-    if (/toilet|loo/.test(n))                            return '🚽';
-    if (/shower|screen/.test(n))                         return '🚿';
-    if (/bath|tub/.test(n))                              return '🛁';
-    if (/mirror/.test(n))                                return '🪞';
-    if (/bin|trash|rubbish/.test(n))                     return '🗑️';
-    if (/fridge|freezer/.test(n))                        return '🧊';
-    if (/oven|stove/.test(n))                            return '🔥';
-    if (/wall|baseboard|skirting/.test(n))               return '🧱';
-    if (/light|lamp|ceiling/.test(n))                    return '💡';
+    if (/tv|television|media/.test(n))                    return '📺';
+    if (/general|misc|other/.test(n))                     return '🗂️';
+    if (/new zone/.test(n))                               return '🗂️';
+    if (/^bed$|^bed |bedding/.test(n))                    return '🛏️';
+    if (/clothes|clothing|wardrobe|dresser/.test(n))      return '👚';
+    if (/floor|carpet|rug|tile/.test(n))                  return '🧹';
+    if (/counter|bench|surface|benchtop/.test(n))         return '🧽';
+    if (/window|sliding door/.test(n))                    return '🪟';
+    if (/shelf|shelv|cabinet|cupboard/.test(n))           return '📚';
+    if (/sink|basin|tap/.test(n))                         return '💧';
+    if (/toilet|loo/.test(n))                             return '🚽';
+    if (/shower|screen/.test(n))                          return '🚿';
+    if (/bath|tub/.test(n))                               return '🛁';
+    if (/mirror/.test(n))                                 return '🪞';
+    if (/bin|trash|rubbish/.test(n))                      return '🗑️';
+    if (/fridge|freezer/.test(n))                         return '🧊';
+    if (/oven|stove/.test(n))                             return '🔥';
+    if (/wall|baseboard|skirting/.test(n))                return '🧱';
+    if (/light|lamp|ceiling/.test(n))                     return '💡';
     return '📍';
   }
 
-  // type === 'task'
-  if (/vacuum|hoover/.test(n))                           return '🌀';
-  if (/mop|mopping/.test(n))                             return '🪣';
-  if (/sweep|broom/.test(n))                             return '🧹';
-  if (/dust|duster|dusting/.test(n))                     return '💨';
-  if (/wipe|wiping/.test(n))                             return '🧽';
-  if (/scrub|scrubbing/.test(n))                         return '🪥';
-  if (/wash|washing|rinse/.test(n))                      return '🧼';
-  if (/dishes|dish|plate|cup|cutlery/.test(n))           return '🍽️';
-  if (/laundry|clothes|linen|sheet|towel/.test(n))       return '🧺';
-  if (/iron|ironing|press/.test(n))                      return '👔';
-  if (/toilet|loo/.test(n))                              return '🚽';
-  if (/bin|trash|rubbish|garbage|empty.*bin/.test(n))    return '🗑️';
-  if (/window|glass/.test(n))                            return '🪟';
-  if (/mirror/.test(n))                                  return '🪞';
-  if (/fridge|refrigerator/.test(n))                     return '🧊';
-  if (/oven|stove|cooktop/.test(n))                      return '🔥';
-  if (/microwave/.test(n))                               return '📡';
-  if (/tidy|organis|organiz|sort|declutter/.test(n))     return '📦';
-  if (/bed|sheet|pillow|doona|duvet|blanket/.test(n))    return '🛏️';
-  if (/shower/.test(n))                                  return '🚿';
-  if (/bath|tub/.test(n))                                return '🛁';
-  if (/sink|tap|basin/.test(n))                          return '💧';
-  if (/floor|carpet|rug/.test(n))                        return '🟫';
-  if (/cat|litter|kitty/.test(n))                        return '🐱';
-  if (/dog|pet/.test(n))                                 return '🐶';
-  if (/plant|water.*plant/.test(n))                      return '🌿';
-  if (/cobweb|spider|web/.test(n))                       return '🕷️';
-  if (/disinfect|sanitise|sanitize/.test(n))             return '🦠';
-  if (/spray|polish|shine/.test(n))                      return '✨';
-  if (/light|bulb/.test(n))                              return '💡';
-  if (/cobweb|spider/.test(n))                           return '🕷️';
-  if (/recycle|recycling/.test(n))                       return '♻️';
-  if (/garden|mow|lawn|weed/.test(n))                    return '🌿';
-  if (/cook|meal|food/.test(n))                          return '🍳';
-  return '✅';
+  // ── TASKS — most specific first to avoid duplicates ──────────────────────────
+
+  // Specific combos (must come before general keyword checks)
+  if (/around toilet/.test(n))                            return '🧻';
+  if (/coffee table/.test(n))                             return '☕';
+  if (/bed side|bedside|side table/.test(n))              return '🕯️';
+  if (/under bed/.test(n))                                return '🔦';
+  if (/make bed/.test(n))                                 return '🛌';
+  if (/wash sheet|change sheet/.test(n))                  return '🛌';
+  if (/dirty clothes|clothes.*basket/.test(n))            return '👕';
+  if (/fold.*clothes|put away clothes/.test(n))           return '👔';
+  if (/shower glass/.test(n))                             return '🫧';
+  if (/shower floor/.test(n))                             return '🚿';
+  if (/bathroom bench|bench wipe/.test(n))                return '🧽';
+  if (/bathroom sink/.test(n))                            return '🚰';
+  if (/organise desk|organize desk/.test(n))              return '🖥️';
+  if (/organise drum|organize drum/.test(n))              return '🥁';
+  if (/organise toy|organize toy/.test(n))                return '🧸';
+  if (/throw.*away|throw.*out|throw.*trash/.test(n))      return '🗑️';
+  if (/clear/.test(n))                                    return '🧹';
+  if (/wall/.test(n))                                     return '🧱';
+  if (/glass/.test(n))                                    return '🫙';
+
+  // General keywords (after specific overrides)
+  if (/vacuum|vaccum|hoover/.test(n))                     return '🌀';
+  if (/mop/.test(n))                                      return '🪣';
+  if (/sweep|broom/.test(n))                              return '🧹';
+  if (/dust/.test(n))                                     return '💨';
+  if (/wipe/.test(n))                                     return '🧽';
+  if (/scrub/.test(n))                                    return '🪥';
+  if (/disinfect|sanitise|sanitize/.test(n))              return '🦠';
+  if (/wash|rinse/.test(n))                               return '🧼';
+  if (/dishes|dish|plate|cutlery/.test(n))                return '🍽️';
+  if (/laundry|linen|towel/.test(n))                      return '🧺';
+  if (/iron|press/.test(n))                               return '👔';
+  if (/toilet|loo/.test(n))                               return '🚽';
+  if (/bin|trash|rubbish|garbage/.test(n))                return '🗑️';
+  if (/window/.test(n))                                   return '🪟';
+  if (/mirror/.test(n))                                   return '🪞';
+  if (/fridge|refrigerator/.test(n))                      return '🧊';
+  if (/oven|stove|cooktop/.test(n))                       return '🔥';
+  if (/microwave/.test(n))                                return '📡';
+  if (/organis|organiz|tidy|sort|declutter/.test(n))      return '📦';
+  if (/sheet|pillow|doona|duvet|blanket/.test(n))         return '🛌';
+  if (/bed/.test(n))                                      return '🛏️';
+  if (/shower/.test(n))                                   return '🚿';
+  if (/bath|tub/.test(n))                                 return '🛁';
+  if (/sink|tap|basin/.test(n))                           return '💧';
+  if (/floor|carpet|rug/.test(n))                         return '🟫';
+  if (/cat|litter|kitty/.test(n))                         return '🐱';
+  if (/dog|pet/.test(n))                                  return '🐶';
+  if (/plant/.test(n))                                    return '🌿';
+  if (/cobweb|spider/.test(n))                            return '🕷️';
+  if (/spray|polish|shine/.test(n))                       return '✨';
+  if (/light|bulb/.test(n))                               return '💡';
+  if (/recycle/.test(n))                                  return '♻️';
+  if (/garden|mow|lawn|weed/.test(n))                     return '🌿';
+  if (/cook|meal|food/.test(n))                           return '🍳';
+  return '✔️';
 }
 
 // Live-update just the emoji span without full re-render
