@@ -504,7 +504,8 @@ let state = { rooms: [], version: 0 };
 const SEED_VERSION = 2;
 
 const SEED_DATA = {
-  version: SEED_VERSION,
+  version: 1,
+  _seedVersion: 2,
   rooms: [
     // ── Living Room ──────────────────────────────────────────────────────────
     {
@@ -700,8 +701,8 @@ async function loadData() {
     if (!r.ok) throw new Error('HTTP ' + r.status);
     const data = await r.json();
 
-    // Seed if empty OR if stored version is behind current seed
-    if (!data.rooms || data.rooms.length === 0 || (data.version || 0) < SEED_VERSION) {
+    // Seed if empty OR if stored _seedVersion is behind current SEED_VERSION
+    if (!data.rooms || data.rooms.length === 0 || (data._seedVersion || 0) < SEED_VERSION) {
       state = JSON.parse(JSON.stringify(SEED_DATA)); // deep clone
       render();
       await saveData();
