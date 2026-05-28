@@ -1,491 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🧠 Cleaning Command Center</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg:       #0b0c0e;
-      --surface:  #13151a;
-      --surface2: #1c1f27;
-      --border:   #252830;
-      --accent:   #c8ff57;
-      --danger:   #ff4d4d;
-      --text:     #dde1ec;
-      --muted:    #555a6b;
-      --mono:     'Share Tech Mono', monospace;
-      --display:  'Barlow Condensed', sans-serif;
-      --radius:   6px;
-    }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>TASK CMD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#0b0c0e;--surface:#13151a;--surface2:#1c1f27;--border:#252830;
+  --accent:#c8ff57;--danger:#ff4d4d;--text:#dde1ec;--muted:#555a6b;
+  --mono:'Share Tech Mono',monospace;--display:'Barlow Condensed',sans-serif;--r:6px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:14px;min-height:100vh;}
+.screen{display:none;min-height:100vh;}
+.screen.active{display:flex;flex-direction:column;}
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ── LANDING ── */
+#screen-landing{align-items:center;justify-content:center;padding:32px 24px;text-align:center;}
+.land-logo{font-family:var(--display);font-size:48px;font-weight:800;color:var(--accent);letter-spacing:2px;line-height:1;}
+.land-sub{color:var(--muted);font-size:13px;margin:8px 0 32px;}
+.land-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px;max-width:380px;width:100%;text-align:left;}
+.land-card h2{font-family:var(--display);font-size:22px;margin-bottom:12px;color:var(--text);}
+.land-step{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start;}
+.land-num{font-family:var(--display);font-size:20px;font-weight:800;color:var(--accent);min-width:24px;}
+.land-step p{font-size:12px;color:var(--muted);line-height:1.6;}
+.land-step p b{color:var(--text);}
+.land-urls{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px;margin-top:20px;font-size:12px;color:var(--muted);}
+.land-urls span{color:var(--accent);}
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--mono);
-      font-size: 14px;
-      min-height: 100vh;
-      padding-bottom: 80px;
-    }
+/* ── TEMPLATE PICKER ── */
+#screen-template{align-items:center;justify-content:center;padding:24px;}
+.tpl-wrap{max-width:420px;width:100%;}
+.tpl-wrap h1{font-family:var(--display);font-size:28px;font-weight:800;color:var(--accent);margin-bottom:4px;}
+.tpl-wrap p{font-size:12px;color:var(--muted);margin-bottom:24px;}
+.tpl-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.tpl-card{background:var(--surface);border:2px solid var(--border);border-radius:10px;padding:20px 16px;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent;}
+.tpl-card:hover,.tpl-card:active{border-color:var(--accent);background:var(--surface2);}
+.tpl-icon{font-size:32px;margin-bottom:8px;}
+.tpl-name{font-family:var(--display);font-size:18px;font-weight:700;color:var(--text);}
+.tpl-desc{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.4;}
 
-    /* ── HEADER ───────────────────────────── */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: var(--bg);
-      border-bottom: 1px solid var(--border);
-      padding: 12px 16px 10px;
-    }
+/* ── AUTH ── */
+#screen-auth{align-items:center;justify-content:center;padding:24px;}
+.auth-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:28px 24px;max-width:360px;width:100%;}
+.auth-box h1{font-family:var(--display);font-size:26px;font-weight:800;color:var(--accent);margin-bottom:4px;}
+.auth-box .auth-sub{font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.5;}
+.auth-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);color:var(--text);font-family:var(--mono);font-size:14px;padding:10px 12px;outline:none;margin-bottom:12px;}
+.auth-input:focus{border-color:var(--accent);}
+.auth-err{color:var(--danger);font-size:12px;margin-bottom:10px;display:none;}
+.btn{font-family:var(--mono);font-size:12px;padding:8px 14px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;transition:all .15s;white-space:nowrap;-webkit-tap-highlight-color:transparent;}
+.btn:active{opacity:.7;transform:scale(.97);}
+.btn.primary{background:var(--accent);color:#000;border-color:var(--accent);font-weight:700;}
+.btn.danger{color:var(--danger);border-color:var(--danger);}
+.btn.ghost{background:transparent;border-color:transparent;color:var(--muted);padding:6px 8px;}
+.btn.ghost:hover{color:var(--text);}
+.btn-full{width:100%;}
+.auth-note{font-size:11px;color:var(--muted);margin-top:12px;text-align:center;line-height:1.5;}
 
-    .header-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    h1 {
-      font-family: var(--display);
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      color: var(--accent);
-      line-height: 1;
-    }
-
-    h1 span { color: var(--muted); font-weight: 400; font-size: 16px; }
-
-    .sync-badge {
-      font-size: 11px;
-      padding: 3px 8px;
-      border-radius: 20px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      color: var(--muted);
-      white-space: nowrap;
-      transition: all 0.3s;
-    }
-    .sync-badge.saving  { color: #facc15; border-color: #facc15; }
-    .sync-badge.synced  { color: var(--accent); border-color: var(--accent); }
-    .sync-badge.error   { color: var(--danger); border-color: var(--danger); }
-
-    /* ── STATS BAR ────────────────────────── */
-    .stats {
-      display: flex;
-      gap: 12px;
-      margin-top: 10px;
-      align-items: center;
-    }
-
-    .stat {
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    .stat b { color: var(--text); font-family: var(--display); font-size: 15px; }
-
-    .progress-wrap {
-      flex: 1;
-      height: 5px;
-      background: var(--surface2);
-      border-radius: 99px;
-      overflow: hidden;
-    }
-
-    .progress-bar {
-      height: 100%;
-      background: var(--accent);
-      border-radius: 99px;
-      transition: width 0.4s ease;
-    }
-
-    .pct-label {
-      font-size: 11px;
-      color: var(--accent);
-      font-family: var(--display);
-      font-weight: 700;
-      min-width: 34px;
-      text-align: right;
-    }
-
-    /* ── TOOLBAR ──────────────────────────── */
-    .toolbar {
-      display: flex;
-      gap: 6px;
-      padding: 10px 16px;
-      border-bottom: 1px solid var(--border);
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      font-family: var(--mono);
-      font-size: 12px;
-      padding: 6px 12px;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--text);
-      cursor: pointer;
-      transition: all 0.15s;
-      white-space: nowrap;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .btn:active { opacity: 0.7; transform: scale(0.97); }
-    .btn:hover  { border-color: var(--muted); }
-
-    .btn.primary {
-      background: var(--accent);
-      color: #000;
-      border-color: var(--accent);
-      font-weight: 700;
-    }
-
-    .btn.danger {
-      color: var(--danger);
-      border-color: var(--danger);
-    }
-
-    .btn.ghost {
-      background: transparent;
-      border-color: transparent;
-      color: var(--muted);
-      padding: 6px 8px;
-    }
-    .btn.ghost:hover { color: var(--text); }
-
-    /* ── MAIN CONTENT ─────────────────────── */
-    main { padding: 12px 16px; display: flex; flex-direction: column; gap: 12px; }
-
-    /* ── ROOM CARD ────────────────────────── */
-    .room-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-
-    .room-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 12px;
-      cursor: pointer;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.2s;
-    }
-
-    .room-header.open { border-bottom-color: var(--border); }
-
-    .room-chevron {
-      color: var(--muted);
-      font-size: 11px;
-      transition: transform 0.2s;
-      flex-shrink: 0;
-    }
-
-    .room-header.open .room-chevron { transform: rotate(90deg); }
-
-    .room-name-input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      color: var(--text);
-      font-family: var(--display);
-      font-size: 17px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      outline: none;
-      cursor: text;
-    }
-
-    .room-name-input::placeholder { color: var(--muted); }
-
-    .room-task-count {
-      font-size: 11px;
-      color: var(--muted);
-      flex-shrink: 0;
-    }
-
-    .room-task-count.all-done { color: var(--accent); }
-
-    /* ── ROOM BODY ────────────────────────── */
-    .room-body {
-      display: none;
-      padding: 10px 12px 12px;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .room-body.open { display: flex; }
-
-    /* ── ZONE ─────────────────────────────── */
-    .zone {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-
-    .zone-header {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 7px 10px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .zone-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      flex-shrink: 0;
-      opacity: 0.6;
-    }
-
-    .zone-name-input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      color: var(--text);
-      font-family: var(--display);
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 0.3px;
-      outline: none;
-    }
-
-    .zone-name-input::placeholder { color: var(--muted); }
-
-    /* ── TASKS ────────────────────────────── */
-    .task-list {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .task-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 10px;
-      border-bottom: 1px solid var(--border);
-      transition: background 0.15s;
-    }
-
-    .task-row:last-child { border-bottom: none; }
-    .task-row:hover { background: rgba(255,255,255,0.02); }
-
-    /* Custom checkbox */
-    .task-check {
-      width: 18px; height: 18px;
-      border: 1.5px solid var(--muted);
-      border-radius: 3px;
-      flex-shrink: 0;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.15s;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .task-check.done {
-      border-color: var(--accent);
-      background: var(--accent);
-    }
-
-    .task-check.done::after {
-      content: '';
-      display: block;
-      width: 5px; height: 9px;
-      border: 2px solid #000;
-      border-top: none;
-      border-left: none;
-      transform: rotate(45deg) translate(-1px, -1px);
-    }
-
-    .task-name-input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      color: var(--text);
-      font-family: var(--mono);
-      font-size: 13px;
-      outline: none;
-      transition: color 0.2s;
-    }
-
-    .task-name-input.done {
-      color: var(--muted);
-      text-decoration: line-through;
-    }
-
-    .task-name-input::placeholder { color: var(--muted); }
-
-    /* ── ADD ROW BUTTONS ──────────────────── */
-    .add-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 10px;
-      cursor: pointer;
-      color: var(--muted);
-      font-size: 12px;
-      transition: color 0.15s;
-      -webkit-tap-highlight-color: transparent;
-      border-top: 1px solid var(--border);
-    }
-
-    .add-row:hover { color: var(--accent); }
-    .add-row::before { content: '+'; font-size: 14px; }
-
-    .add-zone-row {
-      display: flex;
-      gap: 6px;
-      padding: 4px 0;
-    }
-
-    /* ── ROOM ACTIONS ─────────────────────── */
-    .room-actions {
-      display: flex;
-      gap: 6px;
-      justify-content: flex-end;
-      padding-top: 4px;
-    }
-
-    /* ── EMPTY STATE ──────────────────────── */
-    .empty-state {
-      text-align: center;
-      padding: 48px 24px;
-      color: var(--muted);
-    }
-
-    .empty-state .big { font-size: 48px; margin-bottom: 12px; }
-    .empty-state p { font-size: 13px; line-height: 1.6; }
-
-    /* ── TOAST ────────────────────────────── */
-    #toast {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%) translateY(60px);
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 12px;
-      transition: transform 0.3s;
-      z-index: 100;
-      pointer-events: none;
-      white-space: nowrap;
-    }
-
-    #toast.show { transform: translateX(-50%) translateY(0); }
-
-    /* ── MODAL (confirm reset) ────────────── */
-    .modal-overlay {
-      display: none;
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.7);
-      z-index: 200;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
-
-    .modal-overlay.open { display: flex; }
-
-    .modal {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 24px;
-      max-width: 320px;
-      width: 100%;
-    }
-
-    .modal h2 {
-      font-family: var(--display);
-      font-size: 20px;
-      margin-bottom: 8px;
-      color: var(--danger);
-    }
-
-    .modal p { font-size: 13px; color: var(--muted); margin-bottom: 20px; line-height: 1.5; }
-    .modal-btns { display: flex; gap: 8px; justify-content: flex-end; }
-
-    /* ── EMOJI INDICATORS ────────────────── */
-    .room-emoji {
-      font-size: 18px;
-      flex-shrink: 0;
-      line-height: 1;
-      transition: transform 0.2s;
-      cursor: default;
-    }
-
-    .zone-emoji {
-      font-size: 14px;
-      flex-shrink: 0;
-      line-height: 1;
-      cursor: default;
-    }
-
-    .task-emoji {
-      font-size: 14px;
-      flex-shrink: 0;
-      line-height: 1;
-      cursor: default;
-      min-width: 18px;
-      text-align: center;
-    }
-
-    /* ── SCROLLBAR ────────────────────────── */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-  </style>
+/* ── APP ── */
+#screen-app{padding-bottom:80px;}
+header{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--border);padding:12px 16px 10px;}
+.header-top{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+h1.app-title{font-family:var(--display);font-size:22px;font-weight:800;letter-spacing:1px;color:var(--accent);line-height:1;}
+h1.app-title span{color:var(--muted);font-weight:400;font-size:16px;}
+.sync-badge{font-size:11px;padding:3px 8px;border-radius:20px;background:var(--surface2);border:1px solid var(--border);color:var(--muted);white-space:nowrap;transition:all .3s;}
+.sync-badge.saving{color:#facc15;border-color:#facc15;}
+.sync-badge.synced{color:var(--accent);border-color:var(--accent);}
+.sync-badge.error{color:var(--danger);border-color:var(--danger);}
+.stats{display:flex;gap:12px;margin-top:10px;align-items:center;}
+.stat{font-size:11px;color:var(--muted);}
+.stat b{color:var(--text);font-family:var(--display);font-size:15px;}
+.progress-wrap{flex:1;height:5px;background:var(--surface2);border-radius:99px;overflow:hidden;}
+.progress-bar{height:100%;background:var(--accent);border-radius:99px;transition:width .4s ease;}
+.pct-label{font-size:11px;color:var(--accent);font-family:var(--display);font-weight:700;min-width:34px;text-align:right;}
+.toolbar{display:flex;gap:6px;padding:10px 16px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;}
+.room-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.room-header{display:flex;align-items:center;gap:8px;padding:10px 12px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;border-bottom:1px solid transparent;transition:border-color .2s;}
+.room-header.open{border-bottom-color:var(--border);}
+.room-chevron{color:var(--muted);font-size:11px;transition:transform .2s;flex-shrink:0;}
+.room-header.open .room-chevron{transform:rotate(90deg);}
+.room-emoji{font-size:18px;flex-shrink:0;line-height:1;}
+.room-name-input{flex:1;background:transparent;border:none;color:var(--text);font-family:var(--display);font-size:17px;font-weight:700;letter-spacing:.5px;outline:none;cursor:text;}
+.room-name-input::placeholder{color:var(--muted);}
+.room-task-count{font-size:11px;color:var(--muted);flex-shrink:0;}
+.room-task-count.all-done{color:var(--accent);}
+.room-body{display:none;padding:10px 12px 12px;flex-direction:column;gap:12px;}
+.room-body.open{display:flex;}
+.zone{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.zone-header{display:flex;align-items:center;gap:6px;padding:7px 10px;border-bottom:1px solid var(--border);}
+.zone-emoji{font-size:14px;flex-shrink:0;line-height:1;}
+.zone-name-input{flex:1;background:transparent;border:none;color:var(--text);font-family:var(--display);font-size:14px;font-weight:600;letter-spacing:.3px;outline:none;}
+.zone-name-input::placeholder{color:var(--muted);}
+.task-list{display:flex;flex-direction:column;}
+.task-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-bottom:1px solid var(--border);transition:background .15s;}
+.task-row:last-child{border-bottom:none;}
+.task-row:hover{background:rgba(255,255,255,.02);}
+.task-check{width:18px;height:18px;border:1.5px solid var(--muted);border-radius:3px;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;-webkit-tap-highlight-color:transparent;}
+.task-check.done{border-color:var(--accent);background:var(--accent);}
+.task-check.done::after{content:'';display:block;width:5px;height:9px;border:2px solid #000;border-top:none;border-left:none;transform:rotate(45deg) translate(-1px,-1px);}
+.task-emoji{font-size:14px;flex-shrink:0;line-height:1;min-width:18px;text-align:center;}
+.task-name-input{flex:1;background:transparent;border:none;color:var(--text);font-family:var(--mono);font-size:13px;outline:none;transition:color .2s;}
+.task-name-input.done{color:var(--muted);text-decoration:line-through;}
+.task-name-input::placeholder{color:var(--muted);}
+.add-row{display:flex;align-items:center;gap:6px;padding:6px 10px;cursor:pointer;color:var(--muted);font-size:12px;transition:color .15s;-webkit-tap-highlight-color:transparent;border-top:1px solid var(--border);}
+.add-row:hover{color:var(--accent);}
+.add-row::before{content:'+';font-size:14px;}
+.empty-state{text-align:center;padding:48px 24px;color:var(--muted);}
+.empty-state .big{font-size:48px;margin-bottom:12px;}
+.empty-state p{font-size:13px;line-height:1.6;}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 16px;border-radius:20px;font-size:12px;transition:transform .3s;z-index:100;pointer-events:none;white-space:nowrap;}
+#toast.show{transform:translateX(-50%) translateY(0);}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center;padding:24px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px;max-width:320px;width:100%;}
+.modal h2{font-family:var(--display);font-size:20px;margin-bottom:8px;color:var(--danger);}
+.modal p{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.5;}
+.modal-btns{display:flex;gap:8px;justify-content:flex-end;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+</style>
 </head>
 <body>
 
-<header>
-  <div class="header-top">
-    <h1>🧠 CLEANING <span>CMD</span></h1>
-    <span id="syncBadge" class="sync-badge">Loading...</span>
-  </div>
-  <div class="stats">
-    <div class="stat"><b id="statRooms">0</b> rooms</div>
-    <div class="stat"><b id="statTasks">0</b> tasks</div>
-    <div class="progress-wrap">
-      <div class="progress-bar" id="progressBar" style="width:0%"></div>
+<!-- ══ LANDING ════════════════════════════════════════════════════════════ -->
+<div id="screen-landing" class="screen">
+  <div class="land-logo">🧠 TASK CMD</div>
+  <div class="land-sub">Your personal productivity space</div>
+  <div class="land-card">
+    <h2>Claim your space</h2>
+    <div class="land-step">
+      <div class="land-num">1</div>
+      <p>Pick a number between <b>1 and 50</b> and visit that URL directly.</p>
     </div>
-    <div class="pct-label" id="pctLabel">0%</div>
+    <div class="land-step">
+      <div class="land-num">2</div>
+      <p>Choose a template — <b>Cleaning, Bills, Shopping</b> or <b>Meal Planning</b>.</p>
+    </div>
+    <div class="land-step">
+      <div class="land-num">3</div>
+      <p>Set a password. That space is now <b>yours</b>. Bookmark it.</p>
+    </div>
+    <div class="land-urls">
+      Examples: <span>clnuniversal.vercel.app/2</span> &nbsp;·&nbsp; <span>/7</span> &nbsp;·&nbsp; <span>/42</span>
+    </div>
   </div>
-</header>
-
-<div class="toolbar">
-  <button class="btn primary" onclick="addRoom()">＋ Add Room</button>
-  <button class="btn" onclick="expandAll()">📂 Expand All</button>
-  <button class="btn" onclick="collapseAll()">📁 Collapse All</button>
-  <button class="btn" onclick="clearCompleted()">✓ Clear Done</button>
-  <button class="btn danger" onclick="openReset()">🗑 Reset</button>
 </div>
 
-<main id="main"></main>
+<!-- ══ TEMPLATE PICKER ════════════════════════════════════════════════════ -->
+<div id="screen-template" class="screen">
+  <div style="padding:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;">
+    <div class="tpl-wrap">
+      <h1>🧠 TASK CMD</h1>
+      <p id="tpl-space-label">Choose a template for your space</p>
+      <div class="tpl-grid">
+        <div class="tpl-card" onclick="selectTemplate('cleaning')">
+          <div class="tpl-icon">🧹</div>
+          <div class="tpl-name">Cleaning</div>
+          <div class="tpl-desc">Rooms, zones & household tasks</div>
+        </div>
+        <div class="tpl-card" onclick="selectTemplate('bills')">
+          <div class="tpl-icon">💸</div>
+          <div class="tpl-name">Bill Paying</div>
+          <div class="tpl-desc">Track recurring bills & payments</div>
+        </div>
+        <div class="tpl-card" onclick="selectTemplate('shopping')">
+          <div class="tpl-icon">🛒</div>
+          <div class="tpl-name">Shopping</div>
+          <div class="tpl-desc">Grocery & household goods list</div>
+        </div>
+        <div class="tpl-card" onclick="selectTemplate('meals')">
+          <div class="tpl-icon">🍳</div>
+          <div class="tpl-name">Meal Planning</div>
+          <div class="tpl-desc">Weekly meals & meal prep</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ AUTH ══════════════════════════════════════════════════════════════ -->
+<div id="screen-auth" class="screen">
+  <div style="display:flex;align-items:center;justify-content:center;flex:1;padding:24px;">
+    <div class="auth-box">
+      <h1 id="auth-title">Set Password</h1>
+      <p class="auth-sub" id="auth-sub">Choose a password to lock this space. You'll need it every time you visit.</p>
+      <input class="auth-input" type="password" id="auth-pwd" placeholder="Password" onkeydown="if(event.key==='Enter')authConfirmInput.focus()"/>
+      <input class="auth-input" type="password" id="auth-confirm" placeholder="Confirm password" style="display:none" onkeydown="if(event.key==='Enter')submitAuth()"/>
+      <div class="auth-err" id="auth-err"></div>
+      <button class="btn primary btn-full" onclick="submitAuth()">Continue</button>
+      <p class="auth-note" id="auth-note">No recovery option. Don't forget it.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ APP ════════════════════════════════════════════════════════════════ -->
+<div id="screen-app" class="screen">
+  <header>
+    <div class="header-top">
+      <h1 class="app-title">🧠 TASK <span>CMD</span></h1>
+      <span id="syncBadge" class="sync-badge">Loading…</span>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="statRooms">0</b> rooms</div>
+      <div class="stat"><b id="statTasks">0</b> tasks</div>
+      <div class="progress-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+      <div class="pct-label" id="pctLabel">0%</div>
+    </div>
+  </header>
+  <div class="toolbar">
+    <button class="btn primary" onclick="addRoom()">＋ Add Room</button>
+    <button class="btn" onclick="expandAll()">📂 Expand</button>
+    <button class="btn" onclick="collapseAll()">📁 Collapse</button>
+    <button class="btn" onclick="clearCompleted()">✓ Clear Done</button>
+    <button class="btn danger" onclick="openReset()">🗑 Reset</button>
+  </div>
+  <main id="main"></main>
+</div>
 
 <div id="toast"></div>
-
 <div class="modal-overlay" id="resetModal">
   <div class="modal">
     <h2>⚠ Reset Everything?</h2>
-    <p>This will wipe all rooms, zones, and tasks for everyone. There's no undo.</p>
+    <p>Wipes all rooms, zones and tasks for this space. No undo.</p>
     <div class="modal-btns">
       <button class="btn" onclick="closeReset()">Cancel</button>
       <button class="btn danger" onclick="confirmReset()">Yes, Reset</button>
@@ -494,707 +234,776 @@
 </div>
 
 <script>
-// ─── STATE ──────────────────────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════
+// ROUTER
+// ══════════════════════════════════════════════════════════════════════════
+const PATH_MATCH = window.location.pathname.match(/^\/(\d+)$/);
+const SPACE_ID   = PATH_MATCH ? parseInt(PATH_MATCH[1]) : null;
 
-let state = { rooms: [], version: 0 };
+if (SPACE_ID !== null && (SPACE_ID < 1 || SPACE_ID > 50)) {
+  window.location.href = '/';
+}
 
-// ─── SEED DATA ───────────────────────────────────────────────────────────────
-// Bump SEED_VERSION to force all clients to re-seed on next load
-
-const SEED_VERSION = 2;
-
-const SEED_DATA = {
-  version: 1,
-  _seedVersion: 2,
-  rooms: [
-    // ── Living Room ──────────────────────────────────────────────────────────
-    {
-      id: 'room-living', name: 'Living Room', expanded: true,
-      zones: [
-        { id: 'zone-tv', name: 'TV Area', tasks: [
-          { id: 't-lr-1', name: 'Clear coffee table', completed: false },
-          { id: 't-lr-2', name: 'Throw away trash',   completed: false },
-        ]},
-        { id: 'zone-living-gen', name: 'General', tasks: [
-          { id: 't-lr-3', name: 'Walls',          completed: false },
-          { id: 't-lr-4', name: 'Glass',          completed: false },
-          { id: 't-lr-5', name: 'Vaccum & mop',   completed: false },
-          { id: 't-lr-6', name: 'Dust',           completed: false },
-          { id: 't-lr-7', name: 'Organise drums', completed: false },
-          { id: 't-lr-8', name: 'Organise desk',  completed: false },
-        ]}
-      ]
-    },
-    // ── Paigee Bathroom ──────────────────────────────────────────────────────
-    {
-      id: 'room-paigee-bath', name: 'Paigee Bathroom', expanded: false,
-      zones: [
-        { id: 'zone-pb-main', name: 'New Zone', tasks: [
-          { id: 't-pb-1', name: 'Shower glass',         completed: false },
-          { id: 't-pb-2', name: 'Shower floor',         completed: false },
-          { id: 't-pb-3', name: 'Toilet',               completed: false },
-          { id: 't-pb-4', name: 'Around toilet',        completed: false },
-          { id: 't-pb-5', name: 'Bathroom bench wiped', completed: false },
-          { id: 't-pb-6', name: 'Bathroom sink',        completed: false },
-          { id: 't-pb-7', name: 'Mirror',               completed: false },
-          { id: 't-pb-8', name: 'Vaccum & mop',         completed: false },
-        ]}
-      ]
-    },
-    // ── Nic Bathroom ─────────────────────────────────────────────────────────
-    {
-      id: 'room-nic-bath', name: 'Nic Bathroom', expanded: false,
-      zones: [
-        { id: 'zone-nb-main', name: 'New Zone', tasks: [
-          { id: 't-nb-1', name: 'Shower glass',         completed: false },
-          { id: 't-nb-2', name: 'Shower floor',         completed: false },
-          { id: 't-nb-3', name: 'Toilet',               completed: false },
-          { id: 't-nb-4', name: 'Around toilet',        completed: false },
-          { id: 't-nb-5', name: 'Bathroom bench wiped', completed: false },
-          { id: 't-nb-6', name: 'Bathroom sink',        completed: false },
-          { id: 't-nb-7', name: 'Mirror',               completed: false },
-          { id: 't-nb-8', name: 'Vaccum & mop',         completed: false },
-        ]}
-      ]
-    },
-    // ── Paigee Bedroom ───────────────────────────────────────────────────────
-    {
-      id: 'room-paigee-bed', name: 'Paigee Bedroom', expanded: false,
-      zones: [
-        { id: 'zone-pb-bed', name: 'Bed', tasks: [
-          { id: 't-pbr-1', name: 'Wash sheets', completed: false },
-          { id: 't-pbr-2', name: 'Make bed',    completed: false },
-        ]},
-        { id: 'zone-pb-clothes', name: 'Clothes', tasks: [
-          { id: 't-pbr-3', name: 'Dirty clothes in basket',  completed: false },
-          { id: 't-pbr-4', name: 'Fold & put away clothes',  completed: false },
-        ]},
-        { id: 'zone-pb-gen', name: 'General', tasks: [
-          { id: 't-pbr-5', name: 'Throw trash out', completed: false },
-          { id: 't-pbr-6', name: 'Vaccum',          completed: false },
-          { id: 't-pbr-7', name: 'Organise desk',   completed: false },
-          { id: 't-pbr-8', name: 'Dust',            completed: false },
-          { id: 't-pbr-9', name: 'Bed side table',  completed: false },
-        ]}
-      ]
-    },
-    // ── Nic Bedroom ──────────────────────────────────────────────────────────
-    {
-      id: 'room-nic-bed', name: 'Nic Bedroom', expanded: false,
-      zones: [
-        { id: 'zone-nb-bed', name: 'Bed', tasks: [
-          { id: 't-nbr-1', name: 'Wash sheets', completed: false },
-          { id: 't-nbr-2', name: 'Make bed',    completed: false },
-        ]},
-        { id: 'zone-nb-clothes', name: 'Clothes', tasks: [
-          { id: 't-nbr-3', name: 'Dirty clothes in basket',  completed: false },
-          { id: 't-nbr-4', name: 'Fold & put away clothes',  completed: false },
-        ]},
-        { id: 'zone-nb-gen', name: 'General', tasks: [
-          { id: 't-nbr-5', name: 'Throw trash out', completed: false },
-          { id: 't-nbr-6', name: 'Vaccum',          completed: false },
-          { id: 't-nbr-7', name: 'Organise desk',   completed: false },
-          { id: 't-nbr-8', name: 'Dust',            completed: false },
-          { id: 't-nbr-9', name: 'Bed side table',  completed: false },
-        ]}
-      ]
-    },
-    // ── Girls Room ───────────────────────────────────────────────────────────
-    {
-      id: 'room-girls', name: 'Girls room', expanded: false,
-      zones: [
-        { id: 'zone-girls-bed', name: 'Bed', tasks: [
-          { id: 't-gr-1', name: 'Change sheets',   completed: false },
-          { id: 't-gr-2', name: 'Clean under bed', completed: false },
-        ]},
-        { id: 'zone-girls-gen', name: 'General', tasks: [
-          { id: 't-gr-3', name: 'Organise toys', completed: false },
-          { id: 't-gr-4', name: 'Vaccum',        completed: false },
-        ]}
-      ]
-    },
-    // ── Hallway ──────────────────────────────────────────────────────────────
-    {
-      id: 'room-hallway', name: 'Hallway', expanded: false,
-      zones: [
-        { id: 'zone-hall-gen', name: 'General', tasks: [
-          { id: 't-hw-1', name: 'Vaccum',          completed: false },
-          { id: 't-hw-2', name: 'Wipe surfaces',   completed: false },
-          { id: 't-hw-3', name: 'Dust',            completed: false },
-          { id: 't-hw-4', name: 'Clean mirrors',   completed: false },
-          { id: 't-hw-5', name: 'Organise entry',  completed: false },
-        ]}
-      ]
-    },
-    // ── Garage ───────────────────────────────────────────────────────────────
-    {
-      id: 'room-garage', name: 'Garage', expanded: false,
-      zones: [
-        { id: 'zone-garage-storage', name: 'Storage', tasks: [
-          { id: 't-ga-1', name: 'Organise shelves', completed: false },
-          { id: 't-ga-2', name: 'Clear clutter',    completed: false },
-          { id: 't-ga-3', name: 'Wipe surfaces',    completed: false },
-        ]},
-        { id: 'zone-garage-floor', name: 'Floor', tasks: [
-          { id: 't-ga-4', name: 'Sweep floor',      completed: false },
-          { id: 't-ga-5', name: 'Mop floor',        completed: false },
-        ]},
-        { id: 'zone-garage-bins', name: 'Bins', tasks: [
-          { id: 't-ga-6', name: 'Take out bins',    completed: false },
-          { id: 't-ga-7', name: 'Clean bin area',   completed: false },
-        ]}
-      ]
-    },
-    // ── Backyard ─────────────────────────────────────────────────────────────
-    {
-      id: 'room-backyard', name: 'Backyard', expanded: false,
-      zones: [
-        { id: 'zone-by-lawn', name: 'Lawn', tasks: [
-          { id: 't-by-1', name: 'Mow lawn',    completed: false },
-          { id: 't-by-2', name: 'Edge lawn',   completed: false },
-          { id: 't-by-3', name: 'Rake leaves', completed: false },
-        ]},
-        { id: 'zone-by-garden', name: 'Garden', tasks: [
-          { id: 't-by-4', name: 'Weed garden',  completed: false },
-          { id: 't-by-5', name: 'Water plants', completed: false },
-          { id: 't-by-6', name: 'Sweep paths',  completed: false },
-          { id: 't-by-7', name: 'Clear rubbish',completed: false },
-        ]}
-      ]
-    },
-    // ── Front Yard ───────────────────────────────────────────────────────────
-    {
-      id: 'room-frontyard', name: 'Front Yard', expanded: false,
-      zones: [
-        { id: 'zone-fy-lawn', name: 'Lawn', tasks: [
-          { id: 't-fy-1', name: 'Mow lawn',  completed: false },
-          { id: 't-fy-2', name: 'Edge lawn', completed: false },
-        ]},
-        { id: 'zone-fy-entry', name: 'Entry', tasks: [
-          { id: 't-fy-3', name: 'Sweep driveway',    completed: false },
-          { id: 't-fy-4', name: 'Weed garden beds',  completed: false },
-          { id: 't-fy-5', name: 'Water plants',      completed: false },
-          { id: 't-fy-6', name: 'Clear rubbish',     completed: false },
-        ]}
-      ]
-    },
-  ]
-};
-let saveTimer = null;
-let pollTimer = null;
-let lastKnownVersion = 0;
+// ══════════════════════════════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════════════════════════════
+let state           = { rooms: [], version: 0 };
+let passwordHash    = SPACE_ID ? (sessionStorage.getItem(`pwd-${SPACE_ID}`) || null) : null;
+let selectedTpl     = null;
+let authMode        = 'setup'; // 'setup' | 'login'
+let saveTimer       = null;
+let pollTimer       = null;
 let hasPendingChanges = false;
+let lastKnownVersion  = 0;
 
-// ─── UUID ────────────────────────────────────────────────────────────────────
-
-function uid() {
-  return crypto.randomUUID ? crypto.randomUUID()
-    : Math.random().toString(36).slice(2) + Date.now().toString(36);
+// ══════════════════════════════════════════════════════════════════════════
+// SCREEN CONTROL
+// ══════════════════════════════════════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 }
 
-// ─── API ─────────────────────────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════
+// SHA-256
+// ══════════════════════════════════════════════════════════════════════════
+async function sha256(str) {
+  const buf  = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
 
-async function loadData() {
-  setSyncBadge('loading');
-  try {
-    const r = await fetch('/api/data');
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    const data = await r.json();
+// ══════════════════════════════════════════════════════════════════════════
+// API
+// ══════════════════════════════════════════════════════════════════════════
+async function apiGet() {
+  const r = await fetch(`/api/space?id=${SPACE_ID}`, {
+    headers: passwordHash ? { Authorization: `Bearer ${passwordHash}` } : {}
+  });
+  return r.json();
+}
 
-    // Seed if empty OR if stored _seedVersion is behind current SEED_VERSION
-    if (!data.rooms || data.rooms.length === 0 || (data._seedVersion || 0) < SEED_VERSION) {
-      state = JSON.parse(JSON.stringify(SEED_DATA)); // deep clone
-      render();
-      await saveData();
-      toast('✨ Updated to latest room list');
+async function apiSetup(pwdHash, data) {
+  const r = await fetch(`/api/space?id=${SPACE_ID}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'setup', passwordHash: pwdHash, data })
+  });
+  return r.json();
+}
+
+async function apiSave(data) {
+  const r = await fetch(`/api/space?id=${SPACE_ID}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${passwordHash}` },
+    body: JSON.stringify({ action: 'save', data })
+  });
+  return r.json();
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════════════════════════
+async function init() {
+  if (SPACE_ID === null) { showScreen('screen-landing'); return; }
+
+  // /1 always cleaning, no template picker
+  const res = await apiGet().catch(() => null);
+  if (!res) { setSyncBadge('error'); showScreen('screen-app'); return; }
+
+  if (res.status === 'unclaimed') {
+    if (SPACE_ID === 1) {
+      // /1 — skip template, go straight to password setup with cleaning data
+      selectedTpl = 'cleaning';
+      showAuthSetup();
     } else {
-      state = data;
-      lastKnownVersion = data.version || 0;
-      render();
-      setSyncBadge('synced');
+      document.getElementById('tpl-space-label').textContent =
+        `Space /${SPACE_ID} is unclaimed — choose a template to get started`;
+      showScreen('screen-template');
     }
-  } catch (e) {
-    console.error('Load failed:', e);
-    setSyncBadge('error');
-    toast('⚠ Could not load data');
+    return;
+  }
+
+  if (res.status === 'locked') {
+    showAuthLogin();
+    return;
+  }
+
+  if (res.status === 'ok') {
+    state = res.data;
+    lastKnownVersion = state.version || 0;
+    showScreen('screen-app');
+    render();
+    setSyncBadge('synced');
+    startPolling();
   }
 }
 
-async function saveData() {
-  hasPendingChanges = false;
-  state.version = (state.version || 0) + 1;
-  setSyncBadge('saving');
-  try {
-    const r = await fetch('/api/data', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(state)
-    });
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    lastKnownVersion = state.version;
+// ══════════════════════════════════════════════════════════════════════════
+// TEMPLATE SELECTION
+// ══════════════════════════════════════════════════════════════════════════
+function selectTemplate(tpl) {
+  selectedTpl = tpl;
+  showAuthSetup();
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// AUTH SCREENS
+// ══════════════════════════════════════════════════════════════════════════
+function showAuthSetup() {
+  authMode = 'setup';
+  document.getElementById('auth-title').textContent = `Lock Space /${SPACE_ID}`;
+  document.getElementById('auth-sub').textContent   = 'Set a password. This space will be yours once confirmed.';
+  document.getElementById('auth-confirm').style.display = '';
+  document.getElementById('auth-note').textContent  = '⚠ No recovery. Don\'t forget it.';
+  document.getElementById('auth-err').style.display = 'none';
+  document.getElementById('auth-pwd').value = '';
+  document.getElementById('auth-confirm').value = '';
+  showScreen('screen-auth');
+}
+
+function showAuthLogin() {
+  authMode = 'login';
+  document.getElementById('auth-title').textContent = `Space /${SPACE_ID}`;
+  document.getElementById('auth-sub').textContent   = 'Enter your password to continue.';
+  document.getElementById('auth-confirm').style.display = 'none';
+  document.getElementById('auth-note').textContent  = '';
+  document.getElementById('auth-err').style.display = 'none';
+  document.getElementById('auth-pwd').value = '';
+  showScreen('screen-auth');
+}
+
+async function submitAuth() {
+  const pwd  = document.getElementById('auth-pwd').value.trim();
+  const conf = document.getElementById('auth-confirm').value.trim();
+  const err  = document.getElementById('auth-err');
+
+  if (!pwd) { showErr('Enter a password'); return; }
+
+  if (authMode === 'setup') {
+    if (pwd !== conf) { showErr('Passwords don\'t match'); return; }
+    if (pwd.length < 4) { showErr('Minimum 4 characters'); return; }
+    const hash = await sha256(pwd);
+    const seed = buildSeed(selectedTpl);
+    const res  = await apiSetup(hash, seed).catch(() => null);
+    if (!res || !res.ok) { showErr(res?.error || 'Setup failed'); return; }
+    passwordHash = hash;
+    sessionStorage.setItem(`pwd-${SPACE_ID}`, hash);
+    state = seed;
+    lastKnownVersion = 0;
+    showScreen('screen-app');
+    render();
     setSyncBadge('synced');
-  } catch (e) {
-    console.error('Save failed:', e);
-    setSyncBadge('error');
-    toast('⚠ Save failed — check connection');
+    startPolling();
+    toast(`✅ Space /${SPACE_ID} is yours!`);
+  } else {
+    const hash = await sha256(pwd);
+    passwordHash = hash;
+    const res = await apiGet().catch(() => null);
+    if (!res || res.status !== 'ok') {
+      passwordHash = null;
+      showErr('Wrong password');
+      return;
+    }
+    sessionStorage.setItem(`pwd-${SPACE_ID}`, hash);
+    state = res.data;
+    lastKnownVersion = state.version || 0;
+    showScreen('screen-app');
+    render();
+    setSyncBadge('synced');
+    startPolling();
   }
+}
+
+function showErr(msg) {
+  const el = document.getElementById('auth-err');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// SAVE / POLL
+// ══════════════════════════════════════════════════════════════════════════
+function setSyncBadge(s) {
+  const el = document.getElementById('syncBadge');
+  el.className = 'sync-badge';
+  const m = { loading:['Loading…',''], saving:['Saving…','saving'], synced:['✓ Synced','synced'], error:['✗ Error','error'] };
+  const [t,c] = m[s]||['',''];
+  el.textContent = t;
+  if(c) el.classList.add(c);
 }
 
 function scheduleSave() {
   hasPendingChanges = true;
   clearTimeout(saveTimer);
-  saveTimer = setTimeout(saveData, 400);
+  saveTimer = setTimeout(async () => {
+    hasPendingChanges = false;
+    state.version = (state.version||0)+1;
+    setSyncBadge('saving');
+    const res = await apiSave(state).catch(()=>null);
+    if(res?.ok){ lastKnownVersion=state.version; setSyncBadge('synced'); }
+    else setSyncBadge('error');
+  }, 400);
 }
 
-async function pollForChanges() {
-  if (hasPendingChanges) return; // don't overwrite unsaved local work
-  try {
-    const r = await fetch('/api/data');
-    if (!r.ok) return;
-    const data = await r.json();
-    if ((data.version || 0) > lastKnownVersion) {
-      state = data;
-      lastKnownVersion = data.version;
+async function startPolling() {
+  pollTimer = setInterval(async () => {
+    if(hasPendingChanges) return;
+    const res = await apiGet().catch(()=>null);
+    if(res?.status==='ok' && (res.data.version||0) > lastKnownVersion) {
+      state = res.data;
+      lastKnownVersion = state.version;
       render();
-      setSyncBadge('synced');
       toast('🔄 Updated from another device');
     }
-  } catch (_) { /* silent */ }
+  }, 12000);
 }
 
-function startPolling() {
-  pollTimer = setInterval(pollForChanges, 12000);
+// ══════════════════════════════════════════════════════════════════════════
+// ROOM / ZONE / TASK OPS  (unchanged from original)
+// ══════════════════════════════════════════════════════════════════════════
+function uid(){ return crypto.randomUUID?crypto.randomUUID():Math.random().toString(36).slice(2)+Date.now().toString(36); }
+
+function addRoom(){ const r={id:uid(),name:'',expanded:true,zones:[]};state.rooms.push(r);render();scheduleSave();setTimeout(()=>{const e=document.querySelector(`[data-room-name="${r.id}"]`);if(e)e.focus();},50); }
+function removeRoom(id){ state.rooms=state.rooms.filter(r=>r.id!==id);render();scheduleSave(); }
+function toggleRoom(id){ const r=state.rooms.find(r=>r.id===id);if(r)r.expanded=!r.expanded;render();scheduleSave(); }
+function renameRoom(id,n){ const r=state.rooms.find(r=>r.id===id);if(r)r.name=n;scheduleSave();updateStats(); }
+function expandAll(){ state.rooms.forEach(r=>r.expanded=true);render();scheduleSave(); }
+function collapseAll(){ state.rooms.forEach(r=>r.expanded=false);render();scheduleSave(); }
+function addZone(rid){ const r=state.rooms.find(r=>r.id===rid);if(!r)return;const z={id:uid(),name:'',tasks:[]};r.zones.push(z);render();scheduleSave();setTimeout(()=>{const e=document.querySelector(`[data-zone-name="${z.id}"]`);if(e)e.focus();},50); }
+function removeZone(rid,zid){ const r=state.rooms.find(r=>r.id===rid);if(!r)return;r.zones=r.zones.filter(z=>z.id!==zid);render();scheduleSave(); }
+function renameZone(rid,zid,n){ const r=state.rooms.find(r=>r.id===rid);const z=r?.zones.find(z=>z.id===zid);if(z)z.name=n;scheduleSave(); }
+function addTask(rid,zid){ const r=state.rooms.find(r=>r.id===rid);const z=r?.zones.find(z=>z.id===zid);if(!z)return;const t={id:uid(),name:'',completed:false};z.tasks.push(t);render();scheduleSave();setTimeout(()=>{const e=document.querySelector(`[data-task-name="${t.id}"]`);if(e)e.focus();},50); }
+function removeTask(rid,zid,tid){ const r=state.rooms.find(r=>r.id===rid);const z=r?.zones.find(z=>z.id===zid);if(!z)return;z.tasks=z.tasks.filter(t=>t.id!==tid);render();scheduleSave(); }
+function toggleTask(rid,zid,tid){ const r=state.rooms.find(r=>r.id===rid);const z=r?.zones.find(z=>z.id===zid);const t=z?.tasks.find(t=>t.id===tid);if(t)t.completed=!t.completed;render();scheduleSave(); }
+function renameTask(rid,zid,tid,n){ const r=state.rooms.find(r=>r.id===rid);const z=r?.zones.find(z=>z.id===zid);const t=z?.tasks.find(t=>t.id===tid);if(t)t.name=n;scheduleSave(); }
+function clearCompleted(){ let c=0;state.rooms.forEach(r=>r.zones.forEach(z=>{const b=z.tasks.length;z.tasks=z.tasks.filter(t=>!t.completed);c+=b-z.tasks.length;}));render();scheduleSave();toast(c>0?`🧹 Cleared ${c} task${c!==1?'s':''}`:'Nothing to clear'); }
+function openReset(){ document.getElementById('resetModal').classList.add('open'); }
+function closeReset(){ document.getElementById('resetModal').classList.remove('open'); }
+function confirmReset(){ state={rooms:[],version:(state.version||0)+1};closeReset();render();apiSave(state);toast('🗑 Reset'); }
+function updateEmojiFor(id,name,type){ const el=document.querySelector(`[data-emoji-for="${id}"]`);if(el)el.textContent=getEmoji(name,type); }
+
+// ══════════════════════════════════════════════════════════════════════════
+// STATS + RENDER
+// ══════════════════════════════════════════════════════════════════════════
+function updateStats(){
+  const rooms=state.rooms.length;let total=0,done=0;
+  state.rooms.forEach(r=>r.zones.forEach(z=>z.tasks.forEach(t=>{total++;if(t.completed)done++;})));
+  const pct=total===0?0:Math.round((done/total)*100);
+  document.getElementById('statRooms').textContent=rooms;
+  document.getElementById('statTasks').textContent=total;
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('pctLabel').textContent=pct+'%';
 }
 
-// ─── SYNC BADGE ──────────────────────────────────────────────────────────────
-
-function setSyncBadge(status) {
-  const el = document.getElementById('syncBadge');
-  el.className = 'sync-badge';
-  const map = {
-    loading: ['Loading…', ''],
-    saving:  ['Saving…', 'saving'],
-    synced:  ['✓ Synced', 'synced'],
-    error:   ['✗ Error',  'error']
-  };
-  const [text, cls] = map[status] || ['', ''];
-  el.textContent = text;
-  if (cls) el.classList.add(cls);
-}
-
-// ─── TOAST ───────────────────────────────────────────────────────────────────
-
-let toastTimer;
-function toast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove('show'), 2500);
-}
-
-// ─── ROOM OPS ────────────────────────────────────────────────────────────────
-
-function addRoom() {
-  const room = { id: uid(), name: '', expanded: true, zones: [] };
-  state.rooms.push(room);
-  render();
-  scheduleSave();
-  // Focus the new room name
-  setTimeout(() => {
-    const el = document.querySelector(`[data-room-name="${room.id}"]`);
-    if (el) el.focus();
-  }, 50);
-}
-
-function removeRoom(roomId) {
-  state.rooms = state.rooms.filter(r => r.id !== roomId);
-  render();
-  scheduleSave();
-}
-
-function toggleRoom(roomId) {
-  const room = state.rooms.find(r => r.id === roomId);
-  if (room) room.expanded = !room.expanded;
-  render();
-  scheduleSave();
-}
-
-function renameRoom(roomId, name) {
-  const room = state.rooms.find(r => r.id === roomId);
-  if (room) room.name = name;
-  scheduleSave();
-  updateStats();
-}
-
-function expandAll()  { state.rooms.forEach(r => r.expanded = true);  render(); scheduleSave(); }
-function collapseAll(){ state.rooms.forEach(r => r.expanded = false); render(); scheduleSave(); }
-
-// ─── ZONE OPS ────────────────────────────────────────────────────────────────
-
-function addZone(roomId) {
-  const room = state.rooms.find(r => r.id === roomId);
-  if (!room) return;
-  const zone = { id: uid(), name: '', tasks: [] };
-  room.zones.push(zone);
-  render();
-  scheduleSave();
-  setTimeout(() => {
-    const el = document.querySelector(`[data-zone-name="${zone.id}"]`);
-    if (el) el.focus();
-  }, 50);
-}
-
-function removeZone(roomId, zoneId) {
-  const room = state.rooms.find(r => r.id === roomId);
-  if (!room) return;
-  room.zones = room.zones.filter(z => z.id !== zoneId);
-  render();
-  scheduleSave();
-}
-
-function renameZone(roomId, zoneId, name) {
-  const room = state.rooms.find(r => r.id === roomId);
-  const zone = room?.zones.find(z => z.id === zoneId);
-  if (zone) zone.name = name;
-  scheduleSave();
-}
-
-// ─── TASK OPS ────────────────────────────────────────────────────────────────
-
-function addTask(roomId, zoneId) {
-  const room = state.rooms.find(r => r.id === roomId);
-  const zone = room?.zones.find(z => z.id === zoneId);
-  if (!zone) return;
-  const task = { id: uid(), name: '', completed: false };
-  zone.tasks.push(task);
-  render();
-  scheduleSave();
-  setTimeout(() => {
-    const el = document.querySelector(`[data-task-name="${task.id}"]`);
-    if (el) el.focus();
-  }, 50);
-}
-
-function removeTask(roomId, zoneId, taskId) {
-  const room = state.rooms.find(r => r.id === roomId);
-  const zone = room?.zones.find(z => z.id === zoneId);
-  if (!zone) return;
-  zone.tasks = zone.tasks.filter(t => t.id !== taskId);
-  render();
-  scheduleSave();
-}
-
-function toggleTask(roomId, zoneId, taskId) {
-  const room = state.rooms.find(r => r.id === roomId);
-  const zone = room?.zones.find(z => z.id === zoneId);
-  const task = zone?.tasks.find(t => t.id === taskId);
-  if (task) task.completed = !task.completed;
-  render();
-  scheduleSave();
-}
-
-function renameTask(roomId, zoneId, taskId, name) {
-  const room = state.rooms.find(r => r.id === roomId);
-  const zone = room?.zones.find(z => z.id === zoneId);
-  const task = zone?.tasks.find(t => t.id === taskId);
-  if (task) task.name = name;
-  scheduleSave();
-}
-
-// ─── CLEAR COMPLETED ─────────────────────────────────────────────────────────
-
-function clearCompleted() {
-  let count = 0;
-  state.rooms.forEach(room => {
-    room.zones.forEach(zone => {
-      const before = zone.tasks.length;
-      zone.tasks = zone.tasks.filter(t => !t.completed);
-      count += before - zone.tasks.length;
-    });
-  });
-  render();
-  scheduleSave();
-  if (count > 0) toast(`🧹 Cleared ${count} completed task${count !== 1 ? 's' : ''}`);
-  else toast('Nothing to clear');
-}
-
-// ─── RESET ───────────────────────────────────────────────────────────────────
-
-function openReset()  { document.getElementById('resetModal').classList.add('open'); }
-function closeReset() { document.getElementById('resetModal').classList.remove('open'); }
-
-function confirmReset() {
-  state = { rooms: [], version: state.version + 1 };
-  closeReset();
-  render();
-  saveData();
-  toast('🗑 Everything reset');
-}
-
-// ─── STATS ───────────────────────────────────────────────────────────────────
-
-function updateStats() {
-  const rooms = state.rooms.length;
-  let total = 0, done = 0;
-  state.rooms.forEach(r => r.zones.forEach(z => z.tasks.forEach(t => {
-    total++;
-    if (t.completed) done++;
-  })));
-  const pct = total === 0 ? 0 : Math.round((done / total) * 100);
-
-  document.getElementById('statRooms').textContent = rooms;
-  document.getElementById('statTasks').textContent = total;
-  document.getElementById('progressBar').style.width = pct + '%';
-  document.getElementById('pctLabel').textContent = pct + '%';
-}
-
-// ─── RENDER ──────────────────────────────────────────────────────────────────
-
-function render() {
-  const main = document.getElementById('main');
-
-  if (state.rooms.length === 0) {
-    main.innerHTML = `
-      <div class="empty-state">
-        <div class="big">🧹</div>
-        <p>No rooms yet.<br>Hit <b>+ Add Room</b> to get started.</p>
-      </div>`;
-    updateStats();
-    return;
+function render(){
+  const main=document.getElementById('main');
+  if(state.rooms.length===0){
+    main.innerHTML=`<div class="empty-state"><div class="big">📋</div><p>No rooms yet.<br>Hit <b>+ Add Room</b> to get started.</p></div>`;
+    updateStats();return;
   }
-
-  main.innerHTML = state.rooms.map(room => {
-    // Count tasks for this room
-    let roomTotal = 0, roomDone = 0;
-    room.zones.forEach(z => z.tasks.forEach(t => {
-      roomTotal++;
-      if (t.completed) roomDone++;
-    }));
-    const allDone = roomTotal > 0 && roomDone === roomTotal;
-    const countLabel = roomTotal > 0 ? `${roomDone}/${roomTotal}` : '';
-
-    const zonesHtml = room.zones.map(zone => {
-      const tasksHtml = zone.tasks.map(task => `
+  main.innerHTML=state.rooms.map(room=>{
+    let rt=0,rd=0;room.zones.forEach(z=>z.tasks.forEach(t=>{rt++;if(t.completed)rd++;}));
+    const allDone=rt>0&&rd===rt;
+    const zonesHtml=room.zones.map(zone=>{
+      const tasksHtml=zone.tasks.map(task=>`
         <div class="task-row">
-          <div class="task-check ${task.completed ? 'done' : ''}"
-               onclick="toggleTask('${room.id}','${zone.id}','${task.id}')"></div>
-          <span class="task-emoji" data-emoji-for="${task.id}">${getEmoji(task.name, 'task')}</span>
-          <input
-            class="task-name-input ${task.completed ? 'done' : ''}"
-            data-task-name="${task.id}"
-            value="${escHtml(task.name)}"
-            placeholder="task..."
-            oninput="renameTask('${room.id}','${zone.id}','${task.id}', this.value); updateEmojiFor('${task.id}', this.value, 'task')"
-            onkeydown="if(event.key==='Enter'){addTask('${room.id}','${zone.id}');}"
-          />
-          <button class="btn ghost" onclick="removeTask('${room.id}','${zone.id}','${task.id}')" title="Remove task">✕</button>
+          <div class="task-check ${task.completed?'done':''}" onclick="toggleTask('${room.id}','${zone.id}','${task.id}')"></div>
+          <span class="task-emoji" data-emoji-for="${task.id}">${getEmoji(task.name,'task')}</span>
+          <input class="task-name-input ${task.completed?'done':''}" data-task-name="${task.id}"
+            value="${escHtml(task.name)}" placeholder="task…"
+            oninput="renameTask('${room.id}','${zone.id}','${task.id}',this.value);updateEmojiFor('${task.id}',this.value,'task')"
+            onkeydown="if(event.key==='Enter')addTask('${room.id}','${zone.id}')"/>
+          <button class="btn ghost" onclick="removeTask('${room.id}','${zone.id}','${task.id}')">✕</button>
+        </div>`).join('');
+      return `<div class="zone">
+        <div class="zone-header">
+          <span class="zone-emoji" data-emoji-for="${zone.id}">${getEmoji(zone.name,'zone')}</span>
+          <input class="zone-name-input" data-zone-name="${zone.id}" value="${escHtml(zone.name)}" placeholder="zone name…"
+            oninput="renameZone('${room.id}','${zone.id}',this.value);updateEmojiFor('${zone.id}',this.value,'zone')"/>
+          <button class="btn ghost" onclick="removeZone('${room.id}','${zone.id}')">✕</button>
         </div>
-      `).join('');
-
-      return `
-        <div class="zone">
-          <div class="zone-header">
-            <span class="zone-emoji" data-emoji-for="${zone.id}">${getEmoji(zone.name, 'zone')}</span>
-            <input
-              class="zone-name-input"
-              data-zone-name="${zone.id}"
-              value="${escHtml(zone.name)}"
-              placeholder="zone name..."
-              oninput="renameZone('${room.id}','${zone.id}', this.value); updateEmojiFor('${zone.id}', this.value, 'zone')"
-            />
-            <button class="btn ghost" onclick="removeZone('${room.id}','${zone.id}')" title="Remove zone">✕</button>
-          </div>
-          <div class="task-list">
-            ${tasksHtml}
-          </div>
-          <div class="add-row" onclick="addTask('${room.id}','${zone.id}')"> Add task</div>
-        </div>
-      `;
+        <div class="task-list">${tasksHtml}</div>
+        <div class="add-row" onclick="addTask('${room.id}','${zone.id}')"> Add task</div>
+      </div>`;
     }).join('');
-
-    return `
-      <div class="room-card">
-        <div class="room-header ${room.expanded ? 'open' : ''}" onclick="toggleRoom('${room.id}')">
-          <span class="room-chevron">▶</span>
-          <span class="room-emoji" data-emoji-for="${room.id}">${getEmoji(room.name, 'room')}</span>
-          <input
-            class="room-name-input"
-            data-room-name="${room.id}"
-            value="${escHtml(room.name)}"
-            placeholder="Room name..."
-            oninput="renameRoom('${room.id}', this.value); updateEmojiFor('${room.id}', this.value, 'room')"
-            onclick="event.stopPropagation()"
-          />
-          ${countLabel ? `<span class="room-task-count ${allDone ? 'all-done' : ''}">${countLabel} ${allDone ? '✓' : ''}</span>` : ''}
-        </div>
-        <div class="room-body ${room.expanded ? 'open' : ''}">
-          ${zonesHtml}
-          <div style="display:flex;gap:6px;flex-wrap:wrap;">
-            <button class="btn" style="font-size:12px" onclick="addZone('${room.id}')">＋ Add Zone</button>
-            <button class="btn danger" style="font-size:12px" onclick="removeRoom('${room.id}')">✕ Remove Room</button>
-          </div>
+    return `<div class="room-card">
+      <div class="room-header ${room.expanded?'open':''}" onclick="toggleRoom('${room.id}')">
+        <span class="room-chevron">▶</span>
+        <span class="room-emoji" data-emoji-for="${room.id}">${getEmoji(room.name,'room')}</span>
+        <input class="room-name-input" data-room-name="${room.id}" value="${escHtml(room.name)}" placeholder="Room name…"
+          oninput="renameRoom('${room.id}',this.value);updateEmojiFor('${room.id}',this.value,'room')"
+          onclick="event.stopPropagation()"/>
+        ${rt>0?`<span class="room-task-count ${allDone?'all-done':''}">${rd}/${rt}${allDone?' ✓':''}</span>`:''}
+      </div>
+      <div class="room-body ${room.expanded?'open':''}">
+        ${zonesHtml}
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <button class="btn" style="font-size:12px" onclick="addZone('${room.id}')">＋ Add Zone</button>
+          <button class="btn danger" style="font-size:12px" onclick="removeRoom('${room.id}')">✕ Remove Room</button>
         </div>
       </div>
-    `;
+    </div>`;
   }).join('');
-
   updateStats();
 }
 
-// ─── HELPERS ─────────────────────────────────────────────────────────────────
+function escHtml(s){if(!s)return'';return s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
-function escHtml(str) {
-  if (!str) return '';
-  return str.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
+let toastT;
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('show'),2500);}
 
-// ─── EMOJI DETECTION ─────────────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════
+// EMOJI DETECTION
+// ══════════════════════════════════════════════════════════════════════════
+function getEmoji(name,type){
+  const n=(name||'').toLowerCase();
 
-function getEmoji(name, type) {
-  const n = (name || '').toLowerCase();
-
-  // ── ROOMS ───────────────────────────────────────────────────────────────────
-  if (type === 'room') {
-    if (/paigee/.test(n) && /bath/.test(n))              return '👧🛁';
-    if (/paigee/.test(n) && /bed/.test(n))               return '👧🛏️';
-    if (/\bnic\b/.test(n) && /bath/.test(n))             return '👦🛁';
-    if (/\bnic\b/.test(n) && /bed/.test(n))              return '👦🛏️';
-    if (/kitchen|cook|stove/.test(n))                     return '🍳';
-    if (/bathroom|ensuite|toilet room|wc/.test(n))        return '🛁';
-    if (/bedroom|bed room|master|guest room/.test(n))     return '🛏️';
-    if (/living|lounge|sitting|family/.test(n))           return '🛋️';
-    if (/girls|girl/.test(n))                             return '🧸';
-    if (/boys|boy/.test(n))                               return '🎮';
-    if (/kids|child|nursery|play/.test(n))                return '🧸';
-    if (/garage|car port/.test(n))                        return '🚗';
-    if (/laundry|washing|utility/.test(n))                return '🫧';
-    if (/office|study|work/.test(n))                      return '💻';
-    if (/dining|dinner room/.test(n))                     return '🍽️';
-    if (/hall|corridor|entry|foyer|stair/.test(n))        return '🚪';
-    if (/front yard|front garden/.test(n))                return '🏡';
-    if (/backyard|back yard|back garden/.test(n))         return '🌳';
-    if (/garden|yard|outdoor|outside|patio|deck/.test(n)) return '🌿';
-    if (/basement|cellar/.test(n))                        return '🏚️';
-    if (/attic|loft|storage|spare/.test(n))               return '📦';
-    if (/gym|workout|exercise/.test(n))                   return '🏋️';
-    if (/balcony|terrace/.test(n))                        return '🌇';
-    if (/pool|spa/.test(n))                               return '🏊';
-    if (/pantry|cupboard/.test(n))                        return '🗄️';
-    return '🏠';
+  if(type==='room'){
+    if(/paigee/.test(n)&&/bath/.test(n)) return'👧🛁';
+    if(/paigee/.test(n)&&/bed/.test(n))  return'👧🛏️';
+    if(/\bnic\b/.test(n)&&/bath/.test(n)) return'👦🛁';
+    if(/\bnic\b/.test(n)&&/bed/.test(n))  return'👦🛏️';
+    if(/kitchen|cook|stove/.test(n))      return'🍳';
+    if(/bathroom|ensuite|toilet room|wc/.test(n)) return'🛁';
+    if(/bedroom|bed room|master|guest room/.test(n)) return'🛏️';
+    if(/living|lounge|sitting|family/.test(n)) return'🛋️';
+    if(/girls|girl/.test(n))  return'🧸';
+    if(/boys|boy/.test(n))    return'🎮';
+    if(/kids|child|nursery|play/.test(n)) return'🧸';
+    if(/garage|car port/.test(n)) return'🚗';
+    if(/laundry|washing|utility/.test(n)) return'🫧';
+    if(/office|study|work/.test(n)) return'💻';
+    if(/dining|dinner room/.test(n)) return'🍽️';
+    if(/hall|corridor|entry|foyer|stair/.test(n)) return'🚪';
+    if(/front yard|front garden/.test(n)) return'🏡';
+    if(/backyard|back yard|back garden/.test(n)) return'🌳';
+    if(/garden|yard|outdoor|outside|patio|deck/.test(n)) return'🌿';
+    if(/basement|cellar/.test(n)) return'🏚️';
+    if(/attic|loft|storage|spare/.test(n)) return'📦';
+    if(/gym|workout|exercise/.test(n)) return'🏋️';
+    if(/pool|spa/.test(n)) return'🏊';
+    // Bill categories
+    if(/housing|property/.test(n)) return'🏠';
+    if(/utilit/.test(n)) return'⚡';
+    if(/insurance/.test(n)) return'🛡️';
+    if(/subscri|streaming/.test(n)) return'📺';
+    if(/finance|loan|debt/.test(n)) return'💰';
+    // Shopping categories
+    if(/produce|fruit|veg/.test(n)) return'🥦';
+    if(/meat|seafood/.test(n)) return'🥩';
+    if(/dairy|egg/.test(n)) return'🥛';
+    if(/pantry|dry goods|canned/.test(n)) return'🗄️';
+    if(/bakery|bread/.test(n)) return'🍞';
+    if(/drink|beverage/.test(n)) return'🥤';
+    if(/household|cleaning supply/.test(n)) return'🧴';
+    if(/personal care|hygiene/.test(n)) return'🧼';
+    if(/snack/.test(n)) return'🍿';
+    // Meal planning
+    if(/monday/.test(n)) return'1️⃣';
+    if(/tuesday/.test(n)) return'2️⃣';
+    if(/wednesday/.test(n)) return'3️⃣';
+    if(/thursday/.test(n)) return'4️⃣';
+    if(/friday/.test(n)) return'5️⃣';
+    if(/saturday/.test(n)) return'6️⃣';
+    if(/sunday/.test(n)) return'7️⃣';
+    if(/meal prep|batch/.test(n)) return'🍱';
+    if(/week/.test(n)) return'📅';
+    return'🏠';
   }
 
-  // ── ZONES ───────────────────────────────────────────────────────────────────
-  if (type === 'zone') {
-    if (/tv|television|media/.test(n))                    return '📺';
-    if (/general|misc|other/.test(n))                     return '🗂️';
-    if (/new zone/.test(n))                               return '🗂️';
-    if (/^bed$|^bed |bedding/.test(n))                    return '🛏️';
-    if (/clothes|clothing|wardrobe|dresser/.test(n))      return '👚';
-    if (/storage/.test(n))                                return '🗃️';
-    if (/bins/.test(n))                                   return '🗑️';
-    if (/lawn/.test(n))                                   return '🌱';
-    if (/garden/.test(n))                                 return '🌸';
-    if (/entry/.test(n))                                  return '🚪';
-    if (/floor|carpet|rug|tile/.test(n))                  return '🧹';
-    if (/counter|bench|surface|benchtop/.test(n))         return '🧽';
-    if (/window|sliding door/.test(n))                    return '🪟';
-    if (/shelf|shelv|cabinet|cupboard/.test(n))           return '📚';
-    if (/sink|basin|tap/.test(n))                         return '💧';
-    if (/toilet|loo/.test(n))                             return '🚽';
-    if (/shower|screen/.test(n))                          return '🚿';
-    if (/bath|tub/.test(n))                               return '🛁';
-    if (/mirror/.test(n))                                 return '🪞';
-    if (/bin|trash|rubbish/.test(n))                      return '🗑️';
-    if (/fridge|freezer/.test(n))                         return '🧊';
-    if (/oven|stove/.test(n))                             return '🔥';
-    if (/wall|baseboard|skirting/.test(n))                return '🧱';
-    if (/light|lamp|ceiling/.test(n))                     return '💡';
-    return '📍';
+  if(type==='zone'){
+    if(/tv|television|media/.test(n)) return'📺';
+    if(/general|misc|other/.test(n)) return'🗂️';
+    if(/new zone/.test(n)) return'🗂️';
+    if(/^bed$|^bed |bedding/.test(n)) return'🛏️';
+    if(/clothes|clothing|wardrobe|dresser/.test(n)) return'👚';
+    if(/storage/.test(n)) return'🗃️';
+    if(/^bins$|^bin$/.test(n)) return'🗑️';
+    if(/lawn/.test(n)) return'🌱';
+    if(/garden/.test(n)) return'🌸';
+    if(/entry/.test(n)) return'🚪';
+    if(/floor|carpet|rug/.test(n)) return'🧹';
+    if(/counter|bench|surface/.test(n)) return'🧽';
+    if(/window/.test(n)) return'🪟';
+    if(/shelf|shelv|cabinet/.test(n)) return'📚';
+    if(/sink|basin|tap/.test(n)) return'💧';
+    if(/toilet/.test(n)) return'🚽';
+    if(/shower/.test(n)) return'🚿';
+    if(/bath|tub/.test(n)) return'🛁';
+    if(/mirror/.test(n)) return'🪞';
+    if(/fridge|freezer/.test(n)) return'🧊';
+    if(/oven|stove/.test(n)) return'🔥';
+    if(/wall/.test(n)) return'🧱';
+    if(/light|lamp/.test(n)) return'💡';
+    // Bill zones
+    if(/rent|mortgage|housing/.test(n)) return'🏠';
+    if(/electricity|power/.test(n)) return'⚡';
+    if(/gas/.test(n)) return'🔥';
+    if(/water/.test(n)) return'💧';
+    if(/internet|wifi/.test(n)) return'🌐';
+    if(/phone|mobile/.test(n)) return'📱';
+    if(/insurance/.test(n)) return'🛡️';
+    if(/subscri|stream/.test(n)) return'📺';
+    if(/credit|card/.test(n)) return'💳';
+    if(/loan|finance/.test(n)) return'💰';
+    if(/savings|bank/.test(n)) return'🏦';
+    // Shopping zones
+    if(/fruit/.test(n)) return'🍎';
+    if(/veg/.test(n)) return'🥦';
+    if(/meat/.test(n)) return'🥩';
+    if(/seafood|fish/.test(n)) return'🐟';
+    if(/dairy/.test(n)) return'🥛';
+    if(/egg/.test(n)) return'🥚';
+    if(/bakery|bread/.test(n)) return'🍞';
+    if(/dry good|pasta|rice|grain/.test(n)) return'🌾';
+    if(/canned|sauce/.test(n)) return'🥫';
+    if(/snack|sweet/.test(n)) return'🍫';
+    if(/drink|bev/.test(n)) return'🥤';
+    if(/clean/.test(n)) return'🧴';
+    if(/personal|hygiene/.test(n)) return'🧼';
+    // Meal planning zones
+    if(/breakfast/.test(n)) return'🌅';
+    if(/lunch/.test(n)) return'🌤️';
+    if(/dinner|supper/.test(n)) return'🌙';
+    if(/snack/.test(n)) return'🍎';
+    if(/meal prep|batch/.test(n)) return'🍱';
+    return'📍';
   }
 
-  // ── TASKS — most specific first to avoid duplicates ──────────────────────────
+  // ── TASKS ──────────────────────────────────────────────────────────────
 
-  // Specific combos (must come before general keyword checks)
-  if (/around toilet/.test(n))                            return '🧻';
-  if (/coffee table/.test(n))                             return '☕';
-  if (/bed side|bedside|side table/.test(n))              return '🕯️';
-  if (/under bed/.test(n))                                return '🔦';
-  if (/make bed/.test(n))                                 return '🛌';
-  if (/wash sheet|change sheet/.test(n))                  return '🛌';
-  if (/dirty clothes|clothes.*basket/.test(n))            return '👕';
-  if (/fold.*clothes|put away clothes/.test(n))           return '👔';
-  if (/shower glass/.test(n))                             return '🫧';
-  if (/shower floor/.test(n))                             return '🚿';
-  if (/bathroom bench|bench wipe/.test(n))                return '🧽';
-  if (/bathroom sink/.test(n))                            return '🚰';
-  if (/organise shelf|organise shelve|organize shelf/.test(n)) return '📚';
-  if (/organise desk|organize desk/.test(n))              return '🖥️';
-  if (/organise drum|organize drum/.test(n))              return '🥁';
-  if (/organise toy|organize toy/.test(n))                return '🧸';
-  if (/organise entry|organize entry/.test(n))            return '🚪';
-  if (/clear clutter/.test(n))                            return '🗃️';
-  if (/take out bin/.test(n))                             return '🗑️';
-  if (/clean bin|bin area/.test(n))                       return '🧹';
-  if (/throw.*away|throw.*out|throw.*trash/.test(n))      return '🗑️';
-  if (/clear rubbish/.test(n))                            return '🗑️';
-  if (/clear/.test(n))                                    return '🧹';
-  if (/wall/.test(n))                                     return '🧱';
-  if (/glass/.test(n))                                    return '🫙';
-  if (/mow|mowing/.test(n))                               return '🌱';
-  if (/edge lawn|edging/.test(n))                         return '✂️';
-  if (/rake/.test(n))                                     return '🍂';
-  if (/weed/.test(n))                                     return '🌾';
-  if (/water plant|water the|watering/.test(n))           return '💧';
-  if (/sweep path|sweep drive|sweep driveway/.test(n))    return '🧹';
+  // Cleaning-specific (specific first)
+  if(/around toilet/.test(n))  return'🧻';
+  if(/coffee table/.test(n))   return'☕';
+  if(/bed side|bedside|side table/.test(n)) return'🕯️';
+  if(/under bed/.test(n))      return'🔦';
+  if(/make bed/.test(n))       return'🛌';
+  if(/wash sheet|change sheet/.test(n)) return'🛌';
+  if(/dirty clothes|clothes.*basket/.test(n)) return'👕';
+  if(/fold.*clothes|put away clothes/.test(n)) return'👔';
+  if(/shower glass/.test(n))   return'🫧';
+  if(/shower floor/.test(n))   return'🚿';
+  if(/bathroom bench|bench wipe/.test(n)) return'🧽';
+  if(/bathroom sink/.test(n))  return'🚰';
+  if(/organise shelf|organise shelve|organize shelf/.test(n)) return'📚';
+  if(/organise desk|organize desk/.test(n)) return'🖥️';
+  if(/organise drum|organize drum/.test(n)) return'🥁';
+  if(/organise toy|organize toy/.test(n))  return'🧸';
+  if(/organise entry|organize entry/.test(n)) return'🚪';
+  if(/clear clutter/.test(n))  return'🗃️';
+  if(/take out bin/.test(n))   return'🗑️';
+  if(/clean bin|bin area/.test(n)) return'🧹';
+  if(/throw.*away|throw.*out|throw.*trash/.test(n)) return'🗑️';
+  if(/clear rubbish/.test(n))  return'🗑️';
+  if(/mow|mowing/.test(n))     return'🌱';
+  if(/edge lawn|edging/.test(n)) return'✂️';
+  if(/rake/.test(n))           return'🍂';
+  if(/weed/.test(n))           return'🌾';
+  if(/water plant|water the|watering/.test(n)) return'💧';
+  if(/sweep path|sweep drive/.test(n)) return'🧹';
 
-  // General keywords (after specific overrides)
-  if (/vacuum|vaccum|hoover/.test(n))                     return '🌀';
-  if (/mop/.test(n))                                      return '🪣';
-  if (/sweep|broom/.test(n))                              return '🧹';
-  if (/dust/.test(n))                                     return '💨';
-  if (/wipe/.test(n))                                     return '🧽';
-  if (/scrub/.test(n))                                    return '🪥';
-  if (/disinfect|sanitise|sanitize/.test(n))              return '🦠';
-  if (/wash|rinse/.test(n))                               return '🧼';
-  if (/dishes|dish|plate|cutlery/.test(n))                return '🍽️';
-  if (/laundry|linen|towel/.test(n))                      return '🧺';
-  if (/iron|press/.test(n))                               return '👔';
-  if (/toilet|loo/.test(n))                               return '🚽';
-  if (/bin|trash|rubbish|garbage/.test(n))                return '🗑️';
-  if (/window/.test(n))                                   return '🪟';
-  if (/mirror/.test(n))                                   return '🪞';
-  if (/fridge|refrigerator/.test(n))                      return '🧊';
-  if (/oven|stove|cooktop/.test(n))                       return '🔥';
-  if (/microwave/.test(n))                                return '📡';
-  if (/organis|organiz|tidy|sort|declutter/.test(n))      return '📦';
-  if (/sheet|pillow|doona|duvet|blanket/.test(n))         return '🛌';
-  if (/bed/.test(n))                                      return '🛏️';
-  if (/shower/.test(n))                                   return '🚿';
-  if (/bath|tub/.test(n))                                 return '🛁';
-  if (/sink|tap|basin/.test(n))                           return '💧';
-  if (/floor|carpet|rug/.test(n))                         return '🟫';
-  if (/cat|litter|kitty/.test(n))                         return '🐱';
-  if (/dog|pet/.test(n))                                  return '🐶';
-  if (/plant/.test(n))                                    return '🌿';
-  if (/cobweb|spider/.test(n))                            return '🕷️';
-  if (/spray|polish|shine/.test(n))                       return '✨';
-  if (/light|bulb/.test(n))                               return '💡';
-  if (/recycle/.test(n))                                  return '♻️';
-  if (/garden|outdoor/.test(n))                           return '🌿';
-  if (/cook|meal|food/.test(n))                           return '🍳';
-  return '✔️';
+  // Bills
+  if(/rent|mortgage|lease/.test(n)) return'🏠';
+  if(/council rate|shire rate/.test(n)) return'🏛️';
+  if(/body corporate|strata/.test(n)) return'🏢';
+  if(/electricity|power bill|energy bill/.test(n)) return'⚡';
+  if(/gas bill|gas payment/.test(n)) return'🔥';
+  if(/water bill/.test(n))     return'💧';
+  if(/internet|wifi|broadband|nbn/.test(n)) return'🌐';
+  if(/mobile.*plan|phone.*bill|phone.*plan/.test(n)) return'📱';
+  if(/car insurance/.test(n))  return'🚗';
+  if(/home.*insurance|content.*insurance/.test(n)) return'🏠';
+  if(/health insurance/.test(n)) return'🏥';
+  if(/life insurance/.test(n)) return'🛡️';
+  if(/insurance/.test(n))      return'🛡️';
+  if(/netflix/.test(n))        return'🎬';
+  if(/spotify|apple music/.test(n)) return'🎵';
+  if(/disney|stan|binge|prime video/.test(n)) return'📺';
+  if(/icloud|google one/.test(n)) return'☁️';
+  if(/amazon prime/.test(n))   return'📦';
+  if(/gym.*member|member.*gym/.test(n)) return'🏋️';
+  if(/credit card|card payment/.test(n)) return'💳';
+  if(/personal loan|car loan/.test(n)) return'💰';
+  if(/buy now pay later|bnpl|afterpay|zip/.test(n)) return'💳';
+  if(/savings|transfer/.test(n)) return'🏦';
+  if(/subscription/.test(n))   return'📋';
+
+  // Fresh produce
+  if(/\bapple/.test(n))  return'🍎';
+  if(/banana/.test(n))   return'🍌';
+  if(/strawberr/.test(n)) return'🍓';
+  if(/blueberr/.test(n)) return'🫐';
+  if(/grape/.test(n))    return'🍇';
+  if(/lemon/.test(n))    return'🍋';
+  if(/orange/.test(n))   return'🍊';
+  if(/mango/.test(n))    return'🥭';
+  if(/watermelon/.test(n)) return'🍉';
+  if(/pineapple/.test(n)) return'🍍';
+  if(/peach/.test(n))    return'🍑';
+  if(/pear/.test(n))     return'🍐';
+  if(/cherry/.test(n))   return'🍒';
+  if(/kiwi/.test(n))     return'🥝';
+  if(/coconut/.test(n))  return'🥥';
+  if(/avocado/.test(n))  return'🥑';
+  if(/tomato/.test(n))   return'🍅';
+  if(/carrot/.test(n))   return'🥕';
+  if(/broccoli/.test(n)) return'🥦';
+  if(/lettuce|spinach|kale|leafy/.test(n)) return'🥬';
+  if(/potato/.test(n))   return'🥔';
+  if(/sweet potato/.test(n)) return'🍠';
+  if(/onion/.test(n))    return'🧅';
+  if(/garlic/.test(n))   return'🧄';
+  if(/capsicum|bell pepper/.test(n)) return'🫑';
+  if(/mushroom/.test(n)) return'🍄';
+  if(/corn/.test(n))     return'🌽';
+  if(/cucumber/.test(n)) return'🥒';
+  if(/eggplant|zucchini/.test(n)) return'🍆';
+
+  // Meat & seafood
+  if(/chicken breast|chicken thigh|chicken wing/.test(n)) return'🍗';
+  if(/chicken/.test(n))  return'🍗';
+  if(/beef|steak|mince|ground beef/.test(n)) return'🥩';
+  if(/lamb/.test(n))     return'🥩';
+  if(/pork/.test(n))     return'🥩';
+  if(/bacon|ham/.test(n)) return'🥓';
+  if(/sausage|snag/.test(n)) return'🌭';
+  if(/salmon/.test(n))   return'🐟';
+  if(/tuna/.test(n))     return'🐟';
+  if(/prawn|shrimp/.test(n)) return'🦐';
+  if(/crab/.test(n))     return'🦀';
+  if(/lobster/.test(n))  return'🦞';
+  if(/fish fillet|fish file/.test(n)) return'🐟';
+
+  // Dairy & eggs
+  if(/\bmilk\b/.test(n)) return'🥛';
+  if(/cheese/.test(n))   return'🧀';
+  if(/butter|margarine/.test(n)) return'🧈';
+  if(/yogh?urt/.test(n)) return'🍦';
+  if(/cream/.test(n))    return'🥛';
+  if(/\begg/.test(n))    return'🥚';
+
+  // Bakery
+  if(/bread/.test(n))    return'🍞';
+  if(/baguette|loaf/.test(n)) return'🥖';
+  if(/croissant/.test(n)) return'🥐';
+  if(/bagel/.test(n))    return'🥯';
+  if(/roll|bun/.test(n)) return'🍞';
+
+  // Pantry
+  if(/\bpasta\b|spaghetti|fettuccine|penne|linguine/.test(n)) return'🍝';
+  if(/\brice\b/.test(n)) return'🍚';
+  if(/flour/.test(n))    return'🌾';
+  if(/\bsugar\b/.test(n)) return'🍬';
+  if(/\bsalt\b/.test(n)) return'🧂';
+  if(/chilli|chili|hot sauce/.test(n)) return'🌶️';
+  if(/olive oil|vegetable oil|cooking oil/.test(n)) return'🫙';
+  if(/pasta sauce|tomato sauce|ketchup/.test(n)) return'🍅';
+  if(/soy sauce|fish sauce/.test(n)) return'🫙';
+  if(/honey/.test(n))    return'🍯';
+  if(/jam|vegemite|peanut butter|nutella/.test(n)) return'🫙';
+  if(/chocolate/.test(n)) return'🍫';
+  if(/biscuit|cookie/.test(n)) return'🍪';
+  if(/chip|crisp/.test(n)) return'🥔';
+  if(/nut|almond|cashew|walnut|peanut/.test(n)) return'🥜';
+  if(/bean|lentil|chickpea/.test(n)) return'🫘';
+  if(/\bcereal\b/.test(n)) return'🥣';
+  if(/oat|porridge/.test(n)) return'🥣';
+  if(/canned tomato/.test(n)) return'🍅';
+  if(/coconut milk/.test(n)) return'🥥';
+  if(/stock|broth/.test(n)) return'🍲';
+  if(/vinegar/.test(n))  return'🫙';
+
+  // Drinks
+  if(/\bcoffee\b/.test(n)) return'☕';
+  if(/\btea\b/.test(n))   return'🍵';
+  if(/juice/.test(n))    return'🧃';
+  if(/soft drink|soda|cola|lemonade/.test(n)) return'🥤';
+  if(/beer/.test(n))     return'🍺';
+  if(/wine/.test(n))     return'🍷';
+  if(/water/.test(n))    return'💧';
+  if(/smoothie/.test(n)) return'🥤';
+  if(/energy drink/.test(n)) return'⚡';
+
+  // Household cleaning supplies
+  if(/dishwash|washing.?up liquid/.test(n)) return'🍽️';
+  if(/laundry detergent|washing powder|fabric/.test(n)) return'🧺';
+  if(/bleach/.test(n))   return'🫧';
+  if(/toilet paper|loo paper/.test(n)) return'🧻';
+  if(/paper towel|kitchen roll/.test(n)) return'🧻';
+  if(/bin bag|rubbish bag|garbage bag/.test(n)) return'🗑️';
+  if(/\bsponge\b/.test(n)) return'🧽';
+
+  // Personal care
+  if(/shampoo/.test(n))  return'🧴';
+  if(/conditioner/.test(n)) return'🧴';
+  if(/body wash|shower gel/.test(n)) return'🧼';
+  if(/toothpaste|toothbrush/.test(n)) return'🦷';
+  if(/deodorant/.test(n)) return'💨';
+  if(/razor|shaving/.test(n)) return'🪒';
+  if(/sunscreen|sunblock/.test(n)) return'☀️';
+  if(/paracetamol|ibuprofen|medicine|tablet|pill|vitamin/.test(n)) return'💊';
+  if(/bandage|plaster/.test(n)) return'🩹';
+  if(/makeup|lipstick|mascara/.test(n)) return'💄';
+
+  // Meals
+  if(/breakfast/.test(n)) return'🌅';
+  if(/lunch/.test(n))    return'🌤️';
+  if(/dinner|supper/.test(n)) return'🌙';
+  if(/meal prep|batch cook/.test(n)) return'🍱';
+  if(/pizza/.test(n))    return'🍕';
+  if(/burger|hamburger/.test(n)) return'🍔';
+  if(/\bsalad\b/.test(n)) return'🥗';
+  if(/soup/.test(n))     return'🍲';
+  if(/\bpasta\b|spaghetti|bolognese|carbonara/.test(n)) return'🍝';
+  if(/sandwich|wrap|sub/.test(n)) return'🥪';
+  if(/taco|burrito|quesadilla|mexican/.test(n)) return'🌮';
+  if(/curry|indian|masala/.test(n)) return'🍛';
+  if(/sushi|japanese|ramen/.test(n)) return'🍣';
+  if(/noodle|pad thai|pho|laksa/.test(n)) return'🍜';
+  if(/stir fry|fried rice/.test(n)) return'🥘';
+  if(/roast|baked chicken|sunday roast/.test(n)) return'🍖';
+  if(/bbq|barbecue|grill/.test(n)) return'🔥';
+  if(/fish.*chip|chips/.test(n)) return'🐟';
+  if(/pancake|waffle/.test(n)) return'🥞';
+  if(/omelette|scrambled|poached egg/.test(n)) return'🍳';
+  if(/toast/.test(n))    return'🍞';
+  if(/dessert|cake|sweet/.test(n)) return'🍰';
+  if(/ice cream/.test(n)) return'🍦';
+  if(/snack/.test(n))    return'🍎';
+
+  // General cleaning fallbacks
+  if(/vacuum|vaccum|hoover/.test(n)) return'🌀';
+  if(/\bmop\b/.test(n))  return'🪣';
+  if(/sweep|broom/.test(n)) return'🧹';
+  if(/\bdust\b/.test(n)) return'💨';
+  if(/\bwipe\b/.test(n)) return'🧽';
+  if(/scrub/.test(n))    return'🪥';
+  if(/wash|rinse/.test(n)) return'🧼';
+  if(/dishes|dish|plate|cutlery/.test(n)) return'🍽️';
+  if(/towel|linen/.test(n)) return'🧺';
+  if(/toilet/.test(n))   return'🚽';
+  if(/bin|trash|rubbish|garbage/.test(n)) return'🗑️';
+  if(/window/.test(n))   return'🪟';
+  if(/mirror/.test(n))   return'🪞';
+  if(/fridge|refrigerator/.test(n)) return'🧊';
+  if(/oven|stove|cooktop/.test(n)) return'🔥';
+  if(/organis|organiz|tidy|sort|declutter/.test(n)) return'📦';
+  if(/\bbed\b/.test(n))  return'🛏️';
+  if(/shower/.test(n))   return'🚿';
+  if(/\bbath\b/.test(n)) return'🛁';
+  if(/sink|tap|basin/.test(n)) return'💧';
+  if(/floor|carpet/.test(n)) return'🟫';
+  if(/wall/.test(n))     return'🧱';
+  if(/glass/.test(n))    return'🫙';
+  if(/plant/.test(n))    return'🌿';
+  if(/garden|outdoor/.test(n)) return'🌿';
+  if(/clear/.test(n))    return'🧹';
+  return'✔️';
 }
 
-// Live-update just the emoji span without full re-render
-function updateEmojiFor(id, name, type) {
-  const el = document.querySelector(`[data-emoji-for="${id}"]`);
-  if (el) el.textContent = getEmoji(name, type);
+// ══════════════════════════════════════════════════════════════════════════
+// TEMPLATES
+// ══════════════════════════════════════════════════════════════════════════
+function mk(name,completed=false){return{id:uid(),name,completed};}
+function mz(name,...tasks){return{id:uid(),name,tasks:tasks.map(t=>mk(t))};}
+function mr(name,expanded,...zones){return{id:uid(),name,expanded,zones};}
+
+function buildSeed(tpl){
+  if(tpl==='cleaning') return {
+    version:1, _seedVersion:2,
+    rooms:[
+      mr('Living Room',true,
+        mz('TV Area','Clear coffee table','Throw away trash'),
+        mz('General','Walls','Glass','Vaccum & mop','Dust','Organise drums','Organise desk')),
+      mr('Paigee Bathroom',false, mz('New Zone','Shower glass','Shower floor','Toilet','Around toilet','Bathroom bench wiped','Bathroom sink','Mirror','Vaccum & mop')),
+      mr('Nic Bathroom',false,    mz('New Zone','Shower glass','Shower floor','Toilet','Around toilet','Bathroom bench wiped','Bathroom sink','Mirror','Vaccum & mop')),
+      mr('Paigee Bedroom',false,
+        mz('Bed','Wash sheets','Make bed'),
+        mz('Clothes','Dirty clothes in basket','Fold & put away clothes'),
+        mz('General','Throw trash out','Vaccum','Organise desk','Dust','Bed side table')),
+      mr('Nic Bedroom',false,
+        mz('Bed','Wash sheets','Make bed'),
+        mz('Clothes','Dirty clothes in basket','Fold & put away clothes'),
+        mz('General','Throw trash out','Vaccum','Organise desk','Dust','Bed side table')),
+      mr('Girls room',false,
+        mz('Bed','Change sheets','Clean under bed'),
+        mz('General','Organise toys','Vaccum')),
+      mr('Hallway',false, mz('General','Vaccum','Wipe surfaces','Dust','Clean mirrors','Organise entry')),
+      mr('Garage',false,
+        mz('Storage','Organise shelves','Clear clutter','Wipe surfaces'),
+        mz('Floor','Sweep floor','Mop floor'),
+        mz('Bins','Take out bins','Clean bin area')),
+      mr('Backyard',false,
+        mz('Lawn','Mow lawn','Edge lawn','Rake leaves'),
+        mz('Garden','Weed garden','Water plants','Sweep paths','Clear rubbish')),
+      mr('Front Yard',false,
+        mz('Lawn','Mow lawn','Edge lawn'),
+        mz('Entry','Sweep driveway','Weed garden beds','Water plants','Clear rubbish')),
+    ]};
+
+  if(tpl==='bills') return {
+    version:1, _seedVersion:1,
+    rooms:[
+      mr('Housing',true,
+        mz('Rent & Property','Rent / Mortgage','Council rates','Body corporate','Strata fees')),
+      mr('Utilities',true,
+        mz('Essential','Electricity','Gas','Water','Internet / NBN','Mobile phone')),
+      mr('Insurance',false,
+        mz('Policies','Car insurance','Home & contents','Health insurance','Life insurance')),
+      mr('Subscriptions',false,
+        mz('Streaming','Netflix','Disney+','Stan / Binge','Amazon Prime','Apple TV+'),
+        mz('Storage & Other','Spotify','iCloud storage','Google One','YouTube Premium')),
+      mr('Finance',false,
+        mz('Payments','Credit card','Personal loan','Car loan','Afterpay / Zip','Savings transfer')),
+    ]};
+
+  if(tpl==='shopping') return {
+    version:1, _seedVersion:1,
+    rooms:[
+      mr('Fresh Produce',true,
+        mz('Fruit','Apples','Bananas','Strawberries','Grapes','Lemons','Oranges','Blueberries','Mango'),
+        mz('Vegetables','Tomatoes','Carrots','Broccoli','Lettuce','Potatoes','Onions','Garlic','Capsicum','Mushrooms')),
+      mr('Meat & Seafood',false,
+        mz('Meat','Chicken breast','Beef mince','Pork','Lamb','Bacon','Sausages'),
+        mz('Seafood','Salmon','Tuna','Prawns','Fish fillets')),
+      mr('Dairy & Eggs',false,
+        mz('Dairy','Milk','Cheese','Butter','Yoghurt','Cream'),
+        mz('Eggs','Eggs')),
+      mr('Bakery',false,
+        mz('Bread','Bread','Rolls','Bagels')),
+      mr('Pantry',false,
+        mz('Dry Goods','Pasta','Rice','Oats / Cereal','Flour'),
+        mz('Canned & Sauces','Canned tomatoes','Pasta sauce','Coconut milk','Baked beans','Olive oil','Soy sauce'),
+        mz('Snacks & Treats','Chocolate','Biscuits','Chips','Nuts','Honey')),
+      mr('Drinks',false,
+        mz('Beverages','Coffee','Tea','Orange juice','Soft drink','Water')),
+      mr('Household',false,
+        mz('Cleaning','Dishwashing liquid','Laundry detergent','Bleach','Toilet paper','Paper towel','Bin bags','Sponge'),
+        mz('Personal Care','Shampoo','Conditioner','Body wash','Toothpaste','Deodorant','Razor','Sunscreen')),
+    ]};
+
+  if(tpl==='meals') return {
+    version:1, _seedVersion:1,
+    rooms:[
+      mr('Monday',true,   mz('Breakfast',''),mz('Lunch',''),mz('Dinner','')),
+      mr('Tuesday',false, mz('Breakfast',''),mz('Lunch',''),mz('Dinner','')),
+      mr('Wednesday',false,mz('Breakfast',''),mz('Lunch',''),mz('Dinner','')),
+      mr('Thursday',false,mz('Breakfast',''),mz('Lunch',''),mz('Dinner','')),
+      mr('Friday',false,  mz('Breakfast',''),mz('Lunch',''),mz('Dinner','')),
+      mr('Saturday',false,mz('Breakfast',''),mz('Lunch',''),mz('Dinner','')),
+      mr('Sunday',false,  mz('Breakfast',''),mz('Lunch',''),mz('Dinner','')),
+      mr('Meal Prep',false,
+        mz('Batch Cook','Cook rice','Prep vegetables','Marinate protein','Make pasta sauce'),
+        mz('Shopping Needed','')),
+    ]};
+
+  return {version:1,_seedVersion:1,rooms:[]};
 }
 
-// ─── INIT ────────────────────────────────────────────────────────────────────
-
-loadData().then(startPolling);
+// ══════════════════════════════════════════════════════════════════════════
+// START
+// ══════════════════════════════════════════════════════════════════════════
+init();
 </script>
 </body>
 </html>
