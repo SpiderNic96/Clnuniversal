@@ -1056,6 +1056,10 @@ function getEmoji(name, type) {
 
   // ── ROOMS ───────────────────────────────────────────────────────────────────
   if (type === 'room') {
+    if (/paigee/.test(n) && /bath/.test(n))              return '👧🛁';
+    if (/paigee/.test(n) && /bed/.test(n))               return '👧🛏️';
+    if (/\bnic\b/.test(n) && /bath/.test(n))             return '👦🛁';
+    if (/\bnic\b/.test(n) && /bed/.test(n))              return '👦🛏️';
     if (/kitchen|cook|stove/.test(n))                     return '🍳';
     if (/bathroom|ensuite|toilet room|wc/.test(n))        return '🛁';
     if (/bedroom|bed room|master|guest room/.test(n))     return '🛏️';
