@@ -499,99 +499,184 @@
 let state = { rooms: [], version: 0 };
 
 // ─── SEED DATA ───────────────────────────────────────────────────────────────
+// Bump SEED_VERSION to force all clients to re-seed on next load
+
+const SEED_VERSION = 2;
 
 const SEED_DATA = {
-  version: 1,
+  version: SEED_VERSION,
   rooms: [
+    // ── Living Room ──────────────────────────────────────────────────────────
     {
       id: 'room-living', name: 'Living Room', expanded: true,
       zones: [
-        {
-          id: 'zone-tv', name: 'TV Area',
-          tasks: [
-            { id: 't-lr-1', name: 'Clear coffee table', completed: false },
-            { id: 't-lr-2', name: 'Throw away trash',   completed: false },
-          ]
-        },
-        {
-          id: 'zone-living-gen', name: 'General',
-          tasks: [
-            { id: 't-lr-3', name: 'Walls',          completed: false },
-            { id: 't-lr-4', name: 'Glass',          completed: false },
-            { id: 't-lr-5', name: 'Vaccum & mop',   completed: false },
-            { id: 't-lr-6', name: 'Dust',           completed: false },
-            { id: 't-lr-7', name: 'Organise drums', completed: false },
-            { id: 't-lr-8', name: 'Organise desk',  completed: false },
-          ]
-        }
+        { id: 'zone-tv', name: 'TV Area', tasks: [
+          { id: 't-lr-1', name: 'Clear coffee table', completed: false },
+          { id: 't-lr-2', name: 'Throw away trash',   completed: false },
+        ]},
+        { id: 'zone-living-gen', name: 'General', tasks: [
+          { id: 't-lr-3', name: 'Walls',          completed: false },
+          { id: 't-lr-4', name: 'Glass',          completed: false },
+          { id: 't-lr-5', name: 'Vaccum & mop',   completed: false },
+          { id: 't-lr-6', name: 'Dust',           completed: false },
+          { id: 't-lr-7', name: 'Organise drums', completed: false },
+          { id: 't-lr-8', name: 'Organise desk',  completed: false },
+        ]}
       ]
     },
+    // ── Paigee Bathroom ──────────────────────────────────────────────────────
     {
-      id: 'room-bathroom', name: 'Bathroom', expanded: true,
+      id: 'room-paigee-bath', name: 'Paigee Bathroom', expanded: false,
       zones: [
-        {
-          id: 'zone-bath-main', name: 'New Zone',
-          tasks: [
-            { id: 't-ba-1', name: 'Shower glass',          completed: false },
-            { id: 't-ba-2', name: 'Shower floor',          completed: false },
-            { id: 't-ba-3', name: 'Toilet',                completed: false },
-            { id: 't-ba-4', name: 'Around toilet',         completed: false },
-            { id: 't-ba-5', name: 'Bathroom bench wiped',  completed: false },
-            { id: 't-ba-6', name: 'Bathroom sink',         completed: false },
-            { id: 't-ba-7', name: 'Mirror',                completed: false },
-            { id: 't-ba-8', name: 'Vaccum & mop',          completed: false },
-          ]
-        }
+        { id: 'zone-pb-main', name: 'New Zone', tasks: [
+          { id: 't-pb-1', name: 'Shower glass',         completed: false },
+          { id: 't-pb-2', name: 'Shower floor',         completed: false },
+          { id: 't-pb-3', name: 'Toilet',               completed: false },
+          { id: 't-pb-4', name: 'Around toilet',        completed: false },
+          { id: 't-pb-5', name: 'Bathroom bench wiped', completed: false },
+          { id: 't-pb-6', name: 'Bathroom sink',        completed: false },
+          { id: 't-pb-7', name: 'Mirror',               completed: false },
+          { id: 't-pb-8', name: 'Vaccum & mop',         completed: false },
+        ]}
       ]
     },
+    // ── Nic Bathroom ─────────────────────────────────────────────────────────
     {
-      id: 'room-bedroom', name: 'Bedroom', expanded: true,
+      id: 'room-nic-bath', name: 'Nic Bathroom', expanded: false,
       zones: [
-        {
-          id: 'zone-bed', name: 'Bed',
-          tasks: [
-            { id: 't-br-1', name: 'Wash sheets', completed: false },
-            { id: 't-br-2', name: 'Make bed',    completed: false },
-          ]
-        },
-        {
-          id: 'zone-clothes', name: 'Clothes',
-          tasks: [
-            { id: 't-br-3', name: 'Dirty clothes in basket',   completed: false },
-            { id: 't-br-4', name: 'Fold & put away clothes',   completed: false },
-          ]
-        },
-        {
-          id: 'zone-br-gen', name: 'General',
-          tasks: [
-            { id: 't-br-5', name: 'Throw trash out', completed: false },
-            { id: 't-br-6', name: 'Vaccum',          completed: false },
-            { id: 't-br-7', name: 'Organise desk',   completed: false },
-            { id: 't-br-8', name: 'Dust',            completed: false },
-            { id: 't-br-9', name: 'Bed side table',  completed: false },
-          ]
-        }
+        { id: 'zone-nb-main', name: 'New Zone', tasks: [
+          { id: 't-nb-1', name: 'Shower glass',         completed: false },
+          { id: 't-nb-2', name: 'Shower floor',         completed: false },
+          { id: 't-nb-3', name: 'Toilet',               completed: false },
+          { id: 't-nb-4', name: 'Around toilet',        completed: false },
+          { id: 't-nb-5', name: 'Bathroom bench wiped', completed: false },
+          { id: 't-nb-6', name: 'Bathroom sink',        completed: false },
+          { id: 't-nb-7', name: 'Mirror',               completed: false },
+          { id: 't-nb-8', name: 'Vaccum & mop',         completed: false },
+        ]}
       ]
     },
+    // ── Paigee Bedroom ───────────────────────────────────────────────────────
     {
-      id: 'room-girls', name: 'Girls room', expanded: true,
+      id: 'room-paigee-bed', name: 'Paigee Bedroom', expanded: false,
       zones: [
-        {
-          id: 'zone-girls-bed', name: 'Bed',
-          tasks: [
-            { id: 't-gr-1', name: 'Change sheets',   completed: false },
-            { id: 't-gr-2', name: 'Clean under bed', completed: false },
-          ]
-        },
-        {
-          id: 'zone-girls-gen', name: 'General',
-          tasks: [
-            { id: 't-gr-3', name: 'Organise toys', completed: false },
-            { id: 't-gr-4', name: 'Vaccum',        completed: false },
-          ]
-        }
+        { id: 'zone-pb-bed', name: 'Bed', tasks: [
+          { id: 't-pbr-1', name: 'Wash sheets', completed: false },
+          { id: 't-pbr-2', name: 'Make bed',    completed: false },
+        ]},
+        { id: 'zone-pb-clothes', name: 'Clothes', tasks: [
+          { id: 't-pbr-3', name: 'Dirty clothes in basket',  completed: false },
+          { id: 't-pbr-4', name: 'Fold & put away clothes',  completed: false },
+        ]},
+        { id: 'zone-pb-gen', name: 'General', tasks: [
+          { id: 't-pbr-5', name: 'Throw trash out', completed: false },
+          { id: 't-pbr-6', name: 'Vaccum',          completed: false },
+          { id: 't-pbr-7', name: 'Organise desk',   completed: false },
+          { id: 't-pbr-8', name: 'Dust',            completed: false },
+          { id: 't-pbr-9', name: 'Bed side table',  completed: false },
+        ]}
       ]
-    }
+    },
+    // ── Nic Bedroom ──────────────────────────────────────────────────────────
+    {
+      id: 'room-nic-bed', name: 'Nic Bedroom', expanded: false,
+      zones: [
+        { id: 'zone-nb-bed', name: 'Bed', tasks: [
+          { id: 't-nbr-1', name: 'Wash sheets', completed: false },
+          { id: 't-nbr-2', name: 'Make bed',    completed: false },
+        ]},
+        { id: 'zone-nb-clothes', name: 'Clothes', tasks: [
+          { id: 't-nbr-3', name: 'Dirty clothes in basket',  completed: false },
+          { id: 't-nbr-4', name: 'Fold & put away clothes',  completed: false },
+        ]},
+        { id: 'zone-nb-gen', name: 'General', tasks: [
+          { id: 't-nbr-5', name: 'Throw trash out', completed: false },
+          { id: 't-nbr-6', name: 'Vaccum',          completed: false },
+          { id: 't-nbr-7', name: 'Organise desk',   completed: false },
+          { id: 't-nbr-8', name: 'Dust',            completed: false },
+          { id: 't-nbr-9', name: 'Bed side table',  completed: false },
+        ]}
+      ]
+    },
+    // ── Girls Room ───────────────────────────────────────────────────────────
+    {
+      id: 'room-girls', name: 'Girls room', expanded: false,
+      zones: [
+        { id: 'zone-girls-bed', name: 'Bed', tasks: [
+          { id: 't-gr-1', name: 'Change sheets',   completed: false },
+          { id: 't-gr-2', name: 'Clean under bed', completed: false },
+        ]},
+        { id: 'zone-girls-gen', name: 'General', tasks: [
+          { id: 't-gr-3', name: 'Organise toys', completed: false },
+          { id: 't-gr-4', name: 'Vaccum',        completed: false },
+        ]}
+      ]
+    },
+    // ── Hallway ──────────────────────────────────────────────────────────────
+    {
+      id: 'room-hallway', name: 'Hallway', expanded: false,
+      zones: [
+        { id: 'zone-hall-gen', name: 'General', tasks: [
+          { id: 't-hw-1', name: 'Vaccum',          completed: false },
+          { id: 't-hw-2', name: 'Wipe surfaces',   completed: false },
+          { id: 't-hw-3', name: 'Dust',            completed: false },
+          { id: 't-hw-4', name: 'Clean mirrors',   completed: false },
+          { id: 't-hw-5', name: 'Organise entry',  completed: false },
+        ]}
+      ]
+    },
+    // ── Garage ───────────────────────────────────────────────────────────────
+    {
+      id: 'room-garage', name: 'Garage', expanded: false,
+      zones: [
+        { id: 'zone-garage-storage', name: 'Storage', tasks: [
+          { id: 't-ga-1', name: 'Organise shelves', completed: false },
+          { id: 't-ga-2', name: 'Clear clutter',    completed: false },
+          { id: 't-ga-3', name: 'Wipe surfaces',    completed: false },
+        ]},
+        { id: 'zone-garage-floor', name: 'Floor', tasks: [
+          { id: 't-ga-4', name: 'Sweep floor',      completed: false },
+          { id: 't-ga-5', name: 'Mop floor',        completed: false },
+        ]},
+        { id: 'zone-garage-bins', name: 'Bins', tasks: [
+          { id: 't-ga-6', name: 'Take out bins',    completed: false },
+          { id: 't-ga-7', name: 'Clean bin area',   completed: false },
+        ]}
+      ]
+    },
+    // ── Backyard ─────────────────────────────────────────────────────────────
+    {
+      id: 'room-backyard', name: 'Backyard', expanded: false,
+      zones: [
+        { id: 'zone-by-lawn', name: 'Lawn', tasks: [
+          { id: 't-by-1', name: 'Mow lawn',    completed: false },
+          { id: 't-by-2', name: 'Edge lawn',   completed: false },
+          { id: 't-by-3', name: 'Rake leaves', completed: false },
+        ]},
+        { id: 'zone-by-garden', name: 'Garden', tasks: [
+          { id: 't-by-4', name: 'Weed garden',  completed: false },
+          { id: 't-by-5', name: 'Water plants', completed: false },
+          { id: 't-by-6', name: 'Sweep paths',  completed: false },
+          { id: 't-by-7', name: 'Clear rubbish',completed: false },
+        ]}
+      ]
+    },
+    // ── Front Yard ───────────────────────────────────────────────────────────
+    {
+      id: 'room-frontyard', name: 'Front Yard', expanded: false,
+      zones: [
+        { id: 'zone-fy-lawn', name: 'Lawn', tasks: [
+          { id: 't-fy-1', name: 'Mow lawn',  completed: false },
+          { id: 't-fy-2', name: 'Edge lawn', completed: false },
+        ]},
+        { id: 'zone-fy-entry', name: 'Entry', tasks: [
+          { id: 't-fy-3', name: 'Sweep driveway',    completed: false },
+          { id: 't-fy-4', name: 'Weed garden beds',  completed: false },
+          { id: 't-fy-5', name: 'Water plants',      completed: false },
+          { id: 't-fy-6', name: 'Clear rubbish',     completed: false },
+        ]}
+      ]
+    },
   ]
 };
 let saveTimer = null;
@@ -615,11 +700,12 @@ async function loadData() {
     if (!r.ok) throw new Error('HTTP ' + r.status);
     const data = await r.json();
 
-    // First-ever load — seed with default rooms/tasks
-    if (!data.rooms || data.rooms.length === 0) {
-      state = SEED_DATA;
+    // Seed if empty OR if stored version is behind current seed
+    if (!data.rooms || data.rooms.length === 0 || (data.version || 0) < SEED_VERSION) {
+      state = JSON.parse(JSON.stringify(SEED_DATA)); // deep clone
       render();
       await saveData();
+      toast('✨ Updated to latest room list');
     } else {
       state = data;
       lastKnownVersion = data.version || 0;
@@ -976,11 +1062,13 @@ function getEmoji(name, type) {
     if (/girls|girl/.test(n))                             return '🧸';
     if (/boys|boy/.test(n))                               return '🎮';
     if (/kids|child|nursery|play/.test(n))                return '🧸';
-    if (/garage|car|driveway/.test(n))                    return '🚗';
+    if (/garage|car port/.test(n))                        return '🚗';
     if (/laundry|washing|utility/.test(n))                return '🫧';
     if (/office|study|work/.test(n))                      return '💻';
     if (/dining|dinner room/.test(n))                     return '🍽️';
     if (/hall|corridor|entry|foyer|stair/.test(n))        return '🚪';
+    if (/front yard|front garden/.test(n))                return '🏡';
+    if (/backyard|back yard|back garden/.test(n))         return '🌳';
     if (/garden|yard|outdoor|outside|patio|deck/.test(n)) return '🌿';
     if (/basement|cellar/.test(n))                        return '🏚️';
     if (/attic|loft|storage|spare/.test(n))               return '📦';
@@ -998,6 +1086,11 @@ function getEmoji(name, type) {
     if (/new zone/.test(n))                               return '🗂️';
     if (/^bed$|^bed |bedding/.test(n))                    return '🛏️';
     if (/clothes|clothing|wardrobe|dresser/.test(n))      return '👚';
+    if (/storage/.test(n))                                return '🗃️';
+    if (/bins/.test(n))                                   return '🗑️';
+    if (/lawn/.test(n))                                   return '🌱';
+    if (/garden/.test(n))                                 return '🌸';
+    if (/entry/.test(n))                                  return '🚪';
     if (/floor|carpet|rug|tile/.test(n))                  return '🧹';
     if (/counter|bench|surface|benchtop/.test(n))         return '🧽';
     if (/window|sliding door/.test(n))                    return '🪟';
@@ -1030,13 +1123,25 @@ function getEmoji(name, type) {
   if (/shower floor/.test(n))                             return '🚿';
   if (/bathroom bench|bench wipe/.test(n))                return '🧽';
   if (/bathroom sink/.test(n))                            return '🚰';
+  if (/organise shelf|organise shelve|organize shelf/.test(n)) return '📚';
   if (/organise desk|organize desk/.test(n))              return '🖥️';
   if (/organise drum|organize drum/.test(n))              return '🥁';
   if (/organise toy|organize toy/.test(n))                return '🧸';
+  if (/organise entry|organize entry/.test(n))            return '🚪';
+  if (/clear clutter/.test(n))                            return '🗃️';
+  if (/take out bin/.test(n))                             return '🗑️';
+  if (/clean bin|bin area/.test(n))                       return '🧹';
   if (/throw.*away|throw.*out|throw.*trash/.test(n))      return '🗑️';
+  if (/clear rubbish/.test(n))                            return '🗑️';
   if (/clear/.test(n))                                    return '🧹';
   if (/wall/.test(n))                                     return '🧱';
   if (/glass/.test(n))                                    return '🫙';
+  if (/mow|mowing/.test(n))                               return '🌱';
+  if (/edge lawn|edging/.test(n))                         return '✂️';
+  if (/rake/.test(n))                                     return '🍂';
+  if (/weed/.test(n))                                     return '🌾';
+  if (/water plant|water the|watering/.test(n))           return '💧';
+  if (/sweep path|sweep drive|sweep driveway/.test(n))    return '🧹';
 
   // General keywords (after specific overrides)
   if (/vacuum|vaccum|hoover/.test(n))                     return '🌀';
@@ -1071,7 +1176,7 @@ function getEmoji(name, type) {
   if (/spray|polish|shine/.test(n))                       return '✨';
   if (/light|bulb/.test(n))                               return '💡';
   if (/recycle/.test(n))                                  return '♻️';
-  if (/garden|mow|lawn|weed/.test(n))                     return '🌿';
+  if (/garden|outdoor/.test(n))                           return '🌿';
   if (/cook|meal|food/.test(n))                           return '🍳';
   return '✔️';
 }
