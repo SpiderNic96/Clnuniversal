@@ -1,0 +1,8 @@
+{
+  "name": "adhd-cleaning-command-center",
+  "version": "1.0.0",
+  "description": "Shared persistent ADHD Cleaning Command Center — Vercel KV backed",
+  "dependencies": {
+    "@vercel/kv": "^2.0.0"
+  }
+}
