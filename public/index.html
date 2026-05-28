@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🧠 Cleaning Command Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:       #0b0c0e;
+      --surface:  #13151a;
+      --surface2: #1c1f27;
+      --border:   #252830;
+      --accent:   #c8ff57;
+      --danger:   #ff4d4d;
+      --text:     #dde1ec;
+      --muted:    #555a6b;
+      --mono:     'Share Tech Mono', monospace;
+      --display:  'Barlow Condensed', sans-serif;
+      --radius:   6px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 14px;
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
+
+    /* ── HEADER ───────────────────────────── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px 10px;
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    h1 {
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    h1 span { color: var(--muted); font-weight: 400; font-size: 16px; }
+
+    .sync-badge {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 20px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      white-space: nowrap;
+      transition: all 0.3s;
+    }
+    .sync-badge.saving  { color: #facc15; border-color: #facc15; }
+    .sync-badge.synced  { color: var(--accent); border-color: var(--accent); }
+    .sync-badge.error   { color: var(--danger); border-color: var(--danger); }
+
+    /* ── STATS BAR ────────────────────────── */
+    .stats {
+      display: flex;
+      gap: 12px;
+      margin-top: 10px;
+      align-items: center;
+    }
+
+    .stat {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .stat b { color: var(--text); font-family: var(--display); font-size: 15px; }
+
+    .progress-wrap {
+      flex: 1;
+      height: 5px;
+      background: var(--surface2);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 99px;
+      transition: width 0.4s ease;
+    }
+
+    .pct-label {
+      font-size: 11px;
+      color: var(--accent);
+      font-family: var(--display);
+      font-weight: 700;
+      min-width: 34px;
+      text-align: right;
+    }
+
+    /* ── TOOLBAR ──────────────────────────── */
+    .toolbar {
+      display: flex;
+      gap: 6px;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn:active { opacity: 0.7; transform: scale(0.97); }
+    .btn:hover  { border-color: var(--muted); }
+
+    .btn.primary {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+      font-weight: 700;
+    }
+
+    .btn.danger {
+      color: var(--danger);
+      border-color: var(--danger);
+    }
+
+    .btn.ghost {
+      background: transparent;
+      border-color: transparent;
+      color: var(--muted);
+      padding: 6px 8px;
+    }
+    .btn.ghost:hover { color: var(--text); }
+
+    /* ── MAIN CONTENT ─────────────────────── */
+    main { padding: 12px 16px; display: flex; flex-direction: column; gap: 12px; }
+
+    /* ── ROOM CARD ────────────────────────── */
+    .room-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .room-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .room-header.open { border-bottom-color: var(--border); }
+
+    .room-chevron {
+      color: var(--muted);
+      font-size: 11px;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+
+    .room-header.open .room-chevron { transform: rotate(90deg); }
+
+    .room-name-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-family: var(--display);
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      outline: none;
+      cursor: text;
+    }
+
+    .room-name-input::placeholder { color: var(--muted); }
+
+    .room-task-count {
+      font-size: 11px;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    .room-task-count.all-done { color: var(--accent); }
+
+    /* ── ROOM BODY ────────────────────────── */
+    .room-body {
+      display: none;
+      padding: 10px 12px 12px;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .room-body.open { display: flex; }
+
+    /* ── ZONE ─────────────────────────────── */
+    .zone {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .zone-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .zone-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      opacity: 0.6;
+    }
+
+    .zone-name-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-family: var(--display);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      outline: none;
+    }
+
+    .zone-name-input::placeholder { color: var(--muted); }
+
+    /* ── TASKS ────────────────────────────── */
+    .task-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .task-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+
+    .task-row:last-child { border-bottom: none; }
+    .task-row:hover { background: rgba(255,255,255,0.02); }
+
+    /* Custom checkbox */
+    .task-check {
+      width: 18px; height: 18px;
+      border: 1.5px solid var(--muted);
+      border-radius: 3px;
+      flex-shrink: 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .task-check.done {
+      border-color: var(--accent);
+      background: var(--accent);
+    }
+
+    .task-check.done::after {
+      content: '';
+      display: block;
+      width: 5px; height: 9px;
+      border: 2px solid #000;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg) translate(-1px, -1px);
+    }
+
+    .task-name-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 13px;
+      outline: none;
+      transition: color 0.2s;
+    }
+
+    .task-name-input.done {
+      color: var(--muted);
+      text-decoration: line-through;
+    }
+
+    .task-name-input::placeholder { color: var(--muted); }
+
+    /* ── ADD ROW BUTTONS ──────────────────── */
+    .add-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 12px;
+      transition: color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+      border-top: 1px solid var(--border);
+    }
+
+    .add-row:hover { color: var(--accent); }
+    .add-row::before { content: '+'; font-size: 14px; }
+
+    .add-zone-row {
+      display: flex;
+      gap: 6px;
+      padding: 4px 0;
+    }
+
+    /* ── ROOM ACTIONS ─────────────────────── */
+    .room-actions {
+      display: flex;
+      gap: 6px;
+      justify-content: flex-end;
+      padding-top: 4px;
+    }
+
+    /* ── EMPTY STATE ──────────────────────── */
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--muted);
+    }
+
+    .empty-state .big { font-size: 48px; margin-bottom: 12px; }
+    .empty-state p { font-size: 13px; line-height: 1.6; }
+
+    /* ── TOAST ────────────────────────────── */
+    #toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(60px);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      transition: transform 0.3s;
+      z-index: 100;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    #toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ── MODAL (confirm reset) ────────────── */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      max-width: 320px;
+      width: 100%;
+    }
+
+    .modal h2 {
+      font-family: var(--display);
+      font-size: 20px;
+      margin-bottom: 8px;
+      color: var(--danger);
+    }
+
+    .modal p { font-size: 13px; color: var(--muted); margin-bottom: 20px; line-height: 1.5; }
+    .modal-btns { display: flex; gap: 8px; justify-content: flex-end; }
+
+    /* ── EMOJI INDICATORS ────────────────── */
+    .room-emoji {
+      font-size: 18px;
+      flex-shrink: 0;
+      line-height: 1;
+      transition: transform 0.2s;
+      cursor: default;
+    }
+
+    .zone-emoji {
+      font-size: 14px;
+      flex-shrink: 0;
+      line-height: 1;
+      cursor: default;
+    }
+
+    .task-emoji {
+      font-size: 14px;
+      flex-shrink: 0;
+      line-height: 1;
+      cursor: default;
+      min-width: 18px;
+      text-align: center;
+    }
+
+    /* ── SCROLLBAR ────────────────────────── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <h1>🧠 CLEANING <span>CMD</span></h1>
+    <span id="syncBadge" class="sync-badge">Loading...</span>
+  </div>
+  <div class="stats">
+    <div class="stat"><b id="statRooms">0</b> rooms</div>
+    <div class="stat"><b id="statTasks">0</b> tasks</div>
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progressBar" style="width:0%"></div>
+    </div>
+    <div class="pct-label" id="pctLabel">0%</div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <button class="btn primary" onclick="addRoom()">＋ Add Room</button>
+  <button class="btn" onclick="expandAll()">📂 Expand All</button>
+  <button class="btn" onclick="collapseAll()">📁 Collapse All</button>
+  <button class="btn" onclick="clearCompleted()">✓ Clear Done</button>
+  <button class="btn danger" onclick="openReset()">🗑 Reset</button>
+</div>
+
+<main id="main"></main>
+
+<div id="toast"></div>
+
+<div class="modal-overlay" id="resetModal">
+  <div class="modal">
+    <h2>⚠ Reset Everything?</h2>
+    <p>This will wipe all rooms, zones, and tasks for everyone. There's no undo.</p>
+    <div class="modal-btns">
+      <button class="btn" onclick="closeReset()">Cancel</button>
+      <button class="btn danger" onclick="confirmReset()">Yes, Reset</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── STATE ──────────────────────────────────────────────────────────────────
+
+let state = { rooms: [], version: 0 };
+
+// ─── SEED DATA ───────────────────────────────────────────────────────────────
+
+const SEED_DATA = {
+  version: 1,
+  rooms: [
+    {
+      id: 'room-living', name: 'Living Room', expanded: true,
+      zones: [
+        {
+          id: 'zone-tv', name: 'TV Area',
+          tasks: [
+            { id: 't-lr-1', name: 'Clear coffee table', completed: false },
+            { id: 't-lr-2', name: 'Throw away trash',   completed: false },
+          ]
+        },
+        {
+          id: 'zone-living-gen', name: 'General',
+          tasks: [
+            { id: 't-lr-3', name: 'Walls',          completed: false },
+            { id: 't-lr-4', name: 'Glass',          completed: false },
+            { id: 't-lr-5', name: 'Vaccum & mop',   completed: false },
+            { id: 't-lr-6', name: 'Dust',           completed: false },
+            { id: 't-lr-7', name: 'Organise drums', completed: false },
+            { id: 't-lr-8', name: 'Organise desk',  completed: false },
+          ]
+        }
+      ]
+    },
+    {
+      id: 'room-bathroom', name: 'Bathroom', expanded: true,
+      zones: [
+        {
+          id: 'zone-bath-main', name: 'New Zone',
+          tasks: [
+            { id: 't-ba-1', name: 'Shower glass',          completed: false },
+            { id: 't-ba-2', name: 'Shower floor',          completed: false },
+            { id: 't-ba-3', name: 'Toilet',                completed: false },
+            { id: 't-ba-4', name: 'Around toilet',         completed: false },
+            { id: 't-ba-5', name: 'Bathroom bench wiped',  completed: false },
+            { id: 't-ba-6', name: 'Bathroom sink',         completed: false },
+            { id: 't-ba-7', name: 'Mirror',                completed: false },
+            { id: 't-ba-8', name: 'Vaccum & mop',          completed: false },
+          ]
+        }
+      ]
+    },
+    {
+      id: 'room-bedroom', name: 'Bedroom', expanded: true,
+      zones: [
+        {
+          id: 'zone-bed', name: 'Bed',
+          tasks: [
+            { id: 't-br-1', name: 'Wash sheets', completed: false },
+            { id: 't-br-2', name: 'Make bed',    completed: false },
+          ]
+        },
+        {
+          id: 'zone-clothes', name: 'Clothes',
+          tasks: [
+            { id: 't-br-3', name: 'Dirty clothes in basket',   completed: false },
+            { id: 't-br-4', name: 'Fold & put away clothes',   completed: false },
+          ]
+        },
+        {
+          id: 'zone-br-gen', name: 'General',
+          tasks: [
+            { id: 't-br-5', name: 'Throw trash out', completed: false },
+            { id: 't-br-6', name: 'Vaccum',          completed: false },
+            { id: 't-br-7', name: 'Organise desk',   completed: false },
+            { id: 't-br-8', name: 'Dust',            completed: false },
+            { id: 't-br-9', name: 'Bed side table',  completed: false },
+          ]
+        }
+      ]
+    },
+    {
+      id: 'room-girls', name: 'Girls room', expanded: true,
+      zones: [
+        {
+          id: 'zone-girls-bed', name: 'Bed',
+          tasks: [
+            { id: 't-gr-1', name: 'Change sheets',   completed: false },
+            { id: 't-gr-2', name: 'Clean under bed', completed: false },
+          ]
+        },
+        {
+          id: 'zone-girls-gen', name: 'General',
+          tasks: [
+            { id: 't-gr-3', name: 'Organise toys', completed: false },
+            { id: 't-gr-4', name: 'Vaccum',        completed: false },
+          ]
+        }
+      ]
+    }
+  ]
+};
+let saveTimer = null;
+let pollTimer = null;
+let lastKnownVersion = 0;
+let hasPendingChanges = false;
+
+// ─── UUID ────────────────────────────────────────────────────────────────────
+
+function uid() {
+  return crypto.randomUUID ? crypto.randomUUID()
+    : Math.random().toString(36).slice(2) + Date.now().toString(36);
+}
+
+// ─── API ─────────────────────────────────────────────────────────────────────
+
+async function loadData() {
+  setSyncBadge('loading');
+  try {
+    const r = await fetch('/api/data');
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const data = await r.json();
+
+    // First-ever load — seed with default rooms/tasks
+    if (!data.rooms || data.rooms.length === 0) {
+      state = SEED_DATA;
+      render();
+      await saveData();
+    } else {
+      state = data;
+      lastKnownVersion = data.version || 0;
+      render();
+      setSyncBadge('synced');
+    }
+  } catch (e) {
+    console.error('Load failed:', e);
+    setSyncBadge('error');
+    toast('⚠ Could not load data');
+  }
+}
+
+async function saveData() {
+  hasPendingChanges = false;
+  state.version = (state.version || 0) + 1;
+  setSyncBadge('saving');
+  try {
+    const r = await fetch('/api/data', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(state)
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    lastKnownVersion = state.version;
+    setSyncBadge('synced');
+  } catch (e) {
+    console.error('Save failed:', e);
+    setSyncBadge('error');
+    toast('⚠ Save failed — check connection');
+  }
+}
+
+function scheduleSave() {
+  hasPendingChanges = true;
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveData, 400);
+}
+
+async function pollForChanges() {
+  if (hasPendingChanges) return; // don't overwrite unsaved local work
+  try {
+    const r = await fetch('/api/data');
+    if (!r.ok) return;
+    const data = await r.json();
+    if ((data.version || 0) > lastKnownVersion) {
+      state = data;
+      lastKnownVersion = data.version;
+      render();
+      setSyncBadge('synced');
+      toast('🔄 Updated from another device');
+    }
+  } catch (_) { /* silent */ }
+}
+
+function startPolling() {
+  pollTimer = setInterval(pollForChanges, 12000);
+}
+
+// ─── SYNC BADGE ──────────────────────────────────────────────────────────────
+
+function setSyncBadge(status) {
+  const el = document.getElementById('syncBadge');
+  el.className = 'sync-badge';
+  const map = {
+    loading: ['Loading…', ''],
+    saving:  ['Saving…', 'saving'],
+    synced:  ['✓ Synced', 'synced'],
+    error:   ['✗ Error',  'error']
+  };
+  const [text, cls] = map[status] || ['', ''];
+  el.textContent = text;
+  if (cls) el.classList.add(cls);
+}
+
+// ─── TOAST ───────────────────────────────────────────────────────────────────
+
+let toastTimer;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+// ─── ROOM OPS ────────────────────────────────────────────────────────────────
+
+function addRoom() {
+  const room = { id: uid(), name: '', expanded: true, zones: [] };
+  state.rooms.push(room);
+  render();
+  scheduleSave();
+  // Focus the new room name
+  setTimeout(() => {
+    const el = document.querySelector(`[data-room-name="${room.id}"]`);
+    if (el) el.focus();
+  }, 50);
+}
+
+function removeRoom(roomId) {
+  state.rooms = state.rooms.filter(r => r.id !== roomId);
+  render();
+  scheduleSave();
+}
+
+function toggleRoom(roomId) {
+  const room = state.rooms.find(r => r.id === roomId);
+  if (room) room.expanded = !room.expanded;
+  render();
+  scheduleSave();
+}
+
+function renameRoom(roomId, name) {
+  const room = state.rooms.find(r => r.id === roomId);
+  if (room) room.name = name;
+  scheduleSave();
+  updateStats();
+}
+
+function expandAll()  { state.rooms.forEach(r => r.expanded = true);  render(); scheduleSave(); }
+function collapseAll(){ state.rooms.forEach(r => r.expanded = false); render(); scheduleSave(); }
+
+// ─── ZONE OPS ────────────────────────────────────────────────────────────────
+
+function addZone(roomId) {
+  const room = state.rooms.find(r => r.id === roomId);
+  if (!room) return;
+  const zone = { id: uid(), name: '', tasks: [] };
+  room.zones.push(zone);
+  render();
+  scheduleSave();
+  setTimeout(() => {
+    const el = document.querySelector(`[data-zone-name="${zone.id}"]`);
+    if (el) el.focus();
+  }, 50);
+}
+
+function removeZone(roomId, zoneId) {
+  const room = state.rooms.find(r => r.id === roomId);
+  if (!room) return;
+  room.zones = room.zones.filter(z => z.id !== zoneId);
+  render();
+  scheduleSave();
+}
+
+function renameZone(roomId, zoneId, name) {
+  const room = state.rooms.find(r => r.id === roomId);
+  const zone = room?.zones.find(z => z.id === zoneId);
+  if (zone) zone.name = name;
+  scheduleSave();
+}
+
+// ─── TASK OPS ────────────────────────────────────────────────────────────────
+
+function addTask(roomId, zoneId) {
+  const room = state.rooms.find(r => r.id === roomId);
+  const zone = room?.zones.find(z => z.id === zoneId);
+  if (!zone) return;
+  const task = { id: uid(), name: '', completed: false };
+  zone.tasks.push(task);
+  render();
+  scheduleSave();
+  setTimeout(() => {
+    const el = document.querySelector(`[data-task-name="${task.id}"]`);
+    if (el) el.focus();
+  }, 50);
+}
+
+function removeTask(roomId, zoneId, taskId) {
+  const room = state.rooms.find(r => r.id === roomId);
+  const zone = room?.zones.find(z => z.id === zoneId);
+  if (!zone) return;
+  zone.tasks = zone.tasks.filter(t => t.id !== taskId);
+  render();
+  scheduleSave();
+}
+
+function toggleTask(roomId, zoneId, taskId) {
+  const room = state.rooms.find(r => r.id === roomId);
+  const zone = room?.zones.find(z => z.id === zoneId);
+  const task = zone?.tasks.find(t => t.id === taskId);
+  if (task) task.completed = !task.completed;
+  render();
+  scheduleSave();
+}
+
+function renameTask(roomId, zoneId, taskId, name) {
+  const room = state.rooms.find(r => r.id === roomId);
+  const zone = room?.zones.find(z => z.id === zoneId);
+  const task = zone?.tasks.find(t => t.id === taskId);
+  if (task) task.name = name;
+  scheduleSave();
+}
+
+// ─── CLEAR COMPLETED ─────────────────────────────────────────────────────────
+
+function clearCompleted() {
+  let count = 0;
+  state.rooms.forEach(room => {
+    room.zones.forEach(zone => {
+      const before = zone.tasks.length;
+      zone.tasks = zone.tasks.filter(t => !t.completed);
+      count += before - zone.tasks.length;
+    });
+  });
+  render();
+  scheduleSave();
+  if (count > 0) toast(`🧹 Cleared ${count} completed task${count !== 1 ? 's' : ''}`);
+  else toast('Nothing to clear');
+}
+
+// ─── RESET ───────────────────────────────────────────────────────────────────
+
+function openReset()  { document.getElementById('resetModal').classList.add('open'); }
+function closeReset() { document.getElementById('resetModal').classList.remove('open'); }
+
+function confirmReset() {
+  state = { rooms: [], version: state.version + 1 };
+  closeReset();
+  render();
+  saveData();
+  toast('🗑 Everything reset');
+}
+
+// ─── STATS ───────────────────────────────────────────────────────────────────
+
+function updateStats() {
+  const rooms = state.rooms.length;
+  let total = 0, done = 0;
+  state.rooms.forEach(r => r.zones.forEach(z => z.tasks.forEach(t => {
+    total++;
+    if (t.completed) done++;
+  })));
+  const pct = total === 0 ? 0 : Math.round((done / total) * 100);
+
+  document.getElementById('statRooms').textContent = rooms;
+  document.getElementById('statTasks').textContent = total;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('pctLabel').textContent = pct + '%';
+}
+
+// ─── RENDER ──────────────────────────────────────────────────────────────────
+
+function render() {
+  const main = document.getElementById('main');
+
+  if (state.rooms.length === 0) {
+    main.innerHTML = `
+      <div class="empty-state">
+        <div class="big">🧹</div>
+        <p>No rooms yet.<br>Hit <b>+ Add Room</b> to get started.</p>
+      </div>`;
+    updateStats();
+    return;
+  }
+
+  main.innerHTML = state.rooms.map(room => {
+    // Count tasks for this room
+    let roomTotal = 0, roomDone = 0;
+    room.zones.forEach(z => z.tasks.forEach(t => {
+      roomTotal++;
+      if (t.completed) roomDone++;
+    }));
+    const allDone = roomTotal > 0 && roomDone === roomTotal;
+    const countLabel = roomTotal > 0 ? `${roomDone}/${roomTotal}` : '';
+
+    const zonesHtml = room.zones.map(zone => {
+      const tasksHtml = zone.tasks.map(task => `
+        <div class="task-row">
+          <div class="task-check ${task.completed ? 'done' : ''}"
+               onclick="toggleTask('${room.id}','${zone.id}','${task.id}')"></div>
+          <span class="task-emoji" data-emoji-for="${task.id}">${getEmoji(task.name, 'task')}</span>
+          <input
+            class="task-name-input ${task.completed ? 'done' : ''}"
+            data-task-name="${task.id}"
+            value="${escHtml(task.name)}"
+            placeholder="task..."
+            oninput="renameTask('${room.id}','${zone.id}','${task.id}', this.value); updateEmojiFor('${task.id}', this.value, 'task')"
+            onkeydown="if(event.key==='Enter'){addTask('${room.id}','${zone.id}');}"
+          />
+          <button class="btn ghost" onclick="removeTask('${room.id}','${zone.id}','${task.id}')" title="Remove task">✕</button>
+        </div>
+      `).join('');
+
+      return `
+        <div class="zone">
+          <div class="zone-header">
+            <span class="zone-emoji" data-emoji-for="${zone.id}">${getEmoji(zone.name, 'zone')}</span>
+            <input
+              class="zone-name-input"
+              data-zone-name="${zone.id}"
+              value="${escHtml(zone.name)}"
+              placeholder="zone name..."
+              oninput="renameZone('${room.id}','${zone.id}', this.value); updateEmojiFor('${zone.id}', this.value, 'zone')"
+            />
+            <button class="btn ghost" onclick="removeZone('${room.id}','${zone.id}')" title="Remove zone">✕</button>
+          </div>
+          <div class="task-list">
+            ${tasksHtml}
+          </div>
+          <div class="add-row" onclick="addTask('${room.id}','${zone.id}')"> Add task</div>
+        </div>
+      `;
+    }).join('');
+
+    return `
+      <div class="room-card">
+        <div class="room-header ${room.expanded ? 'open' : ''}" onclick="toggleRoom('${room.id}')">
+          <span class="room-chevron">▶</span>
+          <span class="room-emoji" data-emoji-for="${room.id}">${getEmoji(room.name, 'room')}</span>
+          <input
+            class="room-name-input"
+            data-room-name="${room.id}"
+            value="${escHtml(room.name)}"
+            placeholder="Room name..."
+            oninput="renameRoom('${room.id}', this.value); updateEmojiFor('${room.id}', this.value, 'room')"
+            onclick="event.stopPropagation()"
+          />
+          ${countLabel ? `<span class="room-task-count ${allDone ? 'all-done' : ''}">${countLabel} ${allDone ? '✓' : ''}</span>` : ''}
+        </div>
+        <div class="room-body ${room.expanded ? 'open' : ''}">
+          ${zonesHtml}
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <button class="btn" style="font-size:12px" onclick="addZone('${room.id}')">＋ Add Zone</button>
+            <button class="btn danger" style="font-size:12px" onclick="removeRoom('${room.id}')">✕ Remove Room</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  updateStats();
+}
+
+// ─── HELPERS ─────────────────────────────────────────────────────────────────
+
+function escHtml(str) {
+  if (!str) return '';
+  return str.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ─── EMOJI DETECTION ─────────────────────────────────────────────────────────
+
+function getEmoji(name, type) {
+  const n = (name || '').toLowerCase();
+
+  if (type === 'room') {
+    if (/kitchen|cook|bench|stove/.test(n))              return '🍳';
+    if (/bath|shower|toilet|loo|wc|ensuite/.test(n))     return '🚿';
+    if (/bedroom|bed room|master|guest room/.test(n))    return '🛏️';
+    if (/living|lounge|sitting|family|tv room/.test(n))  return '🛋️';
+    if (/garage|car|driveway/.test(n))                   return '🚗';
+    if (/laundry|washing|utility/.test(n))               return '🧺';
+    if (/office|study|desk|work/.test(n))                return '💻';
+    if (/dining|dinner room/.test(n))                    return '🍽️';
+    if (/hall|corridor|entry|foyer|stair/.test(n))       return '🚪';
+    if (/garden|yard|outdoor|outside|patio|deck/.test(n))return '🌿';
+    if (/basement|cellar/.test(n))                       return '🏚️';
+    if (/attic|loft|storage|spare/.test(n))              return '📦';
+    if (/kids|child|nursery|play/.test(n))               return '🧸';
+    if (/gym|workout|exercise/.test(n))                  return '🏋️';
+    if (/balcony|terrace/.test(n))                       return '🌇';
+    if (/pool|spa/.test(n))                              return '🏊';
+    if (/pantry|cupboard/.test(n))                       return '🗄️';
+    return '🏠';
+  }
+
+  if (type === 'zone') {
+    if (/floor|carpet|rug|tile/.test(n))                 return '🧹';
+    if (/counter|bench|surface|benchtop/.test(n))        return '🧽';
+    if (/window|glass|sliding door/.test(n))             return '🪟';
+    if (/shelf|shelv|cabinet|cupboard/.test(n))          return '📚';
+    if (/sink|basin|tap/.test(n))                        return '💧';
+    if (/toilet|loo/.test(n))                            return '🚽';
+    if (/shower|screen/.test(n))                         return '🚿';
+    if (/bath|tub/.test(n))                              return '🛁';
+    if (/mirror/.test(n))                                return '🪞';
+    if (/bin|trash|rubbish/.test(n))                     return '🗑️';
+    if (/fridge|freezer/.test(n))                        return '🧊';
+    if (/oven|stove/.test(n))                            return '🔥';
+    if (/wall|baseboard|skirting/.test(n))               return '🧱';
+    if (/light|lamp|ceiling/.test(n))                    return '💡';
+    return '📍';
+  }
+
+  // type === 'task'
+  if (/vacuum|hoover/.test(n))                           return '🌀';
+  if (/mop|mopping/.test(n))                             return '🪣';
+  if (/sweep|broom/.test(n))                             return '🧹';
+  if (/dust|duster|dusting/.test(n))                     return '💨';
+  if (/wipe|wiping/.test(n))                             return '🧽';
+  if (/scrub|scrubbing/.test(n))                         return '🪥';
+  if (/wash|washing|rinse/.test(n))                      return '🧼';
+  if (/dishes|dish|plate|cup|cutlery/.test(n))           return '🍽️';
+  if (/laundry|clothes|linen|sheet|towel/.test(n))       return '🧺';
+  if (/iron|ironing|press/.test(n))                      return '👔';
+  if (/toilet|loo/.test(n))                              return '🚽';
+  if (/bin|trash|rubbish|garbage|empty.*bin/.test(n))    return '🗑️';
+  if (/window|glass/.test(n))                            return '🪟';
+  if (/mirror/.test(n))                                  return '🪞';
+  if (/fridge|refrigerator/.test(n))                     return '🧊';
+  if (/oven|stove|cooktop/.test(n))                      return '🔥';
+  if (/microwave/.test(n))                               return '📡';
+  if (/tidy|organis|organiz|sort|declutter/.test(n))     return '📦';
+  if (/bed|sheet|pillow|doona|duvet|blanket/.test(n))    return '🛏️';
+  if (/shower/.test(n))                                  return '🚿';
+  if (/bath|tub/.test(n))                                return '🛁';
+  if (/sink|tap|basin/.test(n))                          return '💧';
+  if (/floor|carpet|rug/.test(n))                        return '🟫';
+  if (/cat|litter|kitty/.test(n))                        return '🐱';
+  if (/dog|pet/.test(n))                                 return '🐶';
+  if (/plant|water.*plant/.test(n))                      return '🌿';
+  if (/cobweb|spider|web/.test(n))                       return '🕷️';
+  if (/disinfect|sanitise|sanitize/.test(n))             return '🦠';
+  if (/spray|polish|shine/.test(n))                      return '✨';
+  if (/light|bulb/.test(n))                              return '💡';
+  if (/cobweb|spider/.test(n))                           return '🕷️';
+  if (/recycle|recycling/.test(n))                       return '♻️';
+  if (/garden|mow|lawn|weed/.test(n))                    return '🌿';
+  if (/cook|meal|food/.test(n))                          return '🍳';
+  return '✅';
+}
+
+// Live-update just the emoji span without full re-render
+function updateEmojiFor(id, name, type) {
+  const el = document.querySelector(`[data-emoji-for="${id}"]`);
+  if (el) el.textContent = getEmoji(name, type);
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+
+loadData().then(startPolling);
+</script>
+</body>
+</html>
