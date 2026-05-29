@@ -211,7 +211,7 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;}
     <div class="showcase-card">
       <div class="sc-header"><span class="sc-icon">🧹</span><div><div class="sc-name">Cleaning</div><div class="sc-desc">Household rooms, zones and tasks. Great for shared houses.</div></div></div>
       <div class="sc-rooms">
-        <span class="sc-pill">🛋️ Living Room</span><span class="sc-pill">🛁 Bathroom</span><span class="sc-pill">🛏️ Bedroom</span><span class="sc-pill">🧸 Kids Room</span><span class="sc-pill">🚪 Hallway</span><span class="sc-pill">🚗 Garage</span><span class="sc-pill">🌳 Backyard</span><span class="sc-pill">🏡 Front Yard</span>
+        <span class="sc-pill">🛋️ Living Room</span><span class="sc-pill">🍳 Kitchen</span><span class="sc-pill">🛁 Bathroom</span><span class="sc-pill">🛏️ Bedroom</span><span class="sc-pill">🫧 Laundry</span><span class="sc-pill">🚪 Hallway</span><span class="sc-pill">🚗 Garage</span><span class="sc-pill">🌳 Backyard</span><span class="sc-pill">🏡 Front Yard</span>
       </div>
       <div class="sc-preview">
         <div class="sc-zone-label">📺 TV Area</div>
@@ -1205,22 +1205,29 @@ function buildSeed(tpl){
     version:1, _seedVersion:2,
     rooms:[
       mr('Living Room',true,
-        mz('TV Area','Clear coffee table','Throw away trash'),
-        mz('General','Walls','Glass','Vaccum & mop','Dust','Organise drums','Organise desk')),
-      mr('Paigee Bathroom',false, mz('New Zone','Shower glass','Shower floor','Toilet','Around toilet','Bathroom bench wiped','Bathroom sink','Mirror','Vaccum & mop')),
-      mr('Nic Bathroom',false,    mz('New Zone','Shower glass','Shower floor','Toilet','Around toilet','Bathroom bench wiped','Bathroom sink','Mirror','Vaccum & mop')),
-      mr('Paigee Bedroom',false,
+        mz('TV Area','Clear coffee table','Throw away trash','Wipe TV screen','Tidy remotes'),
+        mz('General','Vaccum','Mop floors','Dust surfaces','Clean windows','Wipe light switches')),
+      mr('Kitchen',false,
+        mz('Benchtops','Wipe benchtops','Clean splashback','Wipe appliances'),
+        mz('Sink & Dishes','Do dishes','Clean sink','Wipe tap'),
+        mz('Oven & Stovetop','Clean stovetop','Wipe oven exterior','Clean rangehood filter'),
+        mz('Fridge','Wipe shelves','Check expiry dates','Clean door seals'),
+        mz('Floor','Sweep floor','Mop floor')),
+      mr('Bathroom',false,
+        mz('Shower','Clean shower glass','Scrub shower floor','Clean shower head'),
+        mz('Toilet','Clean toilet bowl','Wipe seat & lid','Clean around base'),
+        mz('Sink & Vanity','Clean sink','Wipe mirror','Wipe benchtop','Empty bin'),
+        mz('Floor','Sweep floor','Mop floor')),
+      mr('Bedroom',false,
         mz('Bed','Wash sheets','Make bed'),
-        mz('Clothes','Dirty clothes in basket','Fold & put away clothes'),
-        mz('General','Throw trash out','Vaccum','Organise desk','Dust','Bed side table')),
-      mr('Nic Bedroom',false,
-        mz('Bed','Wash sheets','Make bed'),
-        mz('Clothes','Dirty clothes in basket','Fold & put away clothes'),
-        mz('General','Throw trash out','Vaccum','Organise desk','Dust','Bed side table')),
-      mr('Girls room',false,
-        mz('Bed','Change sheets','Clean under bed'),
-        mz('General','Organise toys','Vaccum')),
-      mr('Hallway',false, mz('General','Vaccum','Wipe surfaces','Dust','Clean mirrors','Organise entry')),
+        mz('Wardrobe','Put away clothes','Organise wardrobe'),
+        mz('General','Vaccum','Dust surfaces','Wipe skirting boards')),
+      mr('Laundry',false,
+        mz('Washing','Do a load of washing','Hang washing out','Move to dryer'),
+        mz('Folding','Fold clothes','Put away clothes'),
+        mz('General','Clean lint trap','Wipe washing machine','Sweep floor')),
+      mr('Hallway',false,
+        mz('General','Vaccum','Wipe surfaces','Dust','Clean mirrors','Organise shoes & entry')),
       mr('Garage',false,
         mz('Storage','Organise shelves','Clear clutter','Wipe surfaces'),
         mz('Floor','Sweep floor','Mop floor'),
