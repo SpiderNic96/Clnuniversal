@@ -177,6 +177,16 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;}
           <div class="tpl-name">Meal Planning</div>
           <div class="tpl-desc">Weekly meals & meal prep</div>
         </div>
+        <div class="tpl-card" onclick="selectTemplate('games')">
+          <div class="tpl-icon">🎮</div>
+          <div class="tpl-name">Gaming</div>
+          <div class="tpl-desc">Progress, objectives, collectibles & backlog</div>
+        </div>
+        <div class="tpl-card" onclick="selectTemplate('petcare')">
+          <div class="tpl-icon">🐾</div>
+          <div class="tpl-name">Pet Care</div>
+          <div class="tpl-desc">Feeding, health, grooming & supplies</div>
+        </div>
       </div>
     </div>
   </div>
@@ -583,6 +593,13 @@ function getEmoji(name,type){
     if(/gym|workout|exercise/.test(n)) return'🏋️';
     if(/pool|spa/.test(n)) return'🏊';
     // Bill categories
+    if(/currently playing|in progress/.test(n)) return'🎮';
+    if(/backlog/.test(n))         return'📋';
+    if(/wish list|wishlist|to buy|want/.test(n)) return'⭐';
+    if(/completed|finished|done/.test(n)) return'🏆';
+    if(/\bdlc\b|expansion|season pass/.test(n)) return'📦';
+    if(/\bpet\b|cat|dog|bunny|rabbit|bird|hamster/.test(n)) return'🐾';
+    if(/supply|supplies/.test(n)) return'🛒';
     if(/housing|property/.test(n)) return'🏠';
     if(/utilit/.test(n)) return'⚡';
     if(/insurance/.test(n)) return'🛡️';
@@ -612,6 +629,22 @@ function getEmoji(name,type){
   }
 
   if(type==='zone'){
+    if(/main story|story|campaign|narrative/.test(n)) return'📖';
+    if(/side quest|sidequest|optional/.test(n)) return'📜';
+    if(/collectible|collectable/.test(n)) return'💎';
+    if(/trophy|achievement|platinum|100%/.test(n)) return'🏆';
+    if(/up next|queue/.test(n))   return'📋';
+    if(/reinstall|unfinished/.test(n)) return'🔄';
+    if(/wish list|wishlist/.test(n)) return'⭐';
+    if(/wait.*sale|on sale/.test(n)) return'🏷️';
+    if(/story done|story complete/.test(n)) return'✅';
+    if(/dlc|expansion/.test(n))   return'📦';
+    if(/daily care|daily/.test(n)) return'⭐';
+    if(/health|medical|vet/.test(n)) return'❤️';
+    if(/groom/.test(n))           return'✂️';
+    if(/food|treat|feed/.test(n)) return'🍽️';
+    if(/litter/.test(n))          return'🧹';
+    if(/accessori|toy/.test(n))   return'🎯';
     if(/tv|television|media/.test(n)) return'📺';
     if(/general|misc|other/.test(n)) return'🗂️';
     if(/new zone/.test(n)) return'🗂️';
@@ -871,6 +904,76 @@ function getEmoji(name,type){
   if(/ice cream/.test(n)) return'🍦';
   if(/snack/.test(n))    return'🍎';
 
+  // ── GAMING ──────────────────────────────────────────────────────────────
+  if(/platinum/.test(n))         return'🏅';
+  if(/100%/.test(n))             return'💯';
+  if(/final boss|end boss|last boss/.test(n)) return'💀';
+  if(/\bboss\b/.test(n))         return'⚔️';
+  if(/main story|main campaign/.test(n)) return'📖';
+  if(/side quest|sidequest/.test(n)) return'📜';
+  if(/collectible|collectable/.test(n)) return'💎';
+  if(/trophy|achievement/.test(n)) return'🏆';
+  if(/\bdlc\b|expansion/.test(n)) return'📦';
+  if(/speedrun/.test(n))         return'⏱️';
+  if(/new game\+|ng\+/.test(n))  return'🔄';
+  if(/secret area|hidden/.test(n)) return'🗝️';
+  if(/upgrade|skill tree|level up/.test(n)) return'⬆️';
+  if(/unlock|unlocke/.test(n))   return'🔓';
+  if(/checkpoint|save point/.test(n)) return'💾';
+  if(/multiplayer|online match|ranked/.test(n)) return'🌐';
+  if(/chapter|act \d|episode/.test(n)) return'📑';
+  if(/ending|credits|finish/.test(n)) return'🎬';
+  if(/\bact \d/.test(n))         return'📑';
+  if(/bronze/.test(n))           return'🥉';
+  if(/silver/.test(n))           return'🥈';
+  if(/gold/.test(n))             return'🥇';
+  // Named games
+  if(/spider.?man|spiderman/.test(n)) return'🕷️';
+  if(/call of duty|cod|warzone/.test(n)) return'🔫';
+  if(/fortnite/.test(n))         return'🏗️';
+  if(/minecraft/.test(n))        return'⛏️';
+  if(/zelda/.test(n))            return'🗡️';
+  if(/pokemon/.test(n))          return'⚡';
+  if(/mario/.test(n))            return'🍄';
+  if(/god of war|elden ring|dark souls/.test(n)) return'⚔️';
+  if(/clone hero|guitar hero/.test(n)) return'🎸';
+  if(/fifa|football game/.test(n)) return'⚽';
+  if(/nba|basketball game/.test(n)) return'🏀';
+  if(/on sale watch|price drop/.test(n)) return'🏷️';
+  if(/wishlist|wish list/.test(n)) return'⭐';
+  if(/unfinished run|incomplete/.test(n)) return'🔄';
+  if(/reinstall/.test(n))        return'💿';
+
+  // ── PET CARE ────────────────────────────────────────────────────────────
+  if(/morning feed|evening feed/.test(n)) return'🍽️';
+  if(/fresh water|refill water/.test(n)) return'💧';
+  if(/litter box|clean litter|scoop litter/.test(n)) return'🧹';
+  if(/playtime|play time|play session/.test(n)) return'🎾';
+  if(/flea treatment|flea tablet/.test(n)) return'🦟';
+  if(/worming|worm tablet/.test(n)) return'💊';
+  if(/vet checkup|vet visit|vet appoint/.test(n)) return'🏥';
+  if(/vaccination|vaccine/.test(n)) return'💉';
+  if(/weight check/.test(n))     return'⚖️';
+  if(/brush coat|groom/.test(n)) return'✂️';
+  if(/trim nail|clip nail/.test(n)) return'✂️';
+  if(/ear check|ear clean|ear drop/.test(n)) return'👂';
+  if(/eye wipe|eye drop/.test(n)) return'👁️';
+  if(/dry food|kibble/.test(n))  return'🫙';
+  if(/wet food|cat food|dog food/.test(n)) return'🥫';
+  if(/\btreat\b/.test(n))        return'🦴';
+  if(/water filter/.test(n))     return'💧';
+  if(/flea.*stock|worming.*stock/.test(n)) return'💊';
+  if(/collar check/.test(n))     return'🔗';
+  if(/litter stock/.test(n))     return'📦';
+  if(/bedding wash/.test(n))     return'🧺';
+  if(/\bfeed\b/.test(n))         return'🍽️';
+  if(/\bvet\b/.test(n))          return'🏥';
+  if(/\bcat\b|\bkitten\b/.test(n)) return'🐱';
+  if(/\bdog\b|\bpuppy\b/.test(n)) return'🐶';
+  if(/\bbunny\b|\brabbit\b/.test(n)) return'🐰';
+  if(/\bbird\b|\bparrot\b/.test(n)) return'🦜';
+  if(/pet toy|toy/.test(n))      return'🎾';
+
   // General cleaning fallbacks
   if(/vacuum|vaccum|hoover/.test(n)) return'🌀';
   if(/\bmop\b/.test(n))  return'🪣';
@@ -995,6 +1098,49 @@ function buildSeed(tpl){
       mr('Meal Prep',false,
         mz('Batch Cook','Cook rice','Prep vegetables','Marinate protein','Make pasta sauce'),
         mz('Shopping Needed','')),
+    ]};
+
+  if(tpl==='games') return {
+    version:1, _seedVersion:1,
+    rooms:[
+      mr('Currently Playing',true,
+        mz('Main Story','Act 1 complete','Act 2 complete','Act 3 complete','Final boss','Ending'),
+        mz('Side Quests','Side quest 1','Side quest 2','Side quest 3','Side quest 4'),
+        mz('Collectibles','Collectible set 1','Collectible set 2','Secret area 1','Hidden item 1'),
+        mz('Trophies & Achievements','Bronze set','Silver set','Gold trophy','Platinum / 100%')),
+      mr('Backlog',false,
+        mz('Up Next','Next game','Game after that','Then this one'),
+        mz('Reinstall','Unfinished run 1','Unfinished run 2')),
+      mr('Wish List',false,
+        mz('To Buy','Wishlist game 1','Wishlist game 2','Wishlist game 3'),
+        mz('Wait for Sale','On sale watch 1','On sale watch 2')),
+      mr('Completed',false,
+        mz('Story Done',''),
+        mz('100% / Platinum','')),
+      mr('DLC & Expansions',false,
+        mz('Owned',''),
+        mz('To Buy','')),
+    ]};
+
+  if(tpl==='petcare') return {
+    version:1, _seedVersion:1,
+    rooms:[
+      mr('Pet 1',true,
+        mz('Daily Care','Morning feed','Evening feed','Fresh water','Clean litter box','Playtime'),
+        mz('Health','Flea treatment','Worming tablet','Vet checkup','Vaccinations up to date','Weight check'),
+        mz('Grooming','Brush coat','Trim nails','Ear check','Eye wipe')),
+      mr('Pet 2',false,
+        mz('Daily Care','Morning feed','Evening feed','Fresh water','Clean litter box','Playtime'),
+        mz('Health','Flea treatment','Worming tablet','Vet checkup','Vaccinations up to date','Weight check'),
+        mz('Grooming','Brush coat','Trim nails','Ear check','Eye wipe')),
+      mr('Pet 3',false,
+        mz('Daily Care','Morning feed','Evening feed','Fresh water','Clean litter box','Playtime'),
+        mz('Health','Flea treatment','Worming tablet','Vet checkup','Vaccinations up to date','Weight check'),
+        mz('Grooming','Brush coat','Trim nails','Ear check','Eye wipe')),
+      mr('Supplies',false,
+        mz('Food & Treats','Dry food','Wet food','Treats','Water filter replacement'),
+        mz('Medical Stock','Flea treatment stock','Worming tablets stock','Ear drops','Eye drops'),
+        mz('Accessories','Collar check','Litter stock','Toys','Bedding wash')),
     ]};
 
   return {version:1,_seedVersion:1,rooms:[]};
