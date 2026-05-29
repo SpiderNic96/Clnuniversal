@@ -17,6 +17,20 @@ body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:14
 .screen{display:none;min-height:100vh;}
 .screen.active{display:flex;flex-direction:column;}
 
+/* ── SHOWCASE CARDS ── */
+.showcase-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:16px;}
+.sc-header{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+.sc-icon{font-size:36px;line-height:1;flex-shrink:0;}
+.sc-name{font-family:var(--display);font-size:22px;font-weight:800;color:var(--text);line-height:1;}
+.sc-desc{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4;}
+.sc-rooms{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
+.sc-pill{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--muted);white-space:nowrap;}
+.sc-preview{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:12px;}
+.sc-zone-label{font-family:var(--display);font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;letter-spacing:.3px;}
+.sc-task{display:flex;align-items:center;gap:8px;padding:4px 2px;font-family:var(--mono);font-size:12px;color:var(--text);}
+.sc-box{width:14px;height:14px;border:1.5px solid var(--muted);border-radius:2px;flex-shrink:0;display:inline-block;}
+.sc-checked{border-color:var(--accent);background:var(--accent);}
+
 /* ── LANDING ── */
 #screen-landing{align-items:center;justify-content:center;padding:32px 24px;text-align:center;}
 .land-logo{font-family:var(--display);font-size:48px;font-weight:800;color:var(--accent);letter-spacing:2px;line-height:1;}
@@ -127,26 +141,153 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;}
 <body>
 
 <!-- ══ LANDING ════════════════════════════════════════════════════════════ -->
-<div id="screen-landing" class="screen">
-  <div class="land-logo">🧠 TASK CMD</div>
-  <div class="land-sub">Your personal productivity space</div>
-  <div class="land-card">
-    <h2>Claim your space</h2>
-    <div class="land-step">
-      <div class="land-num">1</div>
-      <p>Pick a number between <b>1 and 50</b> and visit that URL directly.</p>
+<div id="screen-landing" class="screen" style="overflow-y:auto;">
+  <div style="max-width:480px;width:100%;margin:0 auto;padding:32px 20px 60px;">
+
+    <div style="text-align:center;margin-bottom:28px;">
+      <div class="land-logo">🧠 TASK CMD</div>
+      <div class="land-sub">Claim a URL, pick a template, set a password. Your space is yours.</div>
     </div>
-    <div class="land-step">
-      <div class="land-num">2</div>
-      <p>Choose a template — <b>Cleaning, Bills, Shopping</b> or <b>Meal Planning</b>.</p>
+
+    <div class="land-card" style="margin-bottom:28px;">
+      <h2>How to claim your space</h2>
+      <div class="land-step"><div class="land-num">1</div><p>Pick a number <b>1–50</b> and visit that URL — e.g. <b>/3</b> or <b>/17</b></p></div>
+      <div class="land-step"><div class="land-num">2</div><p>Choose a template. Your space gets pre-loaded with rooms, zones and tasks.</p></div>
+      <div class="land-step" style="margin-bottom:0"><div class="land-num">3</div><p>Set a password. That URL is now <b>yours forever</b>. Bookmark it.</p></div>
+      <div class="land-urls">e.g. <span>clnuniversal.vercel.app/4</span> &nbsp;·&nbsp; <span>/12</span> &nbsp;·&nbsp; <span>/50</span></div>
     </div>
-    <div class="land-step">
-      <div class="land-num">3</div>
-      <p>Set a password. That space is now <b>yours</b>. Bookmark it.</p>
+
+    <div style="font-family:var(--display);font-size:22px;font-weight:800;color:var(--accent);margin-bottom:16px;letter-spacing:1px;">📋 AVAILABLE TEMPLATES</div>
+
+    <!-- CLEANING -->
+    <div class="showcase-card">
+      <div class="sc-header"><span class="sc-icon">🧹</span><div><div class="sc-name">Cleaning</div><div class="sc-desc">Household rooms, zones and tasks. Great for shared houses.</div></div></div>
+      <div class="sc-rooms">
+        <span class="sc-pill">🛋️ Living Room</span><span class="sc-pill">🛁 Bathroom</span><span class="sc-pill">🛏️ Bedroom</span><span class="sc-pill">🧸 Kids Room</span><span class="sc-pill">🚪 Hallway</span><span class="sc-pill">🚗 Garage</span><span class="sc-pill">🌳 Backyard</span><span class="sc-pill">🏡 Front Yard</span>
+      </div>
+      <div class="sc-preview">
+        <div class="sc-zone-label">📺 TV Area</div>
+        <div class="sc-task"><span class="sc-box"></span><span>☕</span> Clear coffee table</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🗑️</span> Throw away trash</div>
+        <div class="sc-zone-label" style="margin-top:8px">🗂️ General</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🌀</span> Vaccum & mop</div>
+        <div class="sc-task"><span class="sc-box"></span><span>💨</span> Dust</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🧱</span> Walls</div>
+        <div class="sc-zone-label" style="margin-top:8px">🗂️ Bathroom Zone</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🫧</span> Shower glass</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🚽</span> Toilet</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🪞</span> Mirror</div>
+      </div>
     </div>
-    <div class="land-urls">
-      Examples: <span>clnuniversal.vercel.app/2</span> &nbsp;·&nbsp; <span>/7</span> &nbsp;·&nbsp; <span>/42</span>
+
+    <!-- BILLS -->
+    <div class="showcase-card">
+      <div class="sc-header"><span class="sc-icon">💸</span><div><div class="sc-name">Bill Paying</div><div class="sc-desc">Every recurring payment tracked in one place. Never miss a due date.</div></div></div>
+      <div class="sc-rooms">
+        <span class="sc-pill">🏠 Housing</span><span class="sc-pill">⚡ Utilities</span><span class="sc-pill">🛡️ Insurance</span><span class="sc-pill">📺 Subscriptions</span><span class="sc-pill">💰 Finance</span>
+      </div>
+      <div class="sc-preview">
+        <div class="sc-zone-label">🏠 Rent & Property</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🏠</span> Rent / Mortgage</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🏛️</span> Council rates</div>
+        <div class="sc-zone-label" style="margin-top:8px">⚡ Essential Utilities</div>
+        <div class="sc-task"><span class="sc-box"></span><span>⚡</span> Electricity</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🌐</span> Internet / NBN</div>
+        <div class="sc-task"><span class="sc-box"></span><span>📱</span> Mobile phone</div>
+        <div class="sc-zone-label" style="margin-top:8px">📺 Streaming</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🎬</span> Netflix</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🎵</span> Spotify</div>
+        <div class="sc-zone-label" style="margin-top:8px">💰 Finance</div>
+        <div class="sc-task"><span class="sc-box"></span><span>💳</span> Credit card</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🏦</span> Savings transfer</div>
+      </div>
     </div>
+
+    <!-- SHOPPING -->
+    <div class="showcase-card">
+      <div class="sc-header"><span class="sc-icon">🛒</span><div><div class="sc-name">Shopping</div><div class="sc-desc">Grocery & household list. Type any ingredient and get a matching emoji.</div></div></div>
+      <div class="sc-rooms">
+        <span class="sc-pill">🥦 Fresh Produce</span><span class="sc-pill">🥩 Meat & Seafood</span><span class="sc-pill">🥛 Dairy & Eggs</span><span class="sc-pill">🍞 Bakery</span><span class="sc-pill">🗄️ Pantry</span><span class="sc-pill">🥤 Drinks</span><span class="sc-pill">🧴 Household</span>
+      </div>
+      <div class="sc-preview">
+        <div class="sc-zone-label">🍎 Fruit</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🍎</span> Apples</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🍌</span> Bananas</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🫐</span> Blueberries</div>
+        <div class="sc-zone-label" style="margin-top:8px">🥦 Vegetables</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🍅</span> Tomatoes</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🥕</span> Carrots</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🧄</span> Garlic</div>
+        <div class="sc-zone-label" style="margin-top:8px">🥛 Dairy</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🥛</span> Milk</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🧀</span> Cheese</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🥚</span> Eggs</div>
+      </div>
+    </div>
+
+    <!-- MEALS -->
+    <div class="showcase-card">
+      <div class="sc-header"><span class="sc-icon">🍳</span><div><div class="sc-name">Meal Planning</div><div class="sc-desc">Plan every meal for the full week. Includes a meal prep section.</div></div></div>
+      <div class="sc-rooms">
+        <span class="sc-pill">1️⃣ Monday</span><span class="sc-pill">2️⃣ Tuesday</span><span class="sc-pill">3️⃣ Wednesday</span><span class="sc-pill">4️⃣ Thursday</span><span class="sc-pill">5️⃣ Friday</span><span class="sc-pill">6️⃣ Saturday</span><span class="sc-pill">7️⃣ Sunday</span><span class="sc-pill">🍱 Meal Prep</span>
+      </div>
+      <div class="sc-preview">
+        <div class="sc-zone-label">1️⃣ Monday</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🌅</span> Breakfast — Oats & fruit</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🌤️</span> Lunch — Chicken wrap</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🌙</span> Dinner — Pasta bolognese</div>
+        <div class="sc-zone-label" style="margin-top:8px">🍱 Batch Cook</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🍚</span> Cook rice</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🥕</span> Prep vegetables</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🥩</span> Marinate protein</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🍅</span> Make pasta sauce</div>
+      </div>
+    </div>
+
+    <!-- GAMING -->
+    <div class="showcase-card">
+      <div class="sc-header"><span class="sc-icon">🎮</span><div><div class="sc-name">Gaming</div><div class="sc-desc">Track game progress, objectives, collectibles, trophies and your backlog.</div></div></div>
+      <div class="sc-rooms">
+        <span class="sc-pill">🎮 Currently Playing</span><span class="sc-pill">📋 Backlog</span><span class="sc-pill">⭐ Wish List</span><span class="sc-pill">🏆 Completed</span><span class="sc-pill">📦 DLC & Expansions</span>
+      </div>
+      <div class="sc-preview">
+        <div class="sc-zone-label">📖 Main Story</div>
+        <div class="sc-task"><span class="sc-box"></span><span>📑</span> Act 1 complete</div>
+        <div class="sc-task"><span class="sc-box"></span><span>📑</span> Act 2 complete</div>
+        <div class="sc-task"><span class="sc-box"></span><span>💀</span> Final boss</div>
+        <div class="sc-task"><span class="sc-box sc-checked"></span><span>🎬</span> <span style="text-decoration:line-through;opacity:.5">Ending</span></div>
+        <div class="sc-zone-label" style="margin-top:8px">💎 Collectibles</div>
+        <div class="sc-task"><span class="sc-box"></span><span>💎</span> Collectible set 1</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🗝️</span> Secret area 1</div>
+        <div class="sc-zone-label" style="margin-top:8px">🏆 Trophies & Achievements</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🥉</span> Bronze set</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🥈</span> Silver set</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🏅</span> Platinum / 100%</div>
+      </div>
+    </div>
+
+    <!-- PET CARE -->
+    <div class="showcase-card">
+      <div class="sc-header"><span class="sc-icon">🐾</span><div><div class="sc-name">Pet Care</div><div class="sc-desc">Daily routines, health tracking and supply management for up to 3 pets.</div></div></div>
+      <div class="sc-rooms">
+        <span class="sc-pill">🐾 Pet 1</span><span class="sc-pill">🐾 Pet 2</span><span class="sc-pill">🐾 Pet 3</span><span class="sc-pill">🛒 Supplies</span>
+      </div>
+      <div class="sc-preview">
+        <div class="sc-zone-label">⭐ Daily Care</div>
+        <div class="sc-task"><span class="sc-box sc-checked"></span><span>🍽️</span> <span style="text-decoration:line-through;opacity:.5">Morning feed</span></div>
+        <div class="sc-task"><span class="sc-box"></span><span>🍽️</span> Evening feed</div>
+        <div class="sc-task"><span class="sc-box"></span><span>💧</span> Fresh water</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🧹</span> Clean litter box</div>
+        <div class="sc-zone-label" style="margin-top:8px">❤️ Health</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🦟</span> Flea treatment</div>
+        <div class="sc-task"><span class="sc-box"></span><span>💊</span> Worming tablet</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🏥</span> Vet checkup</div>
+        <div class="sc-zone-label" style="margin-top:8px">✂️ Grooming</div>
+        <div class="sc-task"><span class="sc-box"></span><span>✂️</span> Brush coat</div>
+        <div class="sc-task"><span class="sc-box"></span><span>✂️</span> Trim nails</div>
+      </div>
+    </div>
+
   </div>
 </div>
 
