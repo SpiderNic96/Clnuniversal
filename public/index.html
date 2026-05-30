@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>TASK CMD</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet"/>
@@ -14,124 +13,145 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:14px;min-height:100vh;}
-.screen{display:none;min-height:100vh;}
-.screen.active{display:flex;flex-direction:column;}
-
-/* ── SHOWCASE CARDS ── */
-.showcase-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:16px;}
-.sc-header{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
-.sc-icon{font-size:36px;line-height:1;flex-shrink:0;}
-.sc-name{font-family:var(--display);font-size:22px;font-weight:800;color:var(--text);line-height:1;}
-.sc-desc{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4;}
-.sc-rooms{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
-.sc-pill{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--muted);white-space:nowrap;}
-.sc-preview{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:12px;}
-.sc-zone-label{font-family:var(--display);font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;letter-spacing:.3px;}
-.sc-task{display:flex;align-items:center;gap:8px;padding:4px 2px;font-family:var(--mono);font-size:12px;color:var(--text);}
-.sc-box{width:14px;height:14px;border:1.5px solid var(--muted);border-radius:2px;flex-shrink:0;display:inline-block;}
-.sc-checked{border-color:var(--accent);background:var(--accent);}
-
-/* ── LANDING ── */
-#screen-landing{align-items:center;justify-content:center;padding:32px 24px;text-align:center;}
+.screen{display:none;min-height:100vh;flex-direction:column;}
+.screen.active{display:flex;}
+/* LANDING */
+#screen-landing{overflow-y:auto;}
 .land-logo{font-family:var(--display);font-size:48px;font-weight:800;color:var(--accent);letter-spacing:2px;line-height:1;}
-.land-sub{color:var(--muted);font-size:13px;margin:8px 0 32px;}
-.land-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px;max-width:380px;width:100%;text-align:left;}
-.land-card h2{font-family:var(--display);font-size:22px;margin-bottom:12px;color:var(--text);}
-.land-step{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start;}
-.land-num{font-family:var(--display);font-size:20px;font-weight:800;color:var(--accent);min-width:24px;}
+.land-sub{color:var(--muted);font-size:13px;margin:8px 0 28px;}
+.land-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:14px;}
+.land-card h2{font-family:var(--display);font-size:20px;margin-bottom:12px;}
+.land-step{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start;}
+.land-num{font-family:var(--display);font-size:20px;font-weight:800;color:var(--accent);min-width:22px;}
 .land-step p{font-size:12px;color:var(--muted);line-height:1.6;}
 .land-step p b{color:var(--text);}
-.land-urls{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px;margin-top:20px;font-size:12px;color:var(--muted);}
+.land-urls{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:10px 14px;margin-top:16px;font-size:11px;color:var(--muted);}
 .land-urls span{color:var(--accent);}
-
-/* ── TEMPLATE PICKER ── */
-#screen-template{align-items:center;justify-content:center;padding:24px;}
-.tpl-wrap{max-width:420px;width:100%;}
-.tpl-wrap h1{font-family:var(--display);font-size:28px;font-weight:800;color:var(--accent);margin-bottom:4px;}
-.tpl-wrap p{font-size:12px;color:var(--muted);margin-bottom:24px;}
-.tpl-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.tpl-card{background:var(--surface);border:2px solid var(--border);border-radius:10px;padding:20px 16px;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent;}
-.tpl-card:hover,.tpl-card:active{border-color:var(--accent);background:var(--surface2);}
-.tpl-icon{font-size:32px;margin-bottom:8px;}
-.tpl-name{font-family:var(--display);font-size:18px;font-weight:700;color:var(--text);}
-.tpl-desc{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.4;}
-
-/* ── AUTH ── */
-#screen-auth{align-items:center;justify-content:center;padding:24px;}
-.auth-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:28px 24px;max-width:360px;width:100%;}
-.auth-box h1{font-family:var(--display);font-size:26px;font-weight:800;color:var(--accent);margin-bottom:4px;}
-.auth-box .auth-sub{font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.5;}
-.auth-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);color:var(--text);font-family:var(--mono);font-size:14px;padding:10px 12px;outline:none;margin-bottom:12px;}
+.showcase-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:14px;}
+.sc-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.sc-icon{font-size:32px;line-height:1;flex-shrink:0;}
+.sc-name{font-family:var(--display);font-size:20px;font-weight:800;color:var(--text);line-height:1;}
+.sc-desc{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4;}
+.sc-rooms{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;}
+.sc-pill{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:3px 9px;font-size:11px;color:var(--muted);}
+.sc-preview{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:11px;}
+.sc-zone-label{font-family:var(--display);font-size:13px;font-weight:600;color:var(--text);margin-bottom:5px;}
+.sc-task{display:flex;align-items:center;gap:7px;padding:3px 2px;font-family:var(--mono);font-size:12px;color:var(--text);}
+.sc-box{width:13px;height:13px;border:1.5px solid var(--muted);border-radius:2px;flex-shrink:0;display:inline-block;}
+.sc-checked{border-color:var(--accent);background:var(--accent);}
+/* TEMPLATE PICKER */
+#screen-template{align-items:center;justify-content:center;padding:20px;}
+.tpl-wrap{max-width:440px;width:100%;}
+.tpl-wrap h1{font-family:var(--display);font-size:26px;font-weight:800;color:var(--accent);margin-bottom:4px;}
+.tpl-wrap p{font-size:12px;color:var(--muted);margin-bottom:18px;}
+.tpl-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.tpl-card{background:var(--surface);border:2px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent;}
+.tpl-card:active{opacity:.7;transform:scale(.97);}
+.tpl-card:hover{border-color:var(--accent);}
+.tpl-icon{font-size:28px;margin-bottom:6px;}
+.tpl-name{font-family:var(--display);font-size:17px;font-weight:700;color:var(--text);}
+.tpl-desc{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4;}
+.tpl-all{grid-column:span 2;border-color:var(--accent) !important;background:var(--surface2);}
+.tpl-all .tpl-name{color:var(--accent);}
+/* AUTH */
+#screen-auth{align-items:center;justify-content:center;padding:24px;flex:1;}
+.auth-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:26px 22px;max-width:360px;width:100%;}
+.auth-box h1{font-family:var(--display);font-size:24px;font-weight:800;color:var(--accent);margin-bottom:4px;}
+.auth-sub{font-size:12px;color:var(--muted);margin-bottom:18px;line-height:1.5;}
+.auth-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);color:var(--text);font-family:var(--mono);font-size:14px;padding:9px 11px;outline:none;margin-bottom:10px;}
 .auth-input:focus{border-color:var(--accent);}
-.auth-err{color:var(--danger);font-size:12px;margin-bottom:10px;display:none;}
-.btn{font-family:var(--mono);font-size:12px;padding:8px 14px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;transition:all .15s;white-space:nowrap;-webkit-tap-highlight-color:transparent;}
+.auth-err{color:var(--danger);font-size:12px;margin-bottom:8px;display:none;}
+.auth-note{font-size:11px;color:var(--muted);margin-top:10px;text-align:center;line-height:1.5;}
+/* BUTTONS */
+.btn{font-family:var(--mono);font-size:12px;padding:7px 13px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;transition:all .15s;white-space:nowrap;-webkit-tap-highlight-color:transparent;}
 .btn:active{opacity:.7;transform:scale(.97);}
 .btn.primary{background:var(--accent);color:#000;border-color:var(--accent);font-weight:700;}
 .btn.danger{color:var(--danger);border-color:var(--danger);}
-.btn.ghost{background:transparent;border-color:transparent;color:var(--muted);padding:6px 8px;}
+.btn.ghost{background:transparent;border-color:transparent;color:var(--muted);padding:5px 7px;}
 .btn.ghost:hover{color:var(--text);}
 .btn-full{width:100%;}
-.auth-note{font-size:11px;color:var(--muted);margin-top:12px;text-align:center;line-height:1.5;}
-
-/* ── APP ── */
-#screen-app{padding-bottom:80px;}
-header{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--border);padding:12px 16px 10px;}
+/* APP */
+header{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--border);padding:10px 16px 8px;}
 .header-top{display:flex;align-items:center;justify-content:space-between;gap:8px;}
-h1.app-title{font-family:var(--display);font-size:22px;font-weight:800;letter-spacing:1px;color:var(--accent);line-height:1;}
-h1.app-title span{color:var(--muted);font-weight:400;font-size:16px;}
+h1.app-title{font-family:var(--display);font-size:20px;font-weight:800;letter-spacing:1px;color:var(--accent);line-height:1;}
+h1.app-title span{color:var(--muted);font-weight:400;font-size:15px;}
+.header-badges{display:flex;gap:6px;align-items:center;}
 .sync-badge{font-size:11px;padding:3px 8px;border-radius:20px;background:var(--surface2);border:1px solid var(--border);color:var(--muted);white-space:nowrap;transition:all .3s;}
 .sync-badge.saving{color:#facc15;border-color:#facc15;}
 .sync-badge.synced{color:var(--accent);border-color:var(--accent);}
 .sync-badge.error{color:var(--danger);border-color:var(--danger);}
-.stats{display:flex;gap:12px;margin-top:10px;align-items:center;}
+.ro-badge{font-size:11px;padding:3px 8px;border-radius:20px;background:var(--surface2);border:1px solid var(--muted);color:var(--muted);}
+.stats{display:flex;gap:10px;margin-top:8px;align-items:center;}
 .stat{font-size:11px;color:var(--muted);}
-.stat b{color:var(--text);font-family:var(--display);font-size:15px;}
+.stat b{color:var(--text);font-family:var(--display);font-size:14px;}
 .progress-wrap{flex:1;height:5px;background:var(--surface2);border-radius:99px;overflow:hidden;}
 .progress-bar{height:100%;background:var(--accent);border-radius:99px;transition:width .4s ease;}
-.pct-label{font-size:11px;color:var(--accent);font-family:var(--display);font-weight:700;min-width:34px;text-align:right;}
-.toolbar{display:flex;gap:6px;padding:10px 16px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
-main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;}
+.pct-label{font-size:11px;color:var(--accent);font-family:var(--display);font-weight:700;min-width:32px;text-align:right;}
+/* TAB BAR */
+.tab-bar{display:flex;overflow-x:auto;padding:8px 16px;gap:6px;border-bottom:1px solid var(--border);scrollbar-width:none;-ms-overflow-style:none;background:var(--bg);}
+.tab-bar::-webkit-scrollbar{display:none;}
+.tab-pill{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 10px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);cursor:pointer;flex-shrink:0;-webkit-tap-highlight-color:transparent;transition:all .15s;}
+.tab-pill .ti{font-size:16px;line-height:1;}
+.tab-pill .tl{font-size:10px;color:var(--muted);}
+.tab-pill.active{background:var(--accent);border-color:var(--accent);}
+.tab-pill.active .tl{color:#000;font-weight:700;}
+/* TOOLBAR */
+.toolbar{display:flex;gap:6px;padding:8px 16px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;padding-bottom:80px;}
+/* ROOMS */
 .room-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
-.room-header{display:flex;align-items:center;gap:8px;padding:10px 12px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;border-bottom:1px solid transparent;transition:border-color .2s;}
+.room-header{display:flex;align-items:center;gap:8px;padding:9px 12px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;border-bottom:1px solid transparent;transition:border-color .2s;}
 .room-header.open{border-bottom-color:var(--border);}
 .room-chevron{color:var(--muted);font-size:11px;transition:transform .2s;flex-shrink:0;}
 .room-header.open .room-chevron{transform:rotate(90deg);}
-.room-emoji{font-size:18px;flex-shrink:0;line-height:1;}
-.room-name-input{flex:1;background:transparent;border:none;color:var(--text);font-family:var(--display);font-size:17px;font-weight:700;letter-spacing:.5px;outline:none;cursor:text;}
+.room-emoji{font-size:17px;flex-shrink:0;line-height:1;}
+.room-name-input{flex:1;background:transparent;border:none;color:var(--text);font-family:var(--display);font-size:16px;font-weight:700;letter-spacing:.4px;outline:none;}
 .room-name-input::placeholder{color:var(--muted);}
 .room-task-count{font-size:11px;color:var(--muted);flex-shrink:0;}
 .room-task-count.all-done{color:var(--accent);}
-.room-body{display:none;padding:10px 12px 12px;flex-direction:column;gap:12px;}
+.room-body{display:none;padding:10px 12px 12px;flex-direction:column;gap:10px;}
 .room-body.open{display:flex;}
+/* ZONES */
 .zone{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
 .zone-header{display:flex;align-items:center;gap:6px;padding:7px 10px;border-bottom:1px solid var(--border);}
-.zone-emoji{font-size:14px;flex-shrink:0;line-height:1;}
-.zone-name-input{flex:1;background:transparent;border:none;color:var(--text);font-family:var(--display);font-size:14px;font-weight:600;letter-spacing:.3px;outline:none;}
+.zone-emoji{font-size:14px;flex-shrink:0;}
+.zone-name-input{flex:1;background:transparent;border:none;color:var(--text);font-family:var(--display);font-size:13px;font-weight:600;outline:none;}
 .zone-name-input::placeholder{color:var(--muted);}
-.task-list{display:flex;flex-direction:column;}
-.task-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-bottom:1px solid var(--border);transition:background .15s;}
-.task-row:last-child{border-bottom:none;}
-.task-row:hover{background:rgba(255,255,255,.02);}
-.task-check{width:18px;height:18px;border:1.5px solid var(--muted);border-radius:3px;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;-webkit-tap-highlight-color:transparent;}
+/* TASKS */
+.task-item{border-bottom:1px solid var(--border);}
+.task-item:last-child{border-bottom:none;}
+.task-row{display:flex;align-items:center;gap:9px;padding:7px 10px 4px;}
+.task-check{width:17px;height:17px;border:1.5px solid var(--muted);border-radius:3px;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;-webkit-tap-highlight-color:transparent;}
 .task-check.done{border-color:var(--accent);background:var(--accent);}
-.task-check.done::after{content:'';display:block;width:5px;height:9px;border:2px solid #000;border-top:none;border-left:none;transform:rotate(45deg) translate(-1px,-1px);}
-.task-emoji{font-size:14px;flex-shrink:0;line-height:1;min-width:18px;text-align:center;}
-.task-name-input{flex:1;background:transparent;border:none;color:var(--text);font-family:var(--mono);font-size:13px;outline:none;transition:color .2s;}
+.task-check.done::after{content:'';display:block;width:5px;height:8px;border:2px solid #000;border-top:none;border-left:none;transform:rotate(45deg) translate(-1px,-1px);}
+.task-emoji{font-size:13px;flex-shrink:0;line-height:1;min-width:16px;text-align:center;}
+.task-name-input{flex:1;background:transparent;border:none;color:var(--text);font-family:var(--mono);font-size:13px;outline:none;}
 .task-name-input.done{color:var(--muted);text-decoration:line-through;}
 .task-name-input::placeholder{color:var(--muted);}
+.task-note-row{padding:0 10px 6px 46px;}
+.task-note-input{width:100%;background:transparent;border:none;color:var(--muted);font-family:var(--mono);font-size:11px;outline:none;font-style:italic;}
+.task-note-input:focus{color:var(--text);}
+.task-note-input::placeholder{color:var(--border);font-style:italic;}
 .add-row{display:flex;align-items:center;gap:6px;padding:6px 10px;cursor:pointer;color:var(--muted);font-size:12px;transition:color .15s;-webkit-tap-highlight-color:transparent;border-top:1px solid var(--border);}
 .add-row:hover{color:var(--accent);}
 .add-row::before{content:'+';font-size:14px;}
+/* READONLY */
+body.readonly .btn:not(.ro-safe){display:none;}
+body.readonly input,body.readonly textarea{pointer-events:none;}
+body.readonly .add-row{display:none;}
+/* MISC */
 .empty-state{text-align:center;padding:48px 24px;color:var(--muted);}
-.empty-state .big{font-size:48px;margin-bottom:12px;}
+.empty-state .big{font-size:44px;margin-bottom:10px;}
 .empty-state p{font-size:13px;line-height:1.6;}
 #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 16px;border-radius:20px;font-size:12px;transition:transform .3s;z-index:100;pointer-events:none;white-space:nowrap;}
 #toast.show{transform:translateX(-50%) translateY(0);}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center;padding:24px;}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;align-items:center;justify-content:center;padding:24px;}
 .modal-overlay.open{display:flex;}
-.modal{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px;max-width:320px;width:100%;}
-.modal h2{font-family:var(--display);font-size:20px;margin-bottom:8px;color:var(--danger);}
-.modal p{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.5;}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:22px;max-width:320px;width:100%;}
+.modal h2{font-family:var(--display);font-size:19px;margin-bottom:8px;}
+.modal h2.danger{color:var(--danger);}
+.modal h2.safe{color:var(--accent);}
+.modal p{font-size:12px;color:var(--muted);margin-bottom:18px;line-height:1.5;}
 .modal-btns{display:flex;gap:8px;justify-content:flex-end;}
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
@@ -140,580 +160,553 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;}
 </head>
 <body>
 
-<!-- ══ LANDING ════════════════════════════════════════════════════════════ -->
-<div id="screen-landing" class="screen" style="overflow-y:auto;">
-  <div style="max-width:480px;width:100%;margin:0 auto;padding:32px 20px 60px;">
-
-    <div style="text-align:center;margin-bottom:28px;">
-      <div class="land-logo">🧠 TASK CMD</div>
-      <div class="land-sub">Claim a URL, pick a template, set a password. Your space is yours.</div>
+<!-- LANDING -->
+<div id="screen-landing" class="screen">
+<div style="max-width:480px;width:100%;margin:0 auto;padding:28px 18px 60px;">
+<div style="text-align:center;margin-bottom:24px;">
+  <div class="land-logo">🧠 TASK CMD</div>
+  <div class="land-sub">Claim a URL, pick a template, set a password. Your space is yours.</div>
+</div>
+<div class="land-card">
+  <h2>How to claim your space</h2>
+  <div class="land-step"><div class="land-num">1</div><p>Pick a number <b>1–50</b> and visit that URL — e.g. <b>/3</b> or <b>/17</b></p></div>
+  <div class="land-step"><div class="land-num">2</div><p>Choose a template. Your space gets pre-loaded with rooms, zones and tasks instantly.</p></div>
+  <div class="land-step" style="margin-bottom:0"><div class="land-num">3</div><p>Set a password. That URL is now <b>yours forever</b>. Bookmark it.</p></div>
+  <div class="land-urls">e.g. <span>clnuniversal.vercel.app/4</span> &nbsp;·&nbsp; <span>/12</span> &nbsp;·&nbsp; <span>/50</span></div>
+</div>
+<div class="land-card" style="border-color:var(--accent);">
+  <div style="display:flex;gap:12px;align-items:flex-start;">
+    <span style="font-size:26px;flex-shrink:0;">👥</span>
+    <div>
+      <div style="font-family:var(--display);font-size:17px;font-weight:700;margin-bottom:4px;">Personal or Shared</div>
+      <p style="font-size:12px;color:var(--muted);line-height:1.6;">Anyone with your URL can <b style="color:var(--text)">add, remove or modify rooms, zones and tasks</b> — and check items off. Keep it private or share with housemates, family or teammates. All changes sync in real time.</p>
     </div>
-
-    <div class="land-card" style="margin-bottom:28px;">
-      <h2>How to claim your space</h2>
-      <div class="land-step"><div class="land-num">1</div><p>Pick a number <b>1–50</b> and visit that URL — e.g. <b>/3</b> or <b>/17</b></p></div>
-      <div class="land-step"><div class="land-num">2</div><p>Choose a template. Your space gets pre-loaded with rooms, zones and tasks.</p></div>
-      <div class="land-step" style="margin-bottom:0"><div class="land-num">3</div><p>Set a password. That URL is now <b>yours forever</b>. Bookmark it.</p></div>
-      <div class="land-urls">e.g. <span>clnuniversal.vercel.app/4</span> &nbsp;·&nbsp; <span>/12</span> &nbsp;·&nbsp; <span>/50</span></div>
-    </div>
-
-    <!-- Feature callouts -->
-    <div class="land-card" style="margin-bottom:12px;border-color:var(--accent);border-opacity:.3;">
-      <div style="display:flex;gap:14px;align-items:flex-start;">
-        <span style="font-size:28px;line-height:1;flex-shrink:0;">👥</span>
-        <div>
-          <div style="font-family:var(--display);font-size:18px;font-weight:700;color:var(--text);margin-bottom:4px;">Personal or Shared</div>
-          <p style="font-size:12px;color:var(--muted);line-height:1.6;">Anyone you share your URL with can visit and <b style="color:var(--text)">add, remove or modify rooms, zones and tasks</b> — and check off items as they go. Keep it private for solo use, or share it with housemates, family or teammates for real-time collaboration. Every change syncs instantly across all visitors.</p>
+  </div>
+</div>
+<div class="land-card" style="border-color:var(--accent);">
+  <div style="display:flex;gap:12px;align-items:flex-start;">
+    <span style="font-size:26px;flex-shrink:0;">📊</span>
+    <div>
+      <div style="font-family:var(--display);font-size:17px;font-weight:700;margin-bottom:4px;">Progress Tracking</div>
+      <p style="font-size:12px;color:var(--muted);line-height:1.6;">Every <b style="color:var(--text)">☑ checkbox</b> you tick counts toward the <b style="color:var(--accent)">progress bar</b> at the top. Percentage reflects tasks done across all rooms combined. Use <b style="color:var(--text)">🔄 New Month</b> to uncheck all without deleting.</p>
+      <div style="margin-top:10px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
+          <span style="font-size:11px;color:var(--muted);">3 rooms · 12 tasks</span>
+          <div style="flex:1;height:4px;background:var(--border);border-radius:99px;overflow:hidden;"><div style="width:58%;height:100%;background:var(--accent);border-radius:99px;"></div></div>
+          <span style="font-size:12px;color:var(--accent);font-family:var(--display);font-weight:700;">58%</span>
         </div>
-      </div>
-    </div>
-
-    <div class="land-card" style="margin-bottom:28px;border-color:var(--accent);border-opacity:.3;">
-      <div style="display:flex;gap:14px;align-items:flex-start;">
-        <span style="font-size:28px;line-height:1;flex-shrink:0;">📊</span>
-        <div>
-          <div style="font-family:var(--display);font-size:18px;font-weight:700;color:var(--text);margin-bottom:4px;">Progress Tracking</div>
-          <p style="font-size:12px;color:var(--muted);line-height:1.6;">Every <b style="color:var(--text)">☑ checkbox</b> you tick counts toward the <b style="color:var(--accent)">progress bar</b> at the top of your space. The percentage reflects how many tasks are done across all rooms and zones combined. Hit <b style="color:var(--text)">✓ Clear Done</b> to archive completed items and reset for the next round.</p>
-          <!-- Mini progress demo -->
-          <div style="margin-top:12px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px;">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-              <span style="font-size:11px;color:var(--muted);">3 rooms &nbsp;·&nbsp; 12 tasks</span>
-              <div style="flex:1;height:5px;background:var(--border);border-radius:99px;overflow:hidden;">
-                <div style="width:58%;height:100%;background:var(--accent);border-radius:99px;"></div>
-              </div>
-              <span style="font-size:12px;color:var(--accent);font-family:var(--display);font-weight:700;">58%</span>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:4px;">
-              <div style="display:flex;align-items:center;gap:8px;font-size:11px;font-family:var(--mono);">
-                <span style="width:13px;height:13px;border:1.5px solid var(--accent);background:var(--accent);border-radius:2px;display:inline-block;flex-shrink:0;"></span>
-                <span style="text-decoration:line-through;color:var(--muted);">🌀 Vaccum & mop</span>
-                <span style="color:var(--accent);font-size:10px;margin-left:auto;">✓ counts</span>
-              </div>
-              <div style="display:flex;align-items:center;gap:8px;font-size:11px;font-family:var(--mono);">
-                <span style="width:13px;height:13px;border:1.5px solid var(--muted);border-radius:2px;display:inline-block;flex-shrink:0;"></span>
-                <span style="color:var(--text);">💨 Dust</span>
-                <span style="color:var(--muted);font-size:10px;margin-left:auto;">pending</span>
-              </div>
-              <div style="display:flex;align-items:center;gap:8px;font-size:11px;font-family:var(--mono);">
-                <span style="width:13px;height:13px;border:1.5px solid var(--muted);border-radius:2px;display:inline-block;flex-shrink:0;"></span>
-                <span style="color:var(--text);">🧱 Walls</span>
-                <span style="color:var(--muted);font-size:10px;margin-left:auto;">pending</span>
-              </div>
-            </div>
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <div style="display:flex;align-items:center;gap:7px;font-size:11px;font-family:var(--mono);">
+            <span style="width:12px;height:12px;border:1.5px solid var(--accent);background:var(--accent);border-radius:2px;display:inline-block;flex-shrink:0;"></span>
+            <span style="text-decoration:line-through;color:var(--muted);">🌀 Vaccum & mop</span>
+            <span style="color:var(--accent);font-size:10px;margin-left:auto;">✓ counts</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:7px;font-size:11px;font-family:var(--mono);">
+            <span style="width:12px;height:12px;border:1.5px solid var(--muted);border-radius:2px;display:inline-block;flex-shrink:0;"></span>
+            <span style="color:var(--text);">💨 Dust</span>
+            <span style="color:var(--muted);font-size:10px;margin-left:auto;">pending</span>
           </div>
         </div>
       </div>
     </div>
-
-    <div style="font-family:var(--display);font-size:22px;font-weight:800;color:var(--accent);margin-bottom:16px;letter-spacing:1px;">📋 AVAILABLE TEMPLATES</div>
-
-    <!-- CLEANING -->
-    <div class="showcase-card">
-      <div class="sc-header"><span class="sc-icon">🧹</span><div><div class="sc-name">Cleaning</div><div class="sc-desc">Household rooms, zones and tasks. Great for shared houses.</div></div></div>
-      <div class="sc-rooms">
-        <span class="sc-pill">🛋️ Living Room</span><span class="sc-pill">🍳 Kitchen</span><span class="sc-pill">🛁 Bathroom</span><span class="sc-pill">🛏️ Bedroom</span><span class="sc-pill">🫧 Laundry</span><span class="sc-pill">🚪 Hallway</span><span class="sc-pill">🚗 Garage</span><span class="sc-pill">🌳 Backyard</span><span class="sc-pill">🏡 Front Yard</span>
-      </div>
-      <div class="sc-preview">
-        <div class="sc-zone-label">📺 TV Area</div>
-        <div class="sc-task"><span class="sc-box"></span><span>☕</span> Clear coffee table</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🗑️</span> Throw away trash</div>
-        <div class="sc-zone-label" style="margin-top:8px">🗂️ General</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🌀</span> Vaccum & mop</div>
-        <div class="sc-task"><span class="sc-box"></span><span>💨</span> Dust</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🧱</span> Walls</div>
-        <div class="sc-zone-label" style="margin-top:8px">🗂️ Bathroom Zone</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🫧</span> Shower glass</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🚽</span> Toilet</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🪞</span> Mirror</div>
-      </div>
-    </div>
-
-    <!-- BILLS -->
-    <div class="showcase-card">
-      <div class="sc-header"><span class="sc-icon">💰</span><div><div class="sc-name">Budget & Finance</div><div class="sc-desc">Full financial planning — bills, calendar, debts, savings goals, income & spending.</div></div></div>
-      <div class="sc-rooms">
-        <span class="sc-pill">📅 Bill Calendar</span><span class="sc-pill">📋 Fixed Bills</span><span class="sc-pill">📺 Subscriptions</span><span class="sc-pill">💳 Debts & Owed</span><span class="sc-pill">🏦 Savings Goals</span><span class="sc-pill">💵 Income</span><span class="sc-pill">🛒 Variable Expenses</span><span class="sc-pill">📝 Financial To-Do</span>
-      </div>
-      <div class="sc-preview">
-        <div class="sc-zone-label">📆 Monthly — Start of Month</div>
-        <div class="sc-task"><span class="sc-box sc-checked"></span><span>🏠</span> <span style="text-decoration:line-through;opacity:.5">Rent / Mortgage — Due 1st</span></div>
-        <div class="sc-task"><span class="sc-box"></span><span>🌐</span> Internet / NBN — Due 18th</div>
-        <div class="sc-task"><span class="sc-box"></span><span>💳</span> Credit card — Due 28th</div>
-        <div class="sc-zone-label" style="margin-top:8px">🆘 Emergency Fund</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🆘</span> 3 months expenses target</div>
-        <div class="sc-zone-label" style="margin-top:8px">🎯 Short Term Goals</div>
-        <div class="sc-task"><span class="sc-box"></span><span>✈️</span> Holiday fund</div>
-        <div class="sc-task"><span class="sc-box"></span><span>📱</span> New phone / tech</div>
-        <div class="sc-zone-label" style="margin-top:8px">🤝 Owes Me</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🤝</span> [Name] — $50</div>
-        <div class="sc-zone-label" style="margin-top:8px">🔍 Review</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🔍</span> Compare electricity providers</div>
-        <div class="sc-task"><span class="sc-box"></span><span>❌</span> Cancel unused subscriptions</div>
-      </div>
-    </div>
-
-    <!-- SHOPPING -->
-    <div class="showcase-card">
-      <div class="sc-header"><span class="sc-icon">🛒</span><div><div class="sc-name">Shopping</div><div class="sc-desc">Grocery & household list. Type any ingredient and get a matching emoji.</div></div></div>
-      <div class="sc-rooms">
-        <span class="sc-pill">🥦 Fresh Produce</span><span class="sc-pill">🥩 Meat & Seafood</span><span class="sc-pill">🥛 Dairy & Eggs</span><span class="sc-pill">🍞 Bakery</span><span class="sc-pill">🗄️ Pantry</span><span class="sc-pill">🥤 Drinks</span><span class="sc-pill">🧴 Household</span>
-      </div>
-      <div class="sc-preview">
-        <div class="sc-zone-label">🍎 Fruit</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🍎</span> Apples</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🍌</span> Bananas</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🫐</span> Blueberries</div>
-        <div class="sc-zone-label" style="margin-top:8px">🥦 Vegetables</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🍅</span> Tomatoes</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🥕</span> Carrots</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🧄</span> Garlic</div>
-        <div class="sc-zone-label" style="margin-top:8px">🥛 Dairy</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🥛</span> Milk</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🧀</span> Cheese</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🥚</span> Eggs</div>
-      </div>
-    </div>
-
-    <!-- MEALS -->
-    <div class="showcase-card">
-      <div class="sc-header"><span class="sc-icon">🍳</span><div><div class="sc-name">Meal Planning</div><div class="sc-desc">Plan every meal for the full week. Includes a meal prep section.</div></div></div>
-      <div class="sc-rooms">
-        <span class="sc-pill">1️⃣ Monday</span><span class="sc-pill">2️⃣ Tuesday</span><span class="sc-pill">3️⃣ Wednesday</span><span class="sc-pill">4️⃣ Thursday</span><span class="sc-pill">5️⃣ Friday</span><span class="sc-pill">6️⃣ Saturday</span><span class="sc-pill">7️⃣ Sunday</span><span class="sc-pill">🍱 Meal Prep</span>
-      </div>
-      <div class="sc-preview">
-        <div class="sc-zone-label">1️⃣ Monday</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🌅</span> Breakfast — Oats & fruit</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🌤️</span> Lunch — Chicken wrap</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🌙</span> Dinner — Pasta bolognese</div>
-        <div class="sc-zone-label" style="margin-top:8px">🍱 Batch Cook</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🍚</span> Cook rice</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🥕</span> Prep vegetables</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🥩</span> Marinate protein</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🍅</span> Make pasta sauce</div>
-      </div>
-    </div>
-
-    <!-- GAMING -->
-    <div class="showcase-card">
-      <div class="sc-header"><span class="sc-icon">🎮</span><div><div class="sc-name">Gaming</div><div class="sc-desc">Track game progress, objectives, collectibles, trophies and your backlog.</div></div></div>
-      <div class="sc-rooms">
-        <span class="sc-pill">🎮 Currently Playing</span><span class="sc-pill">📋 Backlog</span><span class="sc-pill">⭐ Wish List</span><span class="sc-pill">🏆 Completed</span><span class="sc-pill">📦 DLC & Expansions</span>
-      </div>
-      <div class="sc-preview">
-        <div class="sc-zone-label">📖 Main Story</div>
-        <div class="sc-task"><span class="sc-box"></span><span>📑</span> Act 1 complete</div>
-        <div class="sc-task"><span class="sc-box"></span><span>📑</span> Act 2 complete</div>
-        <div class="sc-task"><span class="sc-box"></span><span>💀</span> Final boss</div>
-        <div class="sc-task"><span class="sc-box sc-checked"></span><span>🎬</span> <span style="text-decoration:line-through;opacity:.5">Ending</span></div>
-        <div class="sc-zone-label" style="margin-top:8px">💎 Collectibles</div>
-        <div class="sc-task"><span class="sc-box"></span><span>💎</span> Collectible set 1</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🗝️</span> Secret area 1</div>
-        <div class="sc-zone-label" style="margin-top:8px">🏆 Trophies & Achievements</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🥉</span> Bronze set</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🥈</span> Silver set</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🏅</span> Platinum / 100%</div>
-      </div>
-    </div>
-
-    <!-- PET CARE -->
-    <div class="showcase-card">
-      <div class="sc-header"><span class="sc-icon">🐾</span><div><div class="sc-name">Pet Care</div><div class="sc-desc">Daily routines, health tracking and supply management for up to 3 pets.</div></div></div>
-      <div class="sc-rooms">
-        <span class="sc-pill">🐾 Pet 1</span><span class="sc-pill">🐾 Pet 2</span><span class="sc-pill">🐾 Pet 3</span><span class="sc-pill">🛒 Supplies</span>
-      </div>
-      <div class="sc-preview">
-        <div class="sc-zone-label">⭐ Daily Care</div>
-        <div class="sc-task"><span class="sc-box sc-checked"></span><span>🍽️</span> <span style="text-decoration:line-through;opacity:.5">Morning feed</span></div>
-        <div class="sc-task"><span class="sc-box"></span><span>🍽️</span> Evening feed</div>
-        <div class="sc-task"><span class="sc-box"></span><span>💧</span> Fresh water</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🧹</span> Clean litter box</div>
-        <div class="sc-zone-label" style="margin-top:8px">❤️ Health</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🦟</span> Flea treatment</div>
-        <div class="sc-task"><span class="sc-box"></span><span>💊</span> Worming tablet</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🏥</span> Vet checkup</div>
-        <div class="sc-zone-label" style="margin-top:8px">✂️ Grooming</div>
-        <div class="sc-task"><span class="sc-box"></span><span>✂️</span> Brush coat</div>
-        <div class="sc-task"><span class="sc-box"></span><span>✂️</span> Trim nails</div>
-      </div>
-    </div>
-
   </div>
 </div>
-
-<!-- ══ TEMPLATE PICKER ════════════════════════════════════════════════════ -->
-<div id="screen-template" class="screen">
-  <div style="padding:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;">
-    <div class="tpl-wrap">
-      <h1>🧠 TASK CMD</h1>
-      <p id="tpl-space-label">Choose a template for your space</p>
-      <div class="tpl-grid">
-        <div class="tpl-card" onclick="selectTemplate('cleaning')">
-          <div class="tpl-icon">🧹</div>
-          <div class="tpl-name">Cleaning</div>
-          <div class="tpl-desc">Rooms, zones & household tasks</div>
-        </div>
-        <div class="tpl-card" onclick="selectTemplate('bills')">
-          <div class="tpl-icon">💰</div>
-          <div class="tpl-name">Budget & Finance</div>
-          <div class="tpl-desc">Bills, savings, debts, income & financial planning</div>
-        </div>
-        <div class="tpl-card" onclick="selectTemplate('shopping')">
-          <div class="tpl-icon">🛒</div>
-          <div class="tpl-name">Shopping</div>
-          <div class="tpl-desc">Grocery & household goods list</div>
-        </div>
-        <div class="tpl-card" onclick="selectTemplate('meals')">
-          <div class="tpl-icon">🍳</div>
-          <div class="tpl-name">Meal Planning</div>
-          <div class="tpl-desc">Weekly meals & meal prep</div>
-        </div>
-        <div class="tpl-card" onclick="selectTemplate('games')">
-          <div class="tpl-icon">🎮</div>
-          <div class="tpl-name">Gaming</div>
-          <div class="tpl-desc">Progress, objectives, collectibles & backlog</div>
-        </div>
-        <div class="tpl-card" onclick="selectTemplate('petcare')">
-          <div class="tpl-icon">🐾</div>
-          <div class="tpl-name">Pet Care</div>
-          <div class="tpl-desc">Feeding, health, grooming & supplies</div>
-        </div>
-      </div>
-    </div>
+<div style="font-family:var(--display);font-size:20px;font-weight:800;color:var(--accent);margin:20px 0 14px;letter-spacing:1px;">📋 AVAILABLE TEMPLATES</div>
+<!-- Cleaning -->
+<div class="showcase-card">
+  <div class="sc-header"><span class="sc-icon">🧹</span><div><div class="sc-name">Cleaning</div><div class="sc-desc">Household rooms, zones and tasks for any shared home.</div></div></div>
+  <div class="sc-rooms"><span class="sc-pill">🛋️ Living Room</span><span class="sc-pill">🍳 Kitchen</span><span class="sc-pill">🛁 Bathroom</span><span class="sc-pill">🛏️ Bedroom</span><span class="sc-pill">🫧 Laundry</span><span class="sc-pill">🚪 Hallway</span><span class="sc-pill">🚗 Garage</span><span class="sc-pill">🌳 Backyard</span><span class="sc-pill">🏡 Front Yard</span></div>
+  <div class="sc-preview">
+    <div class="sc-zone-label">📺 TV Area</div>
+    <div class="sc-task"><span class="sc-box"></span><span>☕</span> Clear coffee table</div>
+    <div class="sc-task"><span class="sc-box sc-checked"></span><span>🌀</span> <span style="text-decoration:line-through;opacity:.5">Vaccum & mop</span></div>
+    <div class="sc-zone-label" style="margin-top:7px">🗂️ Kitchen — Sink & Dishes</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🍽️</span> Do dishes</div>
+    <div class="sc-task"><span class="sc-box"></span><span>💧</span> Clean sink</div>
   </div>
 </div>
-
-<!-- ══ AUTH ══════════════════════════════════════════════════════════════ -->
-<div id="screen-auth" class="screen">
-  <div style="display:flex;align-items:center;justify-content:center;flex:1;padding:24px;">
-    <div class="auth-box">
-      <h1 id="auth-title">Set Password</h1>
-      <p class="auth-sub" id="auth-sub">Choose a password to lock this space. You'll need it every time you visit.</p>
-      <input class="auth-input" type="password" id="auth-pwd" placeholder="Password" onkeydown="if(event.key==='Enter')authConfirmInput.focus()"/>
-      <input class="auth-input" type="password" id="auth-confirm" placeholder="Confirm password" style="display:none" onkeydown="if(event.key==='Enter')submitAuth()"/>
-      <div class="auth-err" id="auth-err"></div>
-      <button class="btn primary btn-full" onclick="submitAuth()">Continue</button>
-      <p class="auth-note" id="auth-note">No recovery option. Don't forget it.</p>
-    </div>
+<!-- Budget -->
+<div class="showcase-card">
+  <div class="sc-header"><span class="sc-icon">💰</span><div><div class="sc-name">Budget & Finance</div><div class="sc-desc">Bills calendar, savings goals, debts, income & spending tracker.</div></div></div>
+  <div class="sc-rooms"><span class="sc-pill">📅 Bill Calendar</span><span class="sc-pill">📋 Fixed Bills</span><span class="sc-pill">📺 Subscriptions</span><span class="sc-pill">💳 Debts & Owed</span><span class="sc-pill">🏦 Savings Goals</span><span class="sc-pill">💵 Income</span><span class="sc-pill">🛒 Variable Expenses</span><span class="sc-pill">📝 Financial To-Do</span></div>
+  <div class="sc-preview">
+    <div class="sc-zone-label">📆 Monthly — Start of Month</div>
+    <div class="sc-task"><span class="sc-box sc-checked"></span><span>🏠</span> <span style="text-decoration:line-through;opacity:.5">Rent / Mortgage — Due 1st</span></div>
+    <div class="sc-task"><span class="sc-box"></span><span>🌐</span> Internet — Due 18th</div>
+    <div class="sc-zone-label" style="margin-top:7px">🆘 Emergency Fund</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🆘</span> 3 months expenses target</div>
+    <div class="sc-zone-label" style="margin-top:7px">🤝 Owes Me</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🤝</span> [Name] — $50</div>
   </div>
 </div>
+<!-- Shopping -->
+<div class="showcase-card">
+  <div class="sc-header"><span class="sc-icon">🛒</span><div><div class="sc-name">Shopping</div><div class="sc-desc">Grocery & household list. Type any ingredient for a matching emoji.</div></div></div>
+  <div class="sc-rooms"><span class="sc-pill">🥦 Fresh Produce</span><span class="sc-pill">🥩 Meat</span><span class="sc-pill">🥛 Dairy</span><span class="sc-pill">🍞 Bakery</span><span class="sc-pill">🗄️ Pantry</span><span class="sc-pill">🥤 Drinks</span><span class="sc-pill">🧴 Household</span></div>
+  <div class="sc-preview">
+    <div class="sc-zone-label">🍎 Fruit</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🍎</span> Apples</div>
+    <div class="sc-task"><span class="sc-box sc-checked"></span><span>🍌</span> <span style="text-decoration:line-through;opacity:.5">Bananas</span></div>
+    <div class="sc-zone-label" style="margin-top:7px">🥦 Vegetables</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🍅</span> Tomatoes</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🧄</span> Garlic</div>
+  </div>
+</div>
+<!-- Meals -->
+<div class="showcase-card">
+  <div class="sc-header"><span class="sc-icon">🍳</span><div><div class="sc-name">Meal Planning</div><div class="sc-desc">Plan every meal Mon–Sun with a meal prep section.</div></div></div>
+  <div class="sc-rooms"><span class="sc-pill">1️⃣ Monday</span><span class="sc-pill">2️⃣ Tuesday</span><span class="sc-pill">3️⃣ Wednesday</span><span class="sc-pill">4️⃣ Thursday</span><span class="sc-pill">5️⃣ Friday</span><span class="sc-pill">6️⃣ Saturday</span><span class="sc-pill">7️⃣ Sunday</span><span class="sc-pill">🍱 Meal Prep</span></div>
+  <div class="sc-preview">
+    <div class="sc-zone-label">1️⃣ Monday</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🌅</span> Breakfast — Oats & fruit</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🌤️</span> Lunch — Chicken wrap</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🌙</span> Dinner — Pasta bolognese</div>
+  </div>
+</div>
+<!-- Gaming -->
+<div class="showcase-card">
+  <div class="sc-header"><span class="sc-icon">🎮</span><div><div class="sc-name">Gaming</div><div class="sc-desc">Progress, objectives, collectibles, trophies and backlog.</div></div></div>
+  <div class="sc-rooms"><span class="sc-pill">🎮 Currently Playing</span><span class="sc-pill">📋 Backlog</span><span class="sc-pill">⭐ Wish List</span><span class="sc-pill">🏆 Completed</span><span class="sc-pill">📦 DLC</span></div>
+  <div class="sc-preview">
+    <div class="sc-zone-label">📖 Main Story</div>
+    <div class="sc-task"><span class="sc-box sc-checked"></span><span>📑</span> <span style="text-decoration:line-through;opacity:.5">Act 1 complete</span></div>
+    <div class="sc-task"><span class="sc-box"></span><span>💀</span> Final boss</div>
+    <div class="sc-zone-label" style="margin-top:7px">💎 Collectibles</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🗝️</span> Secret area 1</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🏅</span> Platinum / 100%</div>
+  </div>
+</div>
+<!-- Pet Care -->
+<div class="showcase-card">
+  <div class="sc-header"><span class="sc-icon">🐾</span><div><div class="sc-name">Pet Care</div><div class="sc-desc">Daily care, health tracking and supplies for up to 3 pets.</div></div></div>
+  <div class="sc-rooms"><span class="sc-pill">🐾 Pet 1</span><span class="sc-pill">🐾 Pet 2</span><span class="sc-pill">🐾 Pet 3</span><span class="sc-pill">🛒 Supplies</span></div>
+  <div class="sc-preview">
+    <div class="sc-zone-label">⭐ Daily Care</div>
+    <div class="sc-task"><span class="sc-box sc-checked"></span><span>🍽️</span> <span style="text-decoration:line-through;opacity:.5">Morning feed</span></div>
+    <div class="sc-task"><span class="sc-box"></span><span>💧</span> Fresh water</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🧹</span> Clean litter box</div>
+    <div class="sc-zone-label" style="margin-top:7px">❤️ Health</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🦟</span> Flea treatment</div>
+  </div>
+</div>
+<!-- Car -->
+<div class="showcase-card">
+  <div class="sc-header"><span class="sc-icon">🚗</span><div><div class="sc-name">Car Maintenance</div><div class="sc-desc">Service history, upcoming work, rego, insurance and cleaning.</div></div></div>
+  <div class="sc-rooms"><span class="sc-pill">🔧 Service History</span><span class="sc-pill">⏰ Upcoming</span><span class="sc-pill">📋 Rego & Insurance</span><span class="sc-pill">🛞 Tyres & Safety</span><span class="sc-pill">⛽ Fuel & Costs</span><span class="sc-pill">✨ Car Cleaning</span></div>
+  <div class="sc-preview">
+    <div class="sc-zone-label">⏰ Upcoming Service</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🔧</span> Next service due</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🛞</span> Tyre rotation due</div>
+    <div class="sc-zone-label" style="margin-top:7px">📋 Registration</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🚗</span> Car rego expiry</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🛡️</span> Car insurance renewal</div>
+  </div>
+</div>
+<!-- Study -->
+<div class="showcase-card">
+  <div class="sc-header"><span class="sc-icon">📚</span><div><div class="sc-name">Study & Courses</div><div class="sc-desc">Modules, reading lists, projects, notes and learning goals.</div></div></div>
+  <div class="sc-rooms"><span class="sc-pill">📖 Current Course</span><span class="sc-pill">📚 Reading List</span><span class="sc-pill">🔨 Projects</span><span class="sc-pill">📝 Notes Review</span><span class="sc-pill">🎯 Goals</span></div>
+  <div class="sc-preview">
+    <div class="sc-zone-label">📖 Current Course</div>
+    <div class="sc-task"><span class="sc-box sc-checked"></span><span>📑</span> <span style="text-decoration:line-through;opacity:.5">Module 1 complete</span></div>
+    <div class="sc-task"><span class="sc-box"></span><span>📑</span> Module 2 complete</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🔨</span> Build project 1</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🏆</span> Get certificate</div>
+  </div>
+</div>
+<!-- Travel -->
+<div class="showcase-card">
+  <div class="sc-header"><span class="sc-icon">✈️</span><div><div class="sc-name">Travel Planning</div><div class="sc-desc">Bookings, packing, itinerary, pre-departure and budget.</div></div></div>
+  <div class="sc-rooms"><span class="sc-pill">📋 Bookings & Docs</span><span class="sc-pill">🧳 Packing</span><span class="sc-pill">🗺️ Itinerary</span><span class="sc-pill">🏠 Pre-Departure</span><span class="sc-pill">💰 Trip Budget</span></div>
+  <div class="sc-preview">
+    <div class="sc-zone-label">📋 Bookings & Docs</div>
+    <div class="sc-task"><span class="sc-box sc-checked"></span><span>✈️</span> <span style="text-decoration:line-through;opacity:.5">Book flights</span></div>
+    <div class="sc-task"><span class="sc-box"></span><span>🏨</span> Book accommodation</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🛂</span> Passport valid</div>
+    <div class="sc-zone-label" style="margin-top:7px">🧳 Packing</div>
+    <div class="sc-task"><span class="sc-box"></span><span>👕</span> Clothes</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🔌</span> Travel adapter</div>
+  </div>
+</div>
+<!-- Health -->
+<div class="showcase-card">
+  <div class="sc-header"><span class="sc-icon">❤️</span><div><div class="sc-name">Health & Wellness</div><div class="sc-desc">Appointments, meds, exercise, mental health and wellness goals.</div></div></div>
+  <div class="sc-rooms"><span class="sc-pill">🏥 Appointments</span><span class="sc-pill">💊 Medications</span><span class="sc-pill">🏋️ Exercise</span><span class="sc-pill">🧘 Mental Health</span><span class="sc-pill">🎯 Wellness Goals</span></div>
+  <div class="sc-preview">
+    <div class="sc-zone-label">🏥 Appointments</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🏥</span> GP checkup</div>
+    <div class="sc-task"><span class="sc-box sc-checked"></span><span>🦷</span> <span style="text-decoration:line-through;opacity:.5">Dentist</span></div>
+    <div class="sc-zone-label" style="margin-top:7px">🎯 Wellness Goals</div>
+    <div class="sc-task"><span class="sc-box"></span><span>💧</span> Drink 2L water daily</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🚶</span> 10k steps daily</div>
+  </div>
+</div>
+<!-- All Templates -->
+<div class="showcase-card" style="border-color:var(--accent);background:var(--surface2);">
+  <div class="sc-header"><span class="sc-icon">⚡</span><div><div class="sc-name" style="color:var(--accent);">ALL TEMPLATES</div><div class="sc-desc">Every category in one space. Swipe between tabs. One URL for everything.</div></div></div>
+  <div style="display:flex;flex-wrap:wrap;gap:5px;">
+    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">🧹 Clean</span>
+    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">💰 Budget</span>
+    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">🛒 Shop</span>
+    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">🍳 Meals</span>
+    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">🎮 Games</span>
+    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">🐾 Pets</span>
+    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">🚗 Car</span>
+    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">📚 Study</span>
+    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">✈️ Travel</span>
+    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">❤️ Health</span>
+  </div>
+</div>
+</div>
+</div>
 
-<!-- ══ APP ════════════════════════════════════════════════════════════════ -->
+<!-- TEMPLATE PICKER -->
+<div id="screen-template" class="screen" style="overflow-y:auto;">
+<div style="padding:20px;display:flex;flex-direction:column;align-items:center;flex:1;">
+<div class="tpl-wrap">
+<h1>🧠 TASK CMD</h1>
+<p id="tpl-space-label">Choose a template for your space</p>
+<div class="tpl-grid">
+  <div class="tpl-card" onclick="selectTemplate('cleaning')"><div class="tpl-icon">🧹</div><div class="tpl-name">Cleaning</div><div class="tpl-desc">Household rooms, zones & tasks</div></div>
+  <div class="tpl-card" onclick="selectTemplate('bills')"><div class="tpl-icon">💰</div><div class="tpl-name">Budget & Finance</div><div class="tpl-desc">Bills, savings, debts & income</div></div>
+  <div class="tpl-card" onclick="selectTemplate('shopping')"><div class="tpl-icon">🛒</div><div class="tpl-name">Shopping</div><div class="tpl-desc">Groceries & household goods</div></div>
+  <div class="tpl-card" onclick="selectTemplate('meals')"><div class="tpl-icon">🍳</div><div class="tpl-name">Meal Planning</div><div class="tpl-desc">Weekly meals & meal prep</div></div>
+  <div class="tpl-card" onclick="selectTemplate('gaming')"><div class="tpl-icon">🎮</div><div class="tpl-name">Gaming</div><div class="tpl-desc">Progress, collectibles & backlog</div></div>
+  <div class="tpl-card" onclick="selectTemplate('petcare')"><div class="tpl-icon">🐾</div><div class="tpl-name">Pet Care</div><div class="tpl-desc">Feeding, health & grooming</div></div>
+  <div class="tpl-card" onclick="selectTemplate('car')"><div class="tpl-icon">🚗</div><div class="tpl-name">Car Maintenance</div><div class="tpl-desc">Service, rego & tyres</div></div>
+  <div class="tpl-card" onclick="selectTemplate('study')"><div class="tpl-icon">📚</div><div class="tpl-name">Study & Courses</div><div class="tpl-desc">Modules, projects & goals</div></div>
+  <div class="tpl-card" onclick="selectTemplate('travel')"><div class="tpl-icon">✈️</div><div class="tpl-name">Travel Planning</div><div class="tpl-desc">Bookings, packing & itinerary</div></div>
+  <div class="tpl-card" onclick="selectTemplate('health')"><div class="tpl-icon">❤️</div><div class="tpl-name">Health & Wellness</div><div class="tpl-desc">Appointments, exercise & goals</div></div>
+  <div class="tpl-card tpl-all" onclick="selectTemplate('all')"><div class="tpl-icon">⚡</div><div class="tpl-name">ALL TEMPLATES</div><div class="tpl-desc">Every category in one space — swipe between tabs</div></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- AUTH -->
+<div id="screen-auth" class="screen" style="align-items:center;justify-content:center;flex:1;">
+<div class="auth-box">
+  <h1 id="auth-title">Set Password</h1>
+  <p class="auth-sub" id="auth-sub">Choose a password to lock this space.</p>
+  <input class="auth-input" type="password" id="auth-pwd" placeholder="Password" onkeydown="if(event.key==='Enter')document.getElementById('auth-confirm').focus()"/>
+  <input class="auth-input" type="password" id="auth-confirm" placeholder="Confirm password" style="display:none" onkeydown="if(event.key==='Enter')submitAuth()"/>
+  <div class="auth-err" id="auth-err"></div>
+  <button class="btn primary btn-full" onclick="submitAuth()">Continue</button>
+  <p class="auth-note" id="auth-note">⚠ No recovery option. Don't forget it.</p>
+</div>
+</div>
+
+<!-- APP -->
 <div id="screen-app" class="screen">
-  <header>
-    <div class="header-top">
-      <h1 class="app-title">🧠 TASK <span>CMD</span></h1>
+<header>
+  <div class="header-top">
+    <h1 class="app-title">🧠 TASK <span id="appTitleSub">CMD</span></h1>
+    <div class="header-badges">
+      <span id="roBadge" class="ro-badge" style="display:none">👁 View Only</span>
       <span id="syncBadge" class="sync-badge">Loading…</span>
     </div>
-    <div class="stats">
-      <div class="stat"><b id="statRooms">0</b> rooms</div>
-      <div class="stat"><b id="statTasks">0</b> tasks</div>
-      <div class="progress-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
-      <div class="pct-label" id="pctLabel">0%</div>
-    </div>
-  </header>
-  <div class="toolbar">
-    <button class="btn primary" onclick="addRoom()">＋ Add Room</button>
-    <button class="btn" onclick="expandAll()">📂 Expand</button>
-    <button class="btn" onclick="collapseAll()">📁 Collapse</button>
-    <button class="btn" onclick="clearCompleted()">✓ Clear Done</button>
-    <button class="btn danger" onclick="openReset()">🗑 Reset</button>
   </div>
-  <main id="main"></main>
+  <div class="stats">
+    <div class="stat"><b id="statRooms">0</b> rooms</div>
+    <div class="stat"><b id="statTasks">0</b> tasks</div>
+    <div class="progress-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+    <div class="pct-label" id="pctLabel">0%</div>
+  </div>
+</header>
+<div id="tab-bar" class="tab-bar" style="display:none"></div>
+<div class="toolbar">
+  <button class="btn primary" onclick="addRoom()">＋ Room</button>
+  <button class="btn" onclick="expandAll()">📂</button>
+  <button class="btn" onclick="collapseAll()">📁</button>
+  <button class="btn" onclick="clearCompleted()">✓ Clear</button>
+  <button class="btn" onclick="openMonthReset()">🔄 New Month</button>
+  <button class="btn" onclick="copyShareLink()">🔗 Share</button>
+  <button class="btn danger" onclick="openReset()">🗑</button>
+</div>
+<main id="main"></main>
 </div>
 
 <div id="toast"></div>
 <div class="modal-overlay" id="resetModal">
-  <div class="modal">
-    <h2>⚠ Reset Everything?</h2>
-    <p>Wipes all rooms, zones and tasks for this space. No undo.</p>
-    <div class="modal-btns">
-      <button class="btn" onclick="closeReset()">Cancel</button>
-      <button class="btn danger" onclick="confirmReset()">Yes, Reset</button>
-    </div>
-  </div>
+  <div class="modal"><h2 class="danger">⚠ Reset Everything?</h2><p>Wipes all rooms, zones and tasks. No undo.</p>
+  <div class="modal-btns"><button class="btn" onclick="closeReset()">Cancel</button><button class="btn danger" onclick="confirmReset()">Yes, Reset</button></div></div>
+</div>
+<div class="modal-overlay" id="monthResetModal">
+  <div class="modal"><h2 class="safe">🔄 New Month?</h2><p>Unchecks all tasks without deleting anything. Perfect for a monthly reset.</p>
+  <div class="modal-btns"><button class="btn" onclick="closeMonthReset()">Cancel</button><button class="btn primary" onclick="confirmMonthReset()">Reset Progress</button></div></div>
 </div>
 
 <script>
-// ══════════════════════════════════════════════════════════════════════════
-// ROUTER
-// ══════════════════════════════════════════════════════════════════════════
-const PATH_MATCH = window.location.pathname.match(/^\/(\d+)$/);
-const SPACE_ID   = PATH_MATCH ? parseInt(PATH_MATCH[1]) : null;
+// ── CONSTANTS ────────────────────────────────────────────────────────────────
+const PM = window.location.pathname.match(/^\/(\d+)$/);
+const SPACE_ID = PM ? parseInt(PM[1]) : null;
+const IS_READONLY = new URLSearchParams(window.location.search).get('view')==='1';
+if (SPACE_ID && (SPACE_ID<1||SPACE_ID>50)) window.location.href='/';
 
-if (SPACE_ID !== null && (SPACE_ID < 1 || SPACE_ID > 50)) {
-  window.location.href = '/';
+const THEMES = {
+  cleaning:'#c8ff57', bills:'#fbbf24', shopping:'#60a5fa', meals:'#fb923c',
+  gaming:'#a78bfa',   petcare:'#f472b6', car:'#f87171',   study:'#34d399',
+  travel:'#38bdf8',   health:'#fb7185',  all:'#c8ff57',
+};
+const TAB_META = {
+  cleaning:{icon:'🧹',short:'Clean'}, bills:{icon:'💰',short:'Budget'},
+  shopping:{icon:'🛒',short:'Shop'},  meals:{icon:'🍳',short:'Meals'},
+  gaming:{icon:'🎮',short:'Games'},   petcare:{icon:'🐾',short:'Pets'},
+  car:{icon:'🚗',short:'Car'},        study:{icon:'📚',short:'Study'},
+  travel:{icon:'✈️',short:'Travel'}, health:{icon:'❤️',short:'Health'},
+};
+const TAB_ORDER=['cleaning','bills','shopping','meals','gaming','petcare','car','study','travel','health'];
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+let state={rooms:[],version:0};
+let passwordHash = SPACE_ID ? (sessionStorage.getItem(`pwd-${SPACE_ID}`)||null) : null;
+let selectedTpl=null, authMode='setup';
+let saveTimer=null, pollTimer=null, hasPendingChanges=false, lastKnownVersion=0;
+
+// ── THEME ────────────────────────────────────────────────────────────────────
+function applyTheme(tpl){
+  const c=THEMES[tpl]||THEMES.cleaning;
+  document.documentElement.style.setProperty('--accent',c);
+}
+function detectTheme(){
+  if(state.type==='all') return state.activeTab||'cleaning';
+  return state.template||'cleaning';
 }
 
-// ══════════════════════════════════════════════════════════════════════════
-// STATE
-// ══════════════════════════════════════════════════════════════════════════
-let state           = { rooms: [], version: 0 };
-let passwordHash    = SPACE_ID ? (sessionStorage.getItem(`pwd-${SPACE_ID}`) || null) : null;
-let selectedTpl     = null;
-let authMode        = 'setup'; // 'setup' | 'login'
-let saveTimer       = null;
-let pollTimer       = null;
-let hasPendingChanges = false;
-let lastKnownVersion  = 0;
-
-// ══════════════════════════════════════════════════════════════════════════
-// SCREEN CONTROL
-// ══════════════════════════════════════════════════════════════════════════
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+// ── ACTIVE ROOMS ABSTRACTION ─────────────────────────────────────────────────
+function isAllMode(){ return state.type==='all'; }
+function getActiveRooms(){
+  return isAllMode() ? (state.tabs[state.activeTab]?.rooms||[]) : (state.rooms||[]);
+}
+function setActiveRooms(rooms){
+  if(isAllMode()) state.tabs[state.activeTab].rooms=rooms;
+  else state.rooms=rooms;
 }
 
-// ══════════════════════════════════════════════════════════════════════════
-// SHA-256
-// ══════════════════════════════════════════════════════════════════════════
-async function sha256(str) {
-  const buf  = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+// ── SHA256 ────────────────────────────────────────────────────────────────────
+async function sha256(s){
+  const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));
+  return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');
 }
 
-// ══════════════════════════════════════════════════════════════════════════
-// API
-// ══════════════════════════════════════════════════════════════════════════
-async function apiGet() {
-  const r = await fetch(`/api/space?id=${SPACE_ID}`, {
-    headers: passwordHash ? { Authorization: `Bearer ${passwordHash}` } : {}
-  });
+// ── API ───────────────────────────────────────────────────────────────────────
+async function apiGet(view=false){
+  const url=view?`/api/space?id=${SPACE_ID}&view=1`:`/api/space?id=${SPACE_ID}`;
+  const r=await fetch(url,{headers:passwordHash?{Authorization:`Bearer ${passwordHash}`}:{}});
+  return r.json();
+}
+async function apiSetup(pwdHash,data){
+  const r=await fetch(`/api/space?id=${SPACE_ID}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'setup',passwordHash:pwdHash,data})});
+  return r.json();
+}
+async function apiSave(data){
+  const r=await fetch(`/api/space?id=${SPACE_ID}`,{method:'POST',headers:{'Content-Type':'application/json',Authorization:`Bearer ${passwordHash}`},body:JSON.stringify({action:'save',data})});
   return r.json();
 }
 
-async function apiSetup(pwdHash, data) {
-  const r = await fetch(`/api/space?id=${SPACE_ID}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ action: 'setup', passwordHash: pwdHash, data })
-  });
-  return r.json();
-}
+// ── SCREEN ───────────────────────────────────────────────────────────────────
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
 
-async function apiSave(data) {
-  const r = await fetch(`/api/space?id=${SPACE_ID}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${passwordHash}` },
-    body: JSON.stringify({ action: 'save', data })
-  });
-  return r.json();
-}
-
-// ══════════════════════════════════════════════════════════════════════════
-// INIT
-// ══════════════════════════════════════════════════════════════════════════
-async function init() {
-  if (SPACE_ID === null) { showScreen('screen-landing'); return; }
-
-  // /1 always cleaning, no template picker
-  const res = await apiGet().catch(() => null);
-  if (!res) { setSyncBadge('error'); showScreen('screen-app'); return; }
-
-  if (res.status === 'unclaimed') {
-    if (SPACE_ID === 1) {
-      // /1 — skip template, go straight to password setup with cleaning data
-      selectedTpl = 'cleaning';
-      showAuthSetup();
-    } else {
-      document.getElementById('tpl-space-label').textContent =
-        `Space /${SPACE_ID} is unclaimed — choose a template to get started`;
-      showScreen('screen-template');
-    }
+// ── INIT ─────────────────────────────────────────────────────────────────────
+async function init(){
+  if(!SPACE_ID){showScreen('screen-landing');return;}
+  if(IS_READONLY){
+    document.body.classList.add('readonly');
+    document.getElementById('roBadge').style.display='';
+    const res=await apiGet(true).catch(()=>null);
+    if(!res||res.status!=='ok'){setSyncBadge('error');showScreen('screen-app');render();return;}
+    state=res.data; lastKnownVersion=state.version||0;
+    applyTheme(detectTheme()); renderTabBar(); showScreen('screen-app'); render(); setSyncBadge('synced');
     return;
   }
-
-  if (res.status === 'locked') {
-    showAuthLogin();
+  const res=await apiGet().catch(()=>null);
+  if(!res){setSyncBadge('error');showScreen('screen-app');return;}
+  if(res.status==='unclaimed'){
+    if(SPACE_ID===1){selectedTpl='cleaning';showAuthSetup();}
+    else{document.getElementById('tpl-space-label').textContent=`Space /${SPACE_ID} is unclaimed — choose a template`;showScreen('screen-template');}
     return;
   }
-
-  if (res.status === 'ok') {
-    state = res.data;
-    lastKnownVersion = state.version || 0;
-    showScreen('screen-app');
-    render();
-    setSyncBadge('synced');
-    startPolling();
+  if(res.status==='locked'){showAuthLogin();return;}
+  if(res.status==='ok'){
+    state=res.data; lastKnownVersion=state.version||0;
+    applyTheme(detectTheme()); renderTabBar(); showScreen('screen-app'); render(); setSyncBadge('synced'); startPolling();
   }
 }
 
-// ══════════════════════════════════════════════════════════════════════════
-// TEMPLATE SELECTION
-// ══════════════════════════════════════════════════════════════════════════
-function selectTemplate(tpl) {
-  selectedTpl = tpl;
-  showAuthSetup();
-}
-
-// ══════════════════════════════════════════════════════════════════════════
-// AUTH SCREENS
-// ══════════════════════════════════════════════════════════════════════════
-function showAuthSetup() {
-  authMode = 'setup';
-  document.getElementById('auth-title').textContent = `Lock Space /${SPACE_ID}`;
-  document.getElementById('auth-sub').textContent   = 'Set a password. This space will be yours once confirmed.';
-  document.getElementById('auth-confirm').style.display = '';
-  document.getElementById('auth-note').textContent  = '⚠ No recovery. Don\'t forget it.';
-  document.getElementById('auth-err').style.display = 'none';
-  document.getElementById('auth-pwd').value = '';
-  document.getElementById('auth-confirm').value = '';
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+function selectTemplate(tpl){selectedTpl=tpl;showAuthSetup();}
+function showAuthSetup(){
+  authMode='setup';
+  document.getElementById('auth-title').textContent=`Lock Space /${SPACE_ID}`;
+  document.getElementById('auth-sub').textContent='Set a password to lock this space.';
+  document.getElementById('auth-confirm').style.display='';
+  document.getElementById('auth-note').textContent='⚠ No recovery. Don\'t forget it.';
+  document.getElementById('auth-err').style.display='none';
+  document.getElementById('auth-pwd').value=''; document.getElementById('auth-confirm').value='';
   showScreen('screen-auth');
 }
-
-function showAuthLogin() {
-  authMode = 'login';
-  document.getElementById('auth-title').textContent = `Space /${SPACE_ID}`;
-  document.getElementById('auth-sub').textContent   = 'Enter your password to continue.';
-  document.getElementById('auth-confirm').style.display = 'none';
-  document.getElementById('auth-note').textContent  = '';
-  document.getElementById('auth-err').style.display = 'none';
-  document.getElementById('auth-pwd').value = '';
+function showAuthLogin(){
+  authMode='login';
+  document.getElementById('auth-title').textContent=`Space /${SPACE_ID}`;
+  document.getElementById('auth-sub').textContent='Enter your password to continue.';
+  document.getElementById('auth-confirm').style.display='none';
+  document.getElementById('auth-note').textContent='';
+  document.getElementById('auth-err').style.display='none';
+  document.getElementById('auth-pwd').value='';
   showScreen('screen-auth');
 }
-
-async function submitAuth() {
-  const pwd  = document.getElementById('auth-pwd').value.trim();
-  const conf = document.getElementById('auth-confirm').value.trim();
-  const err  = document.getElementById('auth-err');
-
-  if (!pwd) { showErr('Enter a password'); return; }
-
-  if (authMode === 'setup') {
-    if (pwd !== conf) { showErr('Passwords don\'t match'); return; }
-    if (pwd.length < 4) { showErr('Minimum 4 characters'); return; }
-    const hash = await sha256(pwd);
-    const seed = buildSeed(selectedTpl);
-    const res  = await apiSetup(hash, seed).catch(() => null);
-    if (!res || !res.ok) { showErr(res?.error || 'Setup failed'); return; }
-    passwordHash = hash;
-    sessionStorage.setItem(`pwd-${SPACE_ID}`, hash);
-    state = seed;
-    lastKnownVersion = 0;
-    showScreen('screen-app');
-    render();
-    setSyncBadge('synced');
-    startPolling();
+async function submitAuth(){
+  const pwd=document.getElementById('auth-pwd').value.trim();
+  const conf=document.getElementById('auth-confirm').value.trim();
+  const err=document.getElementById('auth-err');
+  if(!pwd){showErr('Enter a password');return;}
+  if(authMode==='setup'){
+    if(pwd!==conf){showErr('Passwords don\'t match');return;}
+    if(pwd.length<4){showErr('Minimum 4 characters');return;}
+    const hash=await sha256(pwd);
+    const seed=buildSeed(selectedTpl);
+    const res=await apiSetup(hash,seed).catch(()=>null);
+    if(!res||!res.ok){showErr(res?.error||'Setup failed');return;}
+    passwordHash=hash; sessionStorage.setItem(`pwd-${SPACE_ID}`,hash);
+    state=seed; lastKnownVersion=0;
+    applyTheme(detectTheme()); renderTabBar(); showScreen('screen-app'); render(); setSyncBadge('synced'); startPolling();
     toast(`✅ Space /${SPACE_ID} is yours!`);
   } else {
-    const hash = await sha256(pwd);
-    passwordHash = hash;
-    const res = await apiGet().catch(() => null);
-    if (!res || res.status !== 'ok') {
-      passwordHash = null;
-      showErr('Wrong password');
-      return;
-    }
-    sessionStorage.setItem(`pwd-${SPACE_ID}`, hash);
-    state = res.data;
-    lastKnownVersion = state.version || 0;
-    showScreen('screen-app');
-    render();
-    setSyncBadge('synced');
-    startPolling();
+    const hash=await sha256(pwd); passwordHash=hash;
+    const res=await apiGet().catch(()=>null);
+    if(!res||res.status!=='ok'){passwordHash=null;showErr('Wrong password');return;}
+    sessionStorage.setItem(`pwd-${SPACE_ID}`,hash);
+    state=res.data; lastKnownVersion=state.version||0;
+    applyTheme(detectTheme()); renderTabBar(); showScreen('screen-app'); render(); setSyncBadge('synced'); startPolling();
   }
 }
+function showErr(m){const e=document.getElementById('auth-err');e.textContent=m;e.style.display='block';}
 
-function showErr(msg) {
-  const el = document.getElementById('auth-err');
-  el.textContent = msg;
-  el.style.display = 'block';
+// ── TABS ──────────────────────────────────────────────────────────────────────
+function renderTabBar(){
+  const bar=document.getElementById('tab-bar');
+  if(!isAllMode()){bar.style.display='none';return;}
+  bar.style.display='flex';
+  bar.innerHTML=TAB_ORDER.map(t=>{
+    const m=TAB_META[t], active=state.activeTab===t;
+    return `<div class="tab-pill${active?' active':''}" onclick="switchTab('${t}')"><span class="ti">${m.icon}</span><span class="tl">${m.short}</span></div>`;
+  }).join('');
+  // Update title sub
+  const m=TAB_META[state.activeTab||'cleaning'];
+  document.getElementById('appTitleSub').textContent=m?m.short:'CMD';
+}
+function switchTab(tab){
+  if(!isAllMode())return;
+  state.activeTab=tab;
+  applyTheme(tab);
+  renderTabBar();
+  render();
+  scheduleSave();
 }
 
-// ══════════════════════════════════════════════════════════════════════════
-// SAVE / POLL
-// ══════════════════════════════════════════════════════════════════════════
-function setSyncBadge(s) {
-  const el = document.getElementById('syncBadge');
-  el.className = 'sync-badge';
-  const m = { loading:['Loading…',''], saving:['Saving…','saving'], synced:['✓ Synced','synced'], error:['✗ Error','error'] };
-  const [t,c] = m[s]||['',''];
-  el.textContent = t;
-  if(c) el.classList.add(c);
+// ── SAVE/POLL ─────────────────────────────────────────────────────────────────
+function setSyncBadge(s){
+  const el=document.getElementById('syncBadge'); el.className='sync-badge';
+  const m={loading:['Loading…',''],saving:['Saving…','saving'],synced:['✓ Synced','synced'],error:['✗ Error','error']};
+  const[t,c]=m[s]||['',''];el.textContent=t;if(c)el.classList.add(c);
 }
-
-function scheduleSave() {
-  hasPendingChanges = true;
-  clearTimeout(saveTimer);
-  saveTimer = setTimeout(async () => {
-    hasPendingChanges = false;
-    state.version = (state.version||0)+1;
-    setSyncBadge('saving');
-    const res = await apiSave(state).catch(()=>null);
-    if(res?.ok){ lastKnownVersion=state.version; setSyncBadge('synced'); }
-    else setSyncBadge('error');
-  }, 400);
+function scheduleSave(){
+  if(IS_READONLY)return;
+  hasPendingChanges=true; clearTimeout(saveTimer);
+  saveTimer=setTimeout(async()=>{
+    hasPendingChanges=false; state.version=(state.version||0)+1; setSyncBadge('saving');
+    const res=await apiSave(state).catch(()=>null);
+    if(res?.ok){lastKnownVersion=state.version;setSyncBadge('synced');}else setSyncBadge('error');
+  },400);
 }
-
-async function startPolling() {
-  pollTimer = setInterval(async () => {
-    if(hasPendingChanges) return;
-    const res = await apiGet().catch(()=>null);
-    if(res?.status==='ok' && (res.data.version||0) > lastKnownVersion) {
-      state = res.data;
-      lastKnownVersion = state.version;
-      render();
-      toast('🔄 Updated from another device');
+function startPolling(){
+  pollTimer=setInterval(async()=>{
+    if(hasPendingChanges)return;
+    const res=await apiGet().catch(()=>null);
+    if(res?.status==='ok'&&(res.data.version||0)>lastKnownVersion){
+      state=res.data; lastKnownVersion=state.version;
+      applyTheme(detectTheme()); renderTabBar(); render(); toast('🔄 Updated from another device');
     }
-  }, 12000);
+  },12000);
 }
 
-// ══════════════════════════════════════════════════════════════════════════
-// ROOM / ZONE / TASK OPS  (unchanged from original)
-// ══════════════════════════════════════════════════════════════════════════
-function uid(){ return crypto.randomUUID?crypto.randomUUID():Math.random().toString(36).slice(2)+Date.now().toString(36); }
+// ── ROOM / ZONE / TASK OPS ────────────────────────────────────────────────────
+function uid(){return crypto.randomUUID?crypto.randomUUID():Math.random().toString(36).slice(2)+Date.now().toString(36);}
 
-function addRoom(){ const r={id:uid(),name:'',expanded:true,zones:[]};state.rooms.push(r);render();scheduleSave();setTimeout(()=>{const e=document.querySelector(`[data-room-name="${r.id}"]`);if(e)e.focus();},50); }
-function removeRoom(id){ state.rooms=state.rooms.filter(r=>r.id!==id);render();scheduleSave(); }
-function toggleRoom(id){ const r=state.rooms.find(r=>r.id===id);if(r)r.expanded=!r.expanded;render();scheduleSave(); }
-function renameRoom(id,n){ const r=state.rooms.find(r=>r.id===id);if(r)r.name=n;scheduleSave();updateStats(); }
-function expandAll(){ state.rooms.forEach(r=>r.expanded=true);render();scheduleSave(); }
-function collapseAll(){ state.rooms.forEach(r=>r.expanded=false);render();scheduleSave(); }
-function addZone(rid){ const r=state.rooms.find(r=>r.id===rid);if(!r)return;const z={id:uid(),name:'',tasks:[]};r.zones.push(z);render();scheduleSave();setTimeout(()=>{const e=document.querySelector(`[data-zone-name="${z.id}"]`);if(e)e.focus();},50); }
-function removeZone(rid,zid){ const r=state.rooms.find(r=>r.id===rid);if(!r)return;r.zones=r.zones.filter(z=>z.id!==zid);render();scheduleSave(); }
-function renameZone(rid,zid,n){ const r=state.rooms.find(r=>r.id===rid);const z=r?.zones.find(z=>z.id===zid);if(z)z.name=n;scheduleSave(); }
-function addTask(rid,zid){ const r=state.rooms.find(r=>r.id===rid);const z=r?.zones.find(z=>z.id===zid);if(!z)return;const t={id:uid(),name:'',completed:false};z.tasks.push(t);render();scheduleSave();setTimeout(()=>{const e=document.querySelector(`[data-task-name="${t.id}"]`);if(e)e.focus();},50); }
-function removeTask(rid,zid,tid){ const r=state.rooms.find(r=>r.id===rid);const z=r?.zones.find(z=>z.id===zid);if(!z)return;z.tasks=z.tasks.filter(t=>t.id!==tid);render();scheduleSave(); }
-function toggleTask(rid,zid,tid){ const r=state.rooms.find(r=>r.id===rid);const z=r?.zones.find(z=>z.id===zid);const t=z?.tasks.find(t=>t.id===tid);if(t)t.completed=!t.completed;render();scheduleSave(); }
-function renameTask(rid,zid,tid,n){ const r=state.rooms.find(r=>r.id===rid);const z=r?.zones.find(z=>z.id===zid);const t=z?.tasks.find(t=>t.id===tid);if(t)t.name=n;scheduleSave(); }
-function clearCompleted(){ let c=0;state.rooms.forEach(r=>r.zones.forEach(z=>{const b=z.tasks.length;z.tasks=z.tasks.filter(t=>!t.completed);c+=b-z.tasks.length;}));render();scheduleSave();toast(c>0?`🧹 Cleared ${c} task${c!==1?'s':''}`:'Nothing to clear'); }
-function openReset(){ document.getElementById('resetModal').classList.add('open'); }
-function closeReset(){ document.getElementById('resetModal').classList.remove('open'); }
-function confirmReset(){ state={rooms:[],version:(state.version||0)+1};closeReset();render();apiSave(state);toast('🗑 Reset'); }
-function updateEmojiFor(id,name,type){ const el=document.querySelector(`[data-emoji-for="${id}"]`);if(el)el.textContent=getEmoji(name,type); }
+function addRoom(){
+  const r={id:uid(),name:'',expanded:true,zones:[]};
+  getActiveRooms().push(r); render(); scheduleSave();
+  setTimeout(()=>{const e=document.querySelector(`[data-room-name="${r.id}"]`);if(e)e.focus();},50);
+}
+function removeRoom(id){setActiveRooms(getActiveRooms().filter(r=>r.id!==id));render();scheduleSave();}
+function toggleRoom(id){const r=getActiveRooms().find(r=>r.id===id);if(r)r.expanded=!r.expanded;render();scheduleSave();}
+function renameRoom(id,n){const r=getActiveRooms().find(r=>r.id===id);if(r)r.name=n;scheduleSave();updateStats();}
+function expandAll(){getActiveRooms().forEach(r=>r.expanded=true);render();scheduleSave();}
+function collapseAll(){getActiveRooms().forEach(r=>r.expanded=false);render();scheduleSave();}
+function addZone(rid){
+  const r=getActiveRooms().find(r=>r.id===rid);if(!r)return;
+  const z={id:uid(),name:'',tasks:[]};r.zones.push(z);render();scheduleSave();
+  setTimeout(()=>{const e=document.querySelector(`[data-zone-name="${z.id}"]`);if(e)e.focus();},50);
+}
+function removeZone(rid,zid){const r=getActiveRooms().find(r=>r.id===rid);if(!r)return;r.zones=r.zones.filter(z=>z.id!==zid);render();scheduleSave();}
+function renameZone(rid,zid,n){const r=getActiveRooms().find(r=>r.id===rid);const z=r?.zones.find(z=>z.id===zid);if(z)z.name=n;scheduleSave();}
+function addTask(rid,zid){
+  const r=getActiveRooms().find(r=>r.id===rid);const z=r?.zones.find(z=>z.id===zid);if(!z)return;
+  const t={id:uid(),name:'',completed:false,note:''};z.tasks.push(t);render();scheduleSave();
+  setTimeout(()=>{const e=document.querySelector(`[data-task-name="${t.id}"]`);if(e)e.focus();},50);
+}
+function removeTask(rid,zid,tid){const r=getActiveRooms().find(r=>r.id===rid);const z=r?.zones.find(z=>z.id===zid);if(!z)return;z.tasks=z.tasks.filter(t=>t.id!==tid);render();scheduleSave();}
+function toggleTask(rid,zid,tid){const r=getActiveRooms().find(r=>r.id===rid);const z=r?.zones.find(z=>z.id===zid);const t=z?.tasks.find(t=>t.id===tid);if(t)t.completed=!t.completed;render();scheduleSave();}
+function renameTask(rid,zid,tid,n){const r=getActiveRooms().find(r=>r.id===rid);const z=r?.zones.find(z=>z.id===zid);const t=z?.tasks.find(t=>t.id===tid);if(t)t.name=n;scheduleSave();}
+function renameNote(rid,zid,tid,n){const r=getActiveRooms().find(r=>r.id===rid);const z=r?.zones.find(z=>z.id===zid);const t=z?.tasks.find(t=>t.id===tid);if(t)t.note=n;scheduleSave();}
+function clearCompleted(){let c=0;getActiveRooms().forEach(r=>r.zones.forEach(z=>{const b=z.tasks.length;z.tasks=z.tasks.filter(t=>!t.completed);c+=b-z.tasks.length;}));render();scheduleSave();toast(c>0?`🧹 Cleared ${c} task${c!==1?'s':''}`:'Nothing to clear');}
+function copyShareLink(){const url=`${window.location.origin}/${SPACE_ID}?view=1`;navigator.clipboard?.writeText(url).then(()=>toast('🔗 Share link copied!'));}
+function openReset(){document.getElementById('resetModal').classList.add('open');}
+function closeReset(){document.getElementById('resetModal').classList.remove('open');}
+function confirmReset(){state={...state,rooms:[],version:(state.version||0)+1};if(isAllMode())state.tabs[state.activeTab].rooms=[];closeReset();render();apiSave(state);toast('🗑 Reset');}
+function openMonthReset(){document.getElementById('monthResetModal').classList.add('open');}
+function closeMonthReset(){document.getElementById('monthResetModal').classList.remove('open');}
+function confirmMonthReset(){getActiveRooms().forEach(r=>r.zones.forEach(z=>z.tasks.forEach(t=>t.completed=false)));closeMonthReset();render();scheduleSave();toast('🔄 Progress reset — new month!');}
+function updateEmojiFor(id,name,type){const el=document.querySelector(`[data-emoji-for="${id}"]`);if(el)el.textContent=getEmoji(name,type);}
 
-// ══════════════════════════════════════════════════════════════════════════
-// STATS + RENDER
-// ══════════════════════════════════════════════════════════════════════════
+// ── STATS + RENDER ────────────────────────────────────────────────────────────
 function updateStats(){
-  const rooms=state.rooms.length;let total=0,done=0;
-  state.rooms.forEach(r=>r.zones.forEach(z=>z.tasks.forEach(t=>{total++;if(t.completed)done++;})));
+  const rooms=getActiveRooms().length; let total=0,done=0;
+  getActiveRooms().forEach(r=>r.zones.forEach(z=>z.tasks.forEach(t=>{total++;if(t.completed)done++;})));
   const pct=total===0?0:Math.round((done/total)*100);
   document.getElementById('statRooms').textContent=rooms;
   document.getElementById('statTasks').textContent=total;
   document.getElementById('progressBar').style.width=pct+'%';
   document.getElementById('pctLabel').textContent=pct+'%';
 }
+function escHtml(s){if(!s)return'';return s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
 function render(){
   const main=document.getElementById('main');
-  if(state.rooms.length===0){
-    main.innerHTML=`<div class="empty-state"><div class="big">📋</div><p>No rooms yet.<br>Hit <b>+ Add Room</b> to get started.</p></div>`;
+  const rooms=getActiveRooms();
+  if(rooms.length===0){
+    main.innerHTML=`<div class="empty-state"><div class="big">📋</div><p>No rooms yet.<br>Hit <b>＋ Room</b> to get started.</p></div>`;
     updateStats();return;
   }
-  main.innerHTML=state.rooms.map(room=>{
+  main.innerHTML=rooms.map(room=>{
     let rt=0,rd=0;room.zones.forEach(z=>z.tasks.forEach(t=>{rt++;if(t.completed)rd++;}));
     const allDone=rt>0&&rd===rt;
     const zonesHtml=room.zones.map(zone=>{
       const tasksHtml=zone.tasks.map(task=>`
-        <div class="task-row">
-          <div class="task-check ${task.completed?'done':''}" onclick="toggleTask('${room.id}','${zone.id}','${task.id}')"></div>
-          <span class="task-emoji" data-emoji-for="${task.id}">${getEmoji(task.name,'task')}</span>
-          <input class="task-name-input ${task.completed?'done':''}" data-task-name="${task.id}"
-            value="${escHtml(task.name)}" placeholder="task…"
-            oninput="renameTask('${room.id}','${zone.id}','${task.id}',this.value);updateEmojiFor('${task.id}',this.value,'task')"
-            onkeydown="if(event.key==='Enter')addTask('${room.id}','${zone.id}')"/>
-          <button class="btn ghost" onclick="removeTask('${room.id}','${zone.id}','${task.id}')">✕</button>
+        <div class="task-item">
+          <div class="task-row">
+            <div class="task-check ${task.completed?'done':''}" onclick="toggleTask('${room.id}','${zone.id}','${task.id}')"></div>
+            <span class="task-emoji" data-emoji-for="${task.id}">${getEmoji(task.name,'task')}</span>
+            <input class="task-name-input ${task.completed?'done':''}" data-task-name="${task.id}"
+              value="${escHtml(task.name)}" placeholder="task…"
+              oninput="renameTask('${room.id}','${zone.id}','${task.id}',this.value);updateEmojiFor('${task.id}',this.value,'task')"
+              onkeydown="if(event.key==='Enter')addTask('${room.id}','${zone.id}')"/>
+            <button class="btn ghost" onclick="removeTask('${room.id}','${zone.id}','${task.id}')">✕</button>
+          </div>
+          <div class="task-note-row">
+            <input class="task-note-input" value="${escHtml(task.note||'')}" placeholder="note…"
+              oninput="renameNote('${room.id}','${zone.id}','${task.id}',this.value)"/>
+          </div>
         </div>`).join('');
       return `<div class="zone">
         <div class="zone-header">
@@ -738,8 +731,8 @@ function render(){
       <div class="room-body ${room.expanded?'open':''}">
         ${zonesHtml}
         <div style="display:flex;gap:6px;flex-wrap:wrap;">
-          <button class="btn" style="font-size:12px" onclick="addZone('${room.id}')">＋ Add Zone</button>
-          <button class="btn danger" style="font-size:12px" onclick="removeRoom('${room.id}')">✕ Remove Room</button>
+          <button class="btn" style="font-size:12px" onclick="addZone('${room.id}')">＋ Zone</button>
+          <button class="btn danger" style="font-size:12px" onclick="removeRoom('${room.id}')">✕ Remove</button>
         </div>
       </div>
     </div>`;
@@ -747,701 +740,601 @@ function render(){
   updateStats();
 }
 
-function escHtml(s){if(!s)return'';return s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-
 let toastT;
-function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('show'),2500);}
+function toast(m){const el=document.getElementById('toast');el.textContent=m;el.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('show'),2500);}
+</script>
 
-// ══════════════════════════════════════════════════════════════════════════
-// EMOJI DETECTION
-// ══════════════════════════════════════════════════════════════════════════
+<script>
+// ── EMOJI ─────────────────────────────────────────────────────────────────────
 function getEmoji(name,type){
-  const n=(name||'').toLowerCase();
-
-  if(type==='room'){
-    if(/paigee/.test(n)&&/bath/.test(n)) return'👧🛁';
-    if(/paigee/.test(n)&&/bed/.test(n))  return'👧🛏️';
-    if(/\bnic\b/.test(n)&&/bath/.test(n)) return'👦🛁';
-    if(/\bnic\b/.test(n)&&/bed/.test(n))  return'👦🛏️';
-    if(/kitchen|cook|stove/.test(n))      return'🍳';
-    if(/bathroom|ensuite|toilet room|wc/.test(n)) return'🛁';
-    if(/bedroom|bed room|master|guest room/.test(n)) return'🛏️';
-    if(/living|lounge|sitting|family/.test(n)) return'🛋️';
-    if(/girls|girl/.test(n))  return'🧸';
-    if(/boys|boy/.test(n))    return'🎮';
-    if(/kids|child|nursery|play/.test(n)) return'🧸';
-    if(/garage|car port/.test(n)) return'🚗';
-    if(/laundry|washing|utility/.test(n)) return'🫧';
-    if(/office|study|work/.test(n)) return'💻';
-    if(/dining|dinner room/.test(n)) return'🍽️';
-    if(/hall|corridor|entry|foyer|stair/.test(n)) return'🚪';
-    if(/front yard|front garden/.test(n)) return'🏡';
-    if(/backyard|back yard|back garden/.test(n)) return'🌳';
-    if(/garden|yard|outdoor|outside|patio|deck/.test(n)) return'🌿';
-    if(/basement|cellar/.test(n)) return'🏚️';
-    if(/attic|loft|storage|spare/.test(n)) return'📦';
-    if(/gym|workout|exercise/.test(n)) return'🏋️';
-    if(/pool|spa/.test(n)) return'🏊';
-    // Bill categories
-    if(/currently playing|in progress/.test(n)) return'🎮';
-    if(/backlog/.test(n))         return'📋';
-    if(/wish list|wishlist|to buy|want/.test(n)) return'⭐';
-    if(/completed|finished|done/.test(n)) return'🏆';
-    if(/\bdlc\b|expansion|season pass/.test(n)) return'📦';
-    if(/\bpet\b|cat|dog|bunny|rabbit|bird|hamster/.test(n)) return'🐾';
-    if(/supply|supplies/.test(n)) return'🛒';
-    if(/bill calendar|due date/.test(n)) return'📅';
-    if(/fixed bill|recurring bill/.test(n)) return'📋';
-    if(/debt|owed|credit/.test(n))  return'💳';
-    if(/saving|goal/.test(n))       return'🏦';
-    if(/income|earning/.test(n))    return'💵';
-    if(/variable expense|spending/.test(n)) return'🛒';
-    if(/financial.*to.do|money.*action/.test(n)) return'📝';
-    if(/housing|property/.test(n)) return'🏠';
-    if(/utilit/.test(n)) return'⚡';
-    if(/insurance/.test(n)) return'🛡️';
-    if(/subscri|streaming/.test(n)) return'📺';
-    if(/finance|loan|debt/.test(n)) return'💰';
-    // Shopping categories
-    if(/produce|fruit|veg/.test(n)) return'🥦';
-    if(/meat|seafood/.test(n)) return'🥩';
-    if(/dairy|egg/.test(n)) return'🥛';
-    if(/pantry|dry goods|canned/.test(n)) return'🗄️';
-    if(/bakery|bread/.test(n)) return'🍞';
-    if(/drink|beverage/.test(n)) return'🥤';
-    if(/household|cleaning supply/.test(n)) return'🧴';
-    if(/personal care|hygiene/.test(n)) return'🧼';
-    if(/snack/.test(n)) return'🍿';
-    // Meal planning
-    if(/monday/.test(n)) return'1️⃣';
-    if(/tuesday/.test(n)) return'2️⃣';
-    if(/wednesday/.test(n)) return'3️⃣';
-    if(/thursday/.test(n)) return'4️⃣';
-    if(/friday/.test(n)) return'5️⃣';
-    if(/saturday/.test(n)) return'6️⃣';
-    if(/sunday/.test(n)) return'7️⃣';
-    if(/meal prep|batch/.test(n)) return'🍱';
-    if(/week/.test(n)) return'📅';
-    return'🏠';
-  }
-
-  if(type==='zone'){
-    if(/main story|story|campaign|narrative/.test(n)) return'📖';
-    if(/side quest|sidequest|optional/.test(n)) return'📜';
-    if(/collectible|collectable/.test(n)) return'💎';
-    if(/trophy|achievement|platinum|100%/.test(n)) return'🏆';
-    if(/up next|queue/.test(n))   return'📋';
-    if(/reinstall|unfinished/.test(n)) return'🔄';
-    if(/wish list|wishlist/.test(n)) return'⭐';
-    if(/wait.*sale|on sale/.test(n)) return'🏷️';
-    if(/story done|story complete/.test(n)) return'✅';
-    if(/dlc|expansion/.test(n))   return'📦';
-    if(/daily care|daily/.test(n)) return'⭐';
-    if(/health|medical|vet/.test(n)) return'❤️';
-    if(/groom/.test(n))           return'✂️';
-    if(/food|treat|feed/.test(n)) return'🍽️';
-    if(/litter/.test(n))          return'🧹';
-    if(/accessori|toy/.test(n))   return'🎯';
-    if(/bill calendar|due date/.test(n)) return'📅';
-    if(/weekly/.test(n))            return'📅';
-    if(/fortnightly/.test(n))       return'📅';
-    if(/monthly/.test(n))           return'📆';
-    if(/quarterly/.test(n))         return'📅';
-    if(/\bannual\b/.test(n))        return'📅';
-    if(/fixed bill|recurring/.test(n)) return'📋';
-    if(/i owe|credit|bnpl/.test(n)) return'💳';
-    if(/owes me/.test(n))           return'🤝';
-    if(/upcoming|instalment/.test(n)) return'⏰';
-    if(/emergency fund/.test(n))    return'🆘';
-    if(/short term/.test(n))        return'🎯';
-    if(/long term/.test(n))         return'📈';
-    if(/regular income/.test(n))    return'💵';
-    if(/one.off|expected/.test(n))  return'💰';
-    if(/food|drink/.test(n))        return'🍽️';
-    if(/transport/.test(n))         return'🚗';
-    if(/personal/.test(n))          return'👤';
-    if(/actions|to.do/.test(n))     return'✅';
-    if(/review/.test(n))            return'🔍';
-    if(/tv|television|media/.test(n)) return'📺';
-    if(/general|misc|other/.test(n)) return'🗂️';
-    if(/new zone/.test(n)) return'🗂️';
-    if(/^bed$|^bed |bedding/.test(n)) return'🛏️';
-    if(/clothes|clothing|wardrobe|dresser/.test(n)) return'👚';
-    if(/storage/.test(n)) return'🗃️';
-    if(/^bins$|^bin$/.test(n)) return'🗑️';
-    if(/lawn/.test(n)) return'🌱';
-    if(/garden/.test(n)) return'🌸';
-    if(/entry/.test(n)) return'🚪';
-    if(/floor|carpet|rug/.test(n)) return'🧹';
-    if(/counter|bench|surface/.test(n)) return'🧽';
-    if(/window/.test(n)) return'🪟';
-    if(/shelf|shelv|cabinet/.test(n)) return'📚';
-    if(/sink|basin|tap/.test(n)) return'💧';
-    if(/toilet/.test(n)) return'🚽';
-    if(/shower/.test(n)) return'🚿';
-    if(/bath|tub/.test(n)) return'🛁';
-    if(/mirror/.test(n)) return'🪞';
-    if(/fridge|freezer/.test(n)) return'🧊';
-    if(/oven|stove/.test(n)) return'🔥';
-    if(/wall/.test(n)) return'🧱';
-    if(/light|lamp/.test(n)) return'💡';
-    // Bill zones
-    if(/rent|mortgage|housing/.test(n)) return'🏠';
-    if(/electricity|power/.test(n)) return'⚡';
-    if(/gas/.test(n)) return'🔥';
-    if(/water/.test(n)) return'💧';
-    if(/internet|wifi/.test(n)) return'🌐';
-    if(/phone|mobile/.test(n)) return'📱';
-    if(/insurance/.test(n)) return'🛡️';
-    if(/subscri|stream/.test(n)) return'📺';
-    if(/credit|card/.test(n)) return'💳';
-    if(/loan|finance/.test(n)) return'💰';
-    if(/savings|bank/.test(n)) return'🏦';
-    // Shopping zones
-    if(/fruit/.test(n)) return'🍎';
-    if(/veg/.test(n)) return'🥦';
-    if(/meat/.test(n)) return'🥩';
-    if(/seafood|fish/.test(n)) return'🐟';
-    if(/dairy/.test(n)) return'🥛';
-    if(/egg/.test(n)) return'🥚';
-    if(/bakery|bread/.test(n)) return'🍞';
-    if(/dry good|pasta|rice|grain/.test(n)) return'🌾';
-    if(/canned|sauce/.test(n)) return'🥫';
-    if(/snack|sweet/.test(n)) return'🍫';
-    if(/drink|bev/.test(n)) return'🥤';
-    if(/clean/.test(n)) return'🧴';
-    if(/personal|hygiene/.test(n)) return'🧼';
-    // Meal planning zones
-    if(/breakfast/.test(n)) return'🌅';
-    if(/lunch/.test(n)) return'🌤️';
-    if(/dinner|supper/.test(n)) return'🌙';
-    if(/snack/.test(n)) return'🍎';
-    if(/meal prep|batch/.test(n)) return'🍱';
-    return'📍';
-  }
-
-  // ── TASKS ──────────────────────────────────────────────────────────────
-
-  // Cleaning-specific (specific first)
-  if(/around toilet/.test(n))  return'🧻';
-  if(/coffee table/.test(n))   return'☕';
-  if(/bed side|bedside|side table/.test(n)) return'🕯️';
-  if(/under bed/.test(n))      return'🔦';
-  if(/make bed/.test(n))       return'🛌';
-  if(/wash sheet|change sheet/.test(n)) return'🛌';
-  if(/dirty clothes|clothes.*basket/.test(n)) return'👕';
-  if(/fold.*clothes|put away clothes/.test(n)) return'👔';
-  if(/shower glass/.test(n))   return'🫧';
-  if(/shower floor/.test(n))   return'🚿';
-  if(/bathroom bench|bench wipe/.test(n)) return'🧽';
-  if(/bathroom sink/.test(n))  return'🚰';
-  if(/organise shelf|organise shelve|organize shelf/.test(n)) return'📚';
-  if(/organise desk|organize desk/.test(n)) return'🖥️';
-  if(/organise drum|organize drum/.test(n)) return'🥁';
-  if(/organise toy|organize toy/.test(n))  return'🧸';
-  if(/organise entry|organize entry/.test(n)) return'🚪';
-  if(/clear clutter/.test(n))  return'🗃️';
-  if(/take out bin/.test(n))   return'🗑️';
-  if(/clean bin|bin area/.test(n)) return'🧹';
-  if(/throw.*away|throw.*out|throw.*trash/.test(n)) return'🗑️';
-  if(/clear rubbish/.test(n))  return'🗑️';
-  if(/mow|mowing/.test(n))     return'🌱';
-  if(/edge lawn|edging/.test(n)) return'✂️';
-  if(/rake/.test(n))           return'🍂';
-  if(/weed/.test(n))           return'🌾';
-  if(/water plant|water the|watering/.test(n)) return'💧';
-  if(/sweep path|sweep drive/.test(n)) return'🧹';
-
-  // Bills
-  if(/rent|mortgage|lease/.test(n)) return'🏠';
-  if(/council rate|shire rate/.test(n)) return'🏛️';
-  if(/body corporate|strata/.test(n)) return'🏢';
-  if(/electricity|power bill|energy bill/.test(n)) return'⚡';
-  if(/gas bill|gas payment/.test(n)) return'🔥';
-  if(/water bill/.test(n))     return'💧';
-  if(/internet|wifi|broadband|nbn/.test(n)) return'🌐';
-  if(/mobile.*plan|phone.*bill|phone.*plan/.test(n)) return'📱';
-  if(/car insurance/.test(n))  return'🚗';
-  if(/home.*insurance|content.*insurance/.test(n)) return'🏠';
-  if(/health insurance/.test(n)) return'🏥';
-  if(/life insurance/.test(n)) return'🛡️';
-  if(/insurance/.test(n))      return'🛡️';
-  if(/netflix/.test(n))        return'🎬';
-  if(/spotify|apple music/.test(n)) return'🎵';
-  if(/disney|stan|binge|prime video/.test(n)) return'📺';
-  if(/icloud|google one/.test(n)) return'☁️';
-  if(/amazon prime/.test(n))   return'📦';
-  if(/gym.*member|member.*gym/.test(n)) return'🏋️';
-  if(/credit card|card payment/.test(n)) return'💳';
-  if(/personal loan|car loan/.test(n)) return'💰';
-  if(/buy now pay later|bnpl|afterpay|zip/.test(n)) return'💳';
-  if(/savings|transfer/.test(n)) return'🏦';
-  if(/subscription/.test(n))   return'📋';
-
-  // Fresh produce
-  if(/\bapple/.test(n))  return'🍎';
-  if(/banana/.test(n))   return'🍌';
-  if(/strawberr/.test(n)) return'🍓';
-  if(/blueberr/.test(n)) return'🫐';
-  if(/grape/.test(n))    return'🍇';
-  if(/lemon/.test(n))    return'🍋';
-  if(/orange/.test(n))   return'🍊';
-  if(/mango/.test(n))    return'🥭';
-  if(/watermelon/.test(n)) return'🍉';
-  if(/pineapple/.test(n)) return'🍍';
-  if(/peach/.test(n))    return'🍑';
-  if(/pear/.test(n))     return'🍐';
-  if(/cherry/.test(n))   return'🍒';
-  if(/kiwi/.test(n))     return'🥝';
-  if(/coconut/.test(n))  return'🥥';
-  if(/avocado/.test(n))  return'🥑';
-  if(/tomato/.test(n))   return'🍅';
-  if(/carrot/.test(n))   return'🥕';
-  if(/broccoli/.test(n)) return'🥦';
-  if(/lettuce|spinach|kale|leafy/.test(n)) return'🥬';
-  if(/potato/.test(n))   return'🥔';
-  if(/sweet potato/.test(n)) return'🍠';
-  if(/onion/.test(n))    return'🧅';
-  if(/garlic/.test(n))   return'🧄';
-  if(/capsicum|bell pepper/.test(n)) return'🫑';
-  if(/mushroom/.test(n)) return'🍄';
-  if(/corn/.test(n))     return'🌽';
-  if(/cucumber/.test(n)) return'🥒';
-  if(/eggplant|zucchini/.test(n)) return'🍆';
-
-  // Meat & seafood
-  if(/chicken breast|chicken thigh|chicken wing/.test(n)) return'🍗';
-  if(/chicken/.test(n))  return'🍗';
-  if(/beef|steak|mince|ground beef/.test(n)) return'🥩';
-  if(/lamb/.test(n))     return'🥩';
-  if(/pork/.test(n))     return'🥩';
-  if(/bacon|ham/.test(n)) return'🥓';
-  if(/sausage|snag/.test(n)) return'🌭';
-  if(/salmon/.test(n))   return'🐟';
-  if(/tuna/.test(n))     return'🐟';
-  if(/prawn|shrimp/.test(n)) return'🦐';
-  if(/crab/.test(n))     return'🦀';
-  if(/lobster/.test(n))  return'🦞';
-  if(/fish fillet|fish file/.test(n)) return'🐟';
-
-  // Dairy & eggs
-  if(/\bmilk\b/.test(n)) return'🥛';
-  if(/cheese/.test(n))   return'🧀';
-  if(/butter|margarine/.test(n)) return'🧈';
-  if(/yogh?urt/.test(n)) return'🍦';
-  if(/cream/.test(n))    return'🥛';
-  if(/\begg/.test(n))    return'🥚';
-
-  // Bakery
-  if(/bread/.test(n))    return'🍞';
-  if(/baguette|loaf/.test(n)) return'🥖';
-  if(/croissant/.test(n)) return'🥐';
-  if(/bagel/.test(n))    return'🥯';
-  if(/roll|bun/.test(n)) return'🍞';
-
-  // Pantry
-  if(/\bpasta\b|spaghetti|fettuccine|penne|linguine/.test(n)) return'🍝';
-  if(/\brice\b/.test(n)) return'🍚';
-  if(/flour/.test(n))    return'🌾';
-  if(/\bsugar\b/.test(n)) return'🍬';
-  if(/\bsalt\b/.test(n)) return'🧂';
-  if(/chilli|chili|hot sauce/.test(n)) return'🌶️';
-  if(/olive oil|vegetable oil|cooking oil/.test(n)) return'🫙';
-  if(/pasta sauce|tomato sauce|ketchup/.test(n)) return'🍅';
-  if(/soy sauce|fish sauce/.test(n)) return'🫙';
-  if(/honey/.test(n))    return'🍯';
-  if(/jam|vegemite|peanut butter|nutella/.test(n)) return'🫙';
-  if(/chocolate/.test(n)) return'🍫';
-  if(/biscuit|cookie/.test(n)) return'🍪';
-  if(/chip|crisp/.test(n)) return'🥔';
-  if(/nut|almond|cashew|walnut|peanut/.test(n)) return'🥜';
-  if(/bean|lentil|chickpea/.test(n)) return'🫘';
-  if(/\bcereal\b/.test(n)) return'🥣';
-  if(/oat|porridge/.test(n)) return'🥣';
-  if(/canned tomato/.test(n)) return'🍅';
-  if(/coconut milk/.test(n)) return'🥥';
-  if(/stock|broth/.test(n)) return'🍲';
-  if(/vinegar/.test(n))  return'🫙';
-
-  // Drinks
-  if(/\bcoffee\b/.test(n)) return'☕';
-  if(/\btea\b/.test(n))   return'🍵';
-  if(/juice/.test(n))    return'🧃';
-  if(/soft drink|soda|cola|lemonade/.test(n)) return'🥤';
-  if(/beer/.test(n))     return'🍺';
-  if(/wine/.test(n))     return'🍷';
-  if(/water/.test(n))    return'💧';
-  if(/smoothie/.test(n)) return'🥤';
-  if(/energy drink/.test(n)) return'⚡';
-
-  // Household cleaning supplies
-  if(/dishwash|washing.?up liquid/.test(n)) return'🍽️';
-  if(/laundry detergent|washing powder|fabric/.test(n)) return'🧺';
-  if(/bleach/.test(n))   return'🫧';
-  if(/toilet paper|loo paper/.test(n)) return'🧻';
-  if(/paper towel|kitchen roll/.test(n)) return'🧻';
-  if(/bin bag|rubbish bag|garbage bag/.test(n)) return'🗑️';
-  if(/\bsponge\b/.test(n)) return'🧽';
-
-  // Personal care
-  if(/shampoo/.test(n))  return'🧴';
-  if(/conditioner/.test(n)) return'🧴';
-  if(/body wash|shower gel/.test(n)) return'🧼';
-  if(/toothpaste|toothbrush/.test(n)) return'🦷';
-  if(/deodorant/.test(n)) return'💨';
-  if(/razor|shaving/.test(n)) return'🪒';
-  if(/sunscreen|sunblock/.test(n)) return'☀️';
-  if(/paracetamol|ibuprofen|medicine|tablet|pill|vitamin/.test(n)) return'💊';
-  if(/bandage|plaster/.test(n)) return'🩹';
-  if(/makeup|lipstick|mascara/.test(n)) return'💄';
-
-  // Meals
-  if(/breakfast/.test(n)) return'🌅';
-  if(/lunch/.test(n))    return'🌤️';
-  if(/dinner|supper/.test(n)) return'🌙';
-  if(/meal prep|batch cook/.test(n)) return'🍱';
-  if(/pizza/.test(n))    return'🍕';
-  if(/burger|hamburger/.test(n)) return'🍔';
-  if(/\bsalad\b/.test(n)) return'🥗';
-  if(/soup/.test(n))     return'🍲';
-  if(/\bpasta\b|spaghetti|bolognese|carbonara/.test(n)) return'🍝';
-  if(/sandwich|wrap|sub/.test(n)) return'🥪';
-  if(/taco|burrito|quesadilla|mexican/.test(n)) return'🌮';
-  if(/curry|indian|masala/.test(n)) return'🍛';
-  if(/sushi|japanese|ramen/.test(n)) return'🍣';
-  if(/noodle|pad thai|pho|laksa/.test(n)) return'🍜';
-  if(/stir fry|fried rice/.test(n)) return'🥘';
-  if(/roast|baked chicken|sunday roast/.test(n)) return'🍖';
-  if(/bbq|barbecue|grill/.test(n)) return'🔥';
-  if(/fish.*chip|chips/.test(n)) return'🐟';
-  if(/pancake|waffle/.test(n)) return'🥞';
-  if(/omelette|scrambled|poached egg/.test(n)) return'🍳';
-  if(/toast/.test(n))    return'🍞';
-  if(/dessert|cake|sweet/.test(n)) return'🍰';
-  if(/ice cream/.test(n)) return'🍦';
-  if(/snack/.test(n))    return'🍎';
-
-  // ── FINANCIAL / BUDGET ──────────────────────────────────────────────────
-  if(/bill calendar|due date|payment date/.test(n))     return'📅';
-  if(/start of month|end of month|mid month/.test(n))   return'📆';
-  if(/fortnightly/.test(n))        return'📅';
-  if(/quarterly/.test(n))          return'📅';
-  if(/\bannual\b/.test(n))         return'📅';
-  if(/emergency fund/.test(n))     return'🆘';
-  if(/house deposit|home deposit/.test(n)) return'🏠';
-  if(/holiday fund|travel fund/.test(n))   return'✈️';
-  if(/christmas|xmas/.test(n))     return'🎄';
-  if(/investment account|investing/.test(n)) return'📈';
-  if(/super|retirement/.test(n))   return'👴';
-  if(/tax return|lodge tax/.test(n)) return'🧾';
-  if(/centrelink|benefit|welfare/.test(n)) return'🏛️';
-  if(/salary|wages|pay cheque|paycheck/.test(n)) return'💵';
-  if(/side hustle|freelance|freelanc/.test(n)) return'💻';
-  if(/reimbursement|reimburse/.test(n)) return'🤝';
-  if(/selling item|sell item/.test(n)) return'🏷️';
-  if(/rental income/.test(n))      return'🏠';
-  if(/afterpay|zip pay|humm|bnpl|buy now/.test(n)) return'💳';
-  if(/car loan/.test(n))           return'🚗';
-  if(/personal loan/.test(n))      return'💰';
-  if(/owes me|owe me/.test(n))     return'🤝';
-  if(/i owe|i need to pay/.test(n)) return'💸';
-  if(/credit score/.test(n))       return'📊';
-  if(/direct debit|autopay|auto pay/.test(n)) return'🔄';
-  if(/cancel.*sub|unused sub/.test(n)) return'❌';
-  if(/compare.*plan|better rate|review.*plan/.test(n)) return'🔍';
-  if(/high.interest savings|savings account/.test(n))  return'🏦';
-  if(/fuel|petrol/.test(n))        return'⛽';
-  if(/car rego|registration/.test(n)) return'🚗';
-  if(/car service|mechanic/.test(n)) return'🔧';
-  if(/\btoll\b/.test(n))           return'🛣️';
-  if(/\bparking\b/.test(n))        return'🅿️';
-  if(/public transport|bus|train|tram/.test(n)) return'🚌';
-  if(/takeaway|takeout/.test(n))   return'🥡';
-  if(/eating out|restaurant|dining/.test(n)) return'🍽️';
-  if(/haircut|barber|hairdress/.test(n)) return'✂️';
-  if(/\bclothing\b|clothes shop/.test(n)) return'👕';
-  if(/income protection/.test(n))  return'🛡️';
-  if(/body corporate|strata/.test(n)) return'🏢';
-  if(/budget|financial plan/.test(n)) return'📊';
-
-  // ── GAMING ──────────────────────────────────────────────────────────────
-  if(/platinum/.test(n))         return'🏅';
-  if(/100%/.test(n))             return'💯';
-  if(/final boss|end boss|last boss/.test(n)) return'💀';
-  if(/\bboss\b/.test(n))         return'⚔️';
-  if(/main story|main campaign/.test(n)) return'📖';
-  if(/side quest|sidequest/.test(n)) return'📜';
-  if(/collectible|collectable/.test(n)) return'💎';
-  if(/trophy|achievement/.test(n)) return'🏆';
-  if(/\bdlc\b|expansion/.test(n)) return'📦';
-  if(/speedrun/.test(n))         return'⏱️';
-  if(/new game\+|ng\+/.test(n))  return'🔄';
-  if(/secret area|hidden/.test(n)) return'🗝️';
-  if(/upgrade|skill tree|level up/.test(n)) return'⬆️';
-  if(/unlock|unlocke/.test(n))   return'🔓';
-  if(/checkpoint|save point/.test(n)) return'💾';
-  if(/multiplayer|online match|ranked/.test(n)) return'🌐';
-  if(/chapter|act \d|episode/.test(n)) return'📑';
-  if(/ending|credits|finish/.test(n)) return'🎬';
-  if(/\bact \d/.test(n))         return'📑';
-  if(/bronze/.test(n))           return'🥉';
-  if(/silver/.test(n))           return'🥈';
-  if(/gold/.test(n))             return'🥇';
-  // Named games
-  if(/spider.?man|spiderman/.test(n)) return'🕷️';
-  if(/call of duty|cod|warzone/.test(n)) return'🔫';
-  if(/fortnite/.test(n))         return'🏗️';
-  if(/minecraft/.test(n))        return'⛏️';
-  if(/zelda/.test(n))            return'🗡️';
-  if(/pokemon/.test(n))          return'⚡';
-  if(/mario/.test(n))            return'🍄';
-  if(/god of war|elden ring|dark souls/.test(n)) return'⚔️';
-  if(/clone hero|guitar hero/.test(n)) return'🎸';
-  if(/fifa|football game/.test(n)) return'⚽';
-  if(/nba|basketball game/.test(n)) return'🏀';
-  if(/on sale watch|price drop/.test(n)) return'🏷️';
-  if(/wishlist|wish list/.test(n)) return'⭐';
-  if(/unfinished run|incomplete/.test(n)) return'🔄';
-  if(/reinstall/.test(n))        return'💿';
-
-  // ── PET CARE ────────────────────────────────────────────────────────────
-  if(/morning feed|evening feed/.test(n)) return'🍽️';
-  if(/fresh water|refill water/.test(n)) return'💧';
-  if(/litter box|clean litter|scoop litter/.test(n)) return'🧹';
-  if(/playtime|play time|play session/.test(n)) return'🎾';
-  if(/flea treatment|flea tablet/.test(n)) return'🦟';
-  if(/worming|worm tablet/.test(n)) return'💊';
-  if(/vet checkup|vet visit|vet appoint/.test(n)) return'🏥';
-  if(/vaccination|vaccine/.test(n)) return'💉';
-  if(/weight check/.test(n))     return'⚖️';
-  if(/brush coat|groom/.test(n)) return'✂️';
-  if(/trim nail|clip nail/.test(n)) return'✂️';
-  if(/ear check|ear clean|ear drop/.test(n)) return'👂';
-  if(/eye wipe|eye drop/.test(n)) return'👁️';
-  if(/dry food|kibble/.test(n))  return'🫙';
-  if(/wet food|cat food|dog food/.test(n)) return'🥫';
-  if(/\btreat\b/.test(n))        return'🦴';
-  if(/water filter/.test(n))     return'💧';
-  if(/flea.*stock|worming.*stock/.test(n)) return'💊';
-  if(/collar check/.test(n))     return'🔗';
-  if(/litter stock/.test(n))     return'📦';
-  if(/bedding wash/.test(n))     return'🧺';
-  if(/\bfeed\b/.test(n))         return'🍽️';
-  if(/\bvet\b/.test(n))          return'🏥';
-  if(/\bcat\b|\bkitten\b/.test(n)) return'🐱';
-  if(/\bdog\b|\bpuppy\b/.test(n)) return'🐶';
-  if(/\bbunny\b|\brabbit\b/.test(n)) return'🐰';
-  if(/\bbird\b|\bparrot\b/.test(n)) return'🦜';
-  if(/pet toy|toy/.test(n))      return'🎾';
-
-  // General cleaning fallbacks
-  if(/vacuum|vaccum|hoover/.test(n)) return'🌀';
-  if(/\bmop\b/.test(n))  return'🪣';
-  if(/sweep|broom/.test(n)) return'🧹';
-  if(/\bdust\b/.test(n)) return'💨';
-  if(/\bwipe\b/.test(n)) return'🧽';
-  if(/scrub/.test(n))    return'🪥';
-  if(/wash|rinse/.test(n)) return'🧼';
-  if(/dishes|dish|plate|cutlery/.test(n)) return'🍽️';
-  if(/towel|linen/.test(n)) return'🧺';
-  if(/toilet/.test(n))   return'🚽';
-  if(/bin|trash|rubbish|garbage/.test(n)) return'🗑️';
-  if(/window/.test(n))   return'🪟';
-  if(/mirror/.test(n))   return'🪞';
-  if(/fridge|refrigerator/.test(n)) return'🧊';
-  if(/oven|stove|cooktop/.test(n)) return'🔥';
-  if(/organis|organiz|tidy|sort|declutter/.test(n)) return'📦';
-  if(/\bbed\b/.test(n))  return'🛏️';
-  if(/shower/.test(n))   return'🚿';
-  if(/\bbath\b/.test(n)) return'🛁';
-  if(/sink|tap|basin/.test(n)) return'💧';
-  if(/floor|carpet/.test(n)) return'🟫';
-  if(/wall/.test(n))     return'🧱';
-  if(/glass/.test(n))    return'🫙';
-  if(/plant/.test(n))    return'🌿';
-  if(/garden|outdoor/.test(n)) return'🌿';
-  if(/clear/.test(n))    return'🧹';
-  return'✔️';
+const n=(name||'').toLowerCase();
+if(type==='room'){
+  if(/paigee/.test(n)&&/bath/.test(n))return'👧🛁';
+  if(/paigee/.test(n)&&/bed/.test(n))return'👧🛏️';
+  if(/\bnic\b/.test(n)&&/bath/.test(n))return'👦🛁';
+  if(/\bnic\b/.test(n)&&/bed/.test(n))return'👦🛏️';
+  if(/kitchen|cook|stove/.test(n))return'🍳';
+  if(/bathroom|ensuite|toilet room|wc/.test(n))return'🛁';
+  if(/bedroom|bed room|master|guest room/.test(n))return'🛏️';
+  if(/living|lounge|sitting|family/.test(n))return'🛋️';
+  if(/girls|girl/.test(n))return'🧸';if(/boys|boy/.test(n))return'🎮';
+  if(/kids|child|nursery|play/.test(n))return'🧸';
+  if(/garage|car port/.test(n))return'🚗';
+  if(/laundry|washing|utility/.test(n))return'🫧';
+  if(/office|study|work/.test(n))return'💻';
+  if(/dining|dinner room/.test(n))return'🍽️';
+  if(/hall|corridor|entry|foyer|stair/.test(n))return'🚪';
+  if(/front yard|front garden/.test(n))return'🏡';
+  if(/backyard|back yard|back garden/.test(n))return'🌳';
+  if(/garden|yard|outdoor|outside|patio|deck/.test(n))return'🌿';
+  if(/basement|cellar/.test(n))return'🏚️';
+  if(/attic|loft|storage|spare/.test(n))return'📦';
+  if(/gym|workout|exercise/.test(n))return'🏋️';
+  if(/pool|spa/.test(n))return'🏊';
+  if(/pantry|cupboard/.test(n))return'🗄️';
+  // Finance rooms
+  if(/bill calendar|due date/.test(n))return'📅';
+  if(/fixed bill|recurring bill/.test(n))return'📋';
+  if(/subscri|streaming/.test(n))return'📺';
+  if(/debt|owed|credit/.test(n))return'💳';
+  if(/saving|goal/.test(n))return'🏦';
+  if(/income|earning/.test(n))return'💵';
+  if(/variable expense|spending/.test(n))return'🛒';
+  if(/financial.*to.do|money.*action/.test(n))return'📝';
+  if(/housing|property/.test(n))return'🏠';
+  if(/utilit/.test(n))return'⚡';
+  if(/insurance/.test(n))return'🛡️';
+  // Gaming rooms
+  if(/currently playing|in progress/.test(n))return'🎮';
+  if(/backlog/.test(n))return'📋';
+  if(/wish list|wishlist|to buy/.test(n))return'⭐';
+  if(/completed|finished/.test(n))return'🏆';
+  if(/\bdlc\b|expansion/.test(n))return'📦';
+  // Pet
+  if(/\bpet\b|supply|supplies/.test(n))return'🐾';
+  // Car
+  if(/service history/.test(n))return'🔧';
+  if(/upcoming.*service|service.*due/.test(n))return'⏰';
+  if(/rego|registration|insurance/.test(n))return'📋';
+  if(/tyre|tire|safety/.test(n))return'🛞';
+  if(/fuel|cost/.test(n))return'⛽';
+  if(/car.*clean|clean.*car/.test(n))return'✨';
+  // Study
+  if(/current.*course|course/.test(n))return'📖';
+  if(/reading list|reading/.test(n))return'📚';
+  if(/project|practice/.test(n))return'🔨';
+  if(/note.*review|review.*note/.test(n))return'📝';
+  // Travel
+  if(/booking|document/.test(n))return'📋';
+  if(/packing|luggage/.test(n))return'🧳';
+  if(/itinerary|day trip/.test(n))return'🗺️';
+  if(/pre.depart|before.*trip/.test(n))return'🏠';
+  if(/trip budget|travel budget/.test(n))return'💰';
+  // Health
+  if(/appointment/.test(n))return'🏥';
+  if(/medication|supplement/.test(n))return'💊';
+  if(/exercise|workout|fitness/.test(n))return'🏋️';
+  if(/mental health|mindful|wellbeing/.test(n))return'🧘';
+  if(/wellness goal/.test(n))return'🎯';
+  // Meal planning days
+  if(/monday/.test(n))return'1️⃣';if(/tuesday/.test(n))return'2️⃣';
+  if(/wednesday/.test(n))return'3️⃣';if(/thursday/.test(n))return'4️⃣';
+  if(/friday/.test(n))return'5️⃣';if(/saturday/.test(n))return'6️⃣';
+  if(/sunday/.test(n))return'7️⃣';
+  if(/meal prep|batch/.test(n))return'🍱';if(/week/.test(n))return'📅';
+  return'🏠';
 }
+if(type==='zone'){
+  if(/bill calendar|due date/.test(n))return'📅';
+  if(/weekly/.test(n))return'📅';if(/fortnightly/.test(n))return'📅';
+  if(/monthly/.test(n))return'📆';if(/quarterly/.test(n))return'📅';
+  if(/\bannual\b/.test(n))return'📅';
+  if(/tv|television|media/.test(n))return'📺';
+  if(/general|misc|other/.test(n))return'🗂️';if(/new zone/.test(n))return'🗂️';
+  if(/^bed$|^bed |bedding/.test(n))return'🛏️';
+  if(/clothes|clothing|wardrobe|dresser/.test(n))return'👚';
+  if(/storage/.test(n))return'🗃️';if(/^bins$|^bin$/.test(n))return'🗑️';
+  if(/lawn/.test(n))return'🌱';if(/garden/.test(n))return'🌸';if(/entry/.test(n))return'🚪';
+  if(/floor|carpet|rug/.test(n))return'🧹';
+  if(/counter|bench|surface/.test(n))return'🧽';
+  if(/window/.test(n))return'🪟';if(/shelf|shelv|cabinet/.test(n))return'📚';
+  if(/sink|basin|tap/.test(n))return'💧';if(/toilet/.test(n))return'🚽';
+  if(/shower/.test(n))return'🚿';if(/bath|tub/.test(n))return'🛁';if(/mirror/.test(n))return'🪞';
+  if(/fridge|freezer/.test(n))return'🧊';if(/oven|stove/.test(n))return'🔥';
+  if(/wall/.test(n))return'🧱';if(/light|lamp/.test(n))return'💡';
+  // Finance zones
+  if(/rent|mortgage|housing/.test(n))return'🏠';if(/electricity|power/.test(n))return'⚡';
+  if(/internet|wifi/.test(n))return'🌐';if(/phone|mobile/.test(n))return'📱';
+  if(/insurance/.test(n))return'🛡️';if(/subscri|stream/.test(n))return'📺';
+  if(/credit|card/.test(n))return'💳';if(/loan|finance/.test(n))return'💰';
+  if(/savings|bank/.test(n))return'🏦';if(/i owe|bnpl/.test(n))return'💳';
+  if(/owes me/.test(n))return'🤝';if(/upcoming|instalment/.test(n))return'⏰';
+  if(/emergency fund/.test(n))return'🆘';if(/short term/.test(n))return'🎯';
+  if(/long term/.test(n))return'📈';if(/regular income/.test(n))return'💵';
+  if(/one.off|expected/.test(n))return'💰';if(/food|drink/.test(n))return'🍽️';
+  if(/transport/.test(n))return'🚗';if(/personal/.test(n))return'👤';
+  if(/actions|to.do/.test(n))return'✅';if(/review/.test(n))return'🔍';
+  // Shopping zones
+  if(/fruit/.test(n))return'🍎';if(/veg/.test(n))return'🥦';
+  if(/meat/.test(n))return'🥩';if(/seafood|fish/.test(n))return'🐟';
+  if(/dairy/.test(n))return'🥛';if(/egg/.test(n))return'🥚';
+  if(/bakery|bread/.test(n))return'🍞';if(/dry good|grain/.test(n))return'🌾';
+  if(/canned|sauce/.test(n))return'🥫';if(/snack|sweet/.test(n))return'🍫';
+  if(/drink|bev/.test(n))return'🥤';if(/clean/.test(n))return'🧴';if(/hygiene/.test(n))return'🧼';
+  // Gaming zones
+  if(/main story|story|campaign/.test(n))return'📖';if(/side quest/.test(n))return'📜';
+  if(/collectible/.test(n))return'💎';if(/trophy|achievement/.test(n))return'🏆';
+  if(/up next|queue/.test(n))return'📋';if(/wish list|wishlist/.test(n))return'⭐';
+  if(/story done/.test(n))return'✅';if(/dlc|expansion/.test(n))return'📦';
+  // Pet zones
+  if(/daily care|daily/.test(n))return'⭐';if(/health|medical|vet/.test(n))return'❤️';
+  if(/groom/.test(n))return'✂️';if(/food|treat|feed/.test(n))return'🍽️';
+  if(/litter/.test(n))return'🧹';if(/accessori|toy/.test(n))return'🎾';
+  // Car zones
+  if(/service history/.test(n))return'🔧';if(/upcoming|service due/.test(n))return'⏰';
+  if(/rego|registration/.test(n))return'📋';if(/tyre|tire/.test(n))return'🛞';
+  if(/fuel/.test(n))return'⛽';if(/car.*clean/.test(n))return'✨';
+  // Study zones
+  if(/current.*course/.test(n))return'📖';if(/reading/.test(n))return'📚';
+  if(/project|practice/.test(n))return'🔨';if(/note/.test(n))return'📝';
+  if(/goal/.test(n))return'🎯';
+  // Travel zones
+  if(/booking|document/.test(n))return'📋';if(/packing/.test(n))return'🧳';
+  if(/itinerary/.test(n))return'🗺️';if(/pre.depart/.test(n))return'🏠';
+  if(/trip budget/.test(n))return'💰';
+  // Health zones
+  if(/appointment/.test(n))return'🏥';if(/medication|supplement/.test(n))return'💊';
+  if(/exercise|workout/.test(n))return'🏋️';if(/mental/.test(n))return'🧘';
+  if(/wellness/.test(n))return'🎯';
+  // Meal planning
+  if(/breakfast/.test(n))return'🌅';if(/lunch/.test(n))return'🌤️';
+  if(/dinner|supper/.test(n))return'🌙';if(/meal prep|batch/.test(n))return'🍱';
+  return'📍';
+}
+// TASKS
+if(/around toilet/.test(n))return'🧻';if(/coffee table/.test(n))return'☕';
+if(/bed side|bedside|side table/.test(n))return'🕯️';if(/under bed/.test(n))return'🔦';
+if(/make bed/.test(n))return'🛌';if(/wash sheet|change sheet/.test(n))return'🛌';
+if(/dirty clothes|clothes.*basket/.test(n))return'👕';if(/fold.*clothes|put away clothes/.test(n))return'👔';
+if(/shower glass/.test(n))return'🫧';if(/shower floor/.test(n))return'🚿';
+if(/bathroom bench|bench wipe/.test(n))return'🧽';if(/bathroom sink/.test(n))return'🚰';
+if(/rangehood|range hood/.test(n))return'💨';if(/splashback/.test(n))return'🧽';
+if(/door seal|expiry date/.test(n))return'🧊';if(/skirting board|baseboard/.test(n))return'🧱';
+if(/lint trap/.test(n))return'🫧';if(/washing machine/.test(n))return'🫧';
+if(/organise shelf|organise shelve/.test(n))return'📚';
+if(/organise desk|organize desk/.test(n))return'🖥️';
+if(/organise drum|organize drum/.test(n))return'🥁';
+if(/organise toy|organize toy/.test(n))return'🧸';
+if(/organise entry|organize entry/.test(n))return'🚪';
+if(/organise shoe|sort shoe/.test(n))return'👟';
+if(/clear clutter/.test(n))return'🗃️';if(/take out bin/.test(n))return'🗑️';
+if(/clean bin|bin area/.test(n))return'🧹';
+if(/throw.*away|throw.*out|throw.*trash/.test(n))return'🗑️';
+if(/clear rubbish/.test(n))return'🗑️';if(/clear/.test(n))return'🧹';
+if(/wall/.test(n))return'🧱';if(/glass/.test(n))return'🫙';
+if(/mow|mowing/.test(n))return'🌱';if(/edge lawn|edging/.test(n))return'✂️';
+if(/rake/.test(n))return'🍂';if(/weed/.test(n))return'🌾';
+if(/water plant|water the|watering/.test(n))return'💧';
+if(/sweep path|sweep drive/.test(n))return'🧹';
+// Finance tasks
+if(/bill calendar|due date|payment date/.test(n))return'📅';
+if(/start of month|end of month|mid month/.test(n))return'📆';
+if(/fortnightly/.test(n))return'📅';if(/quarterly/.test(n))return'📅';if(/\bannual\b/.test(n))return'📅';
+if(/emergency fund/.test(n))return'🆘';if(/house deposit|home deposit/.test(n))return'🏠';
+if(/holiday fund|travel fund/.test(n))return'✈️';if(/christmas|xmas/.test(n))return'🎄';
+if(/investment account|investing/.test(n))return'📈';if(/super|retirement/.test(n))return'👴';
+if(/tax return|lodge tax/.test(n))return'🧾';if(/centrelink|benefit/.test(n))return'🏛️';
+if(/salary|wages|pay cheque/.test(n))return'💵';if(/side hustle|freelance/.test(n))return'💻';
+if(/reimbursement/.test(n))return'🤝';if(/selling item/.test(n))return'🏷️';
+if(/afterpay|zip pay|humm|bnpl/.test(n))return'💳';if(/car loan/.test(n))return'🚗';
+if(/personal loan/.test(n))return'💰';if(/owes me|owe me/.test(n))return'🤝';
+if(/credit score/.test(n))return'📊';if(/direct debit|autopay/.test(n))return'🔄';
+if(/cancel.*sub|unused sub/.test(n))return'❌';
+if(/compare.*plan|better rate/.test(n))return'🔍';
+if(/high.interest savings|savings account/.test(n))return'🏦';
+if(/fuel|petrol/.test(n))return'⛽';if(/car rego|registration/.test(n))return'🚗';
+if(/car service|mechanic/.test(n))return'🔧';if(/\btoll\b/.test(n))return'🛣️';if(/\bparking\b/.test(n))return'🅿️';
+if(/public transport|bus pass|train/.test(n))return'🚌';
+if(/takeaway|takeout/.test(n))return'🥡';if(/eating out|restaurant/.test(n))return'🍽️';
+if(/haircut|barber/.test(n))return'✂️';if(/income protection/.test(n))return'🛡️';
+if(/body corporate|strata/.test(n))return'🏢';
+if(/rent|mortgage|lease/.test(n))return'🏠';if(/council rate/.test(n))return'🏛️';
+if(/electricity|power bill/.test(n))return'⚡';if(/gas bill/.test(n))return'🔥';
+if(/water bill/.test(n))return'💧';if(/internet|wifi|nbn/.test(n))return'🌐';
+if(/mobile.*plan|phone.*bill/.test(n))return'📱';
+if(/car insurance/.test(n))return'🚗';if(/health insurance/.test(n))return'🏥';
+if(/netflix/.test(n))return'🎬';if(/spotify|apple music/.test(n))return'🎵';
+if(/disney|stan|binge|prime video/.test(n))return'📺';
+if(/icloud|google one/.test(n))return'☁️';if(/amazon prime/.test(n))return'📦';
+if(/gym.*member/.test(n))return'🏋️';if(/credit card|card payment/.test(n))return'💳';
+if(/savings|transfer/.test(n))return'🏦';if(/insurance/.test(n))return'🛡️';
+// Car maintenance tasks
+if(/next service due|service.*due/.test(n))return'🔧';
+if(/tyre rotation|tire rotation/.test(n))return'🛞';
+if(/brake check/.test(n))return'🛑';if(/air filter|cabin filter/.test(n))return'💨';
+if(/oil change/.test(n))return'🛢️';if(/spark plug/.test(n))return'⚡';
+if(/wiper blade/.test(n))return'🌧️';if(/spare tyre|spare tire/.test(n))return'🛞';
+if(/tyre.*pressure|tire.*pressure/.test(n))return'🛞';
+if(/tyre.*tread|tire.*tread/.test(n))return'🛞';
+if(/battery check|car battery/.test(n))return'🔋';
+if(/rego expiry|rego due|registration/.test(n))return'🚗';
+if(/green slip|ctp/.test(n))return'📋';if(/roadside assist/.test(n))return'🆘';
+if(/toll account/.test(n))return'🛣️';if(/parking fine/.test(n))return'🅿️';
+if(/exterior wash|car wash/.test(n))return'🫧';
+if(/interior vacuum|car vacuum/.test(n))return'🌀';
+if(/wipe dashboard/.test(n))return'🧽';if(/clean windows.*car|car.*windows/.test(n))return'🪟';
+if(/wheel clean/.test(n))return'🛞';
+// Study tasks
+if(/module \d|module complete/.test(n))return'📑';
+if(/final project|submit.*assign|assignment due/.test(n))return'📋';
+if(/reading list|book \d|article \d/.test(n))return'📚';
+if(/build project|build.*app|complete.*exercise/.test(n))return'🔨';
+if(/revision session|review.*notes/.test(n))return'📝';
+if(/get certificate|complete course/.test(n))return'🏆';
+if(/apply.*skill|start.*course/.test(n))return'🎯';
+// Travel tasks
+if(/book flight|flights/.test(n))return'✈️';if(/book.*accommodation|hotel|airbnb/.test(n))return'🏨';
+if(/travel insurance/.test(n))return'🛡️';if(/passport/.test(n))return'🛂';
+if(/visa/.test(n))return'📄';if(/travel adapter/.test(n))return'🔌';
+if(/offline map|download.*map/.test(n))return'🗺️';if(/notify bank/.test(n))return'🏦';
+if(/house sitter/.test(n))return'🏠';if(/hold mail/.test(n))return'📬';
+if(/airport transfer/.test(n))return'🚗';if(/pet care.*trip|trip.*pet/.test(n))return'🐾';
+if(/day \d|things to do/.test(n))return'🗺️';if(/restaurant booking/.test(n))return'🍽️';
+if(/packing|pack /.test(n))return'🧳';
+if(/flight cost|accommodation cost|travel budget|activities budget/.test(n))return'💰';
+// Health tasks
+if(/gp checkup|gp appoint/.test(n))return'🏥';if(/dentist/.test(n))return'🦷';
+if(/optometrist|eye test/.test(n))return'👁️';if(/specialist/.test(n))return'🏥';
+if(/blood test/.test(n))return'🩸';if(/flu vaccine|vaccination/.test(n))return'💉';
+if(/skin check|skin.*cancer/.test(n))return'🔬';
+if(/prescription refill/.test(n))return'💊';if(/vitamin d/.test(n))return'☀️';
+if(/fish oil|omega/.test(n))return'🐟';if(/magnesium/.test(n))return'💊';
+if(/therapy|counselling/.test(n))return'🧠';if(/meditation/.test(n))return'🧘';
+if(/journal/.test(n))return'📓';if(/reduce screen/.test(n))return'📵';
+if(/social connection|catch up/.test(n))return'👥';
+if(/drink.*water|2l water|water daily/.test(n))return'💧';
+if(/8 hour|good sleep|sleep/.test(n))return'😴';
+if(/10k step|steps daily/.test(n))return'🚶';if(/reduce caffeine/.test(n))return'☕';
+if(/meal prep.*health|healthy meal/.test(n))return'🥗';
+// Gaming tasks
+if(/platinum/.test(n))return'🏅';if(/100%/.test(n))return'💯';
+if(/final boss|end boss/.test(n))return'💀';if(/\bboss\b/.test(n))return'⚔️';
+if(/main story|main campaign/.test(n))return'📖';if(/side quest/.test(n))return'📜';
+if(/collectible|collectable/.test(n))return'💎';if(/trophy|achievement/.test(n))return'🏆';
+if(/speedrun/.test(n))return'⏱️';if(/secret area|hidden/.test(n))return'🗝️';
+if(/upgrade|level up/.test(n))return'⬆️';if(/unlock/.test(n))return'🔓';
+if(/chapter|act \d/.test(n))return'📑';if(/ending|credits/.test(n))return'🎬';
+if(/bronze/.test(n))return'🥉';if(/silver/.test(n))return'🥈';if(/gold trophy/.test(n))return'🥇';
+if(/spider.?man|spiderman/.test(n))return'🕷️';if(/call of duty|cod|warzone/.test(n))return'🔫';
+if(/fortnite/.test(n))return'🏗️';if(/minecraft/.test(n))return'⛏️';
+if(/zelda/.test(n))return'🗡️';if(/pokemon/.test(n))return'⚡';
+if(/mario/.test(n))return'🍄';if(/god of war|elden ring/.test(n))return'⚔️';
+if(/clone hero|guitar hero/.test(n))return'🎸';
+if(/wishlist|wish list/.test(n))return'⭐';if(/on sale watch|price drop/.test(n))return'🏷️';
+if(/reinstall/.test(n))return'💿';
+// Pet tasks
+if(/morning feed|evening feed/.test(n))return'🍽️';if(/fresh water|refill water/.test(n))return'💧';
+if(/litter box|clean litter|scoop litter/.test(n))return'🧹';
+if(/playtime|play time/.test(n))return'🎾';if(/flea treatment/.test(n))return'🦟';
+if(/worming|worm tablet/.test(n))return'💊';if(/vet checkup|vet visit/.test(n))return'🏥';
+if(/vaccination|vaccine/.test(n))return'💉';if(/weight check/.test(n))return'⚖️';
+if(/brush coat|groom/.test(n))return'✂️';if(/trim nail|clip nail/.test(n))return'✂️';
+if(/ear check|ear clean/.test(n))return'👂';if(/eye wipe|eye drop/.test(n))return'👁️';
+if(/dry food|kibble/.test(n))return'🫙';if(/wet food|cat food|dog food/.test(n))return'🥫';
+if(/\btreat\b/.test(n))return'🦴';if(/water filter/.test(n))return'💧';
+if(/collar check/.test(n))return'🔗';if(/litter stock/.test(n))return'📦';
+if(/bedding wash/.test(n))return'🧺';if(/\bfeed\b/.test(n))return'🍽️';
+if(/\bvet\b/.test(n))return'🏥';if(/\bcat\b|\bkitten\b/.test(n))return'🐱';
+if(/\bdog\b|\bpuppy\b/.test(n))return'🐶';if(/\bbunny\b|\brabbit\b/.test(n))return'🐰';
+// Shopping — produce
+if(/\bapple/.test(n))return'🍎';if(/banana/.test(n))return'🍌';
+if(/strawberr/.test(n))return'🍓';if(/blueberr/.test(n))return'🫐';
+if(/grape/.test(n))return'🍇';if(/lemon/.test(n))return'🍋';if(/orange/.test(n))return'🍊';
+if(/mango/.test(n))return'🥭';if(/watermelon/.test(n))return'🍉';
+if(/pineapple/.test(n))return'🍍';if(/avocado/.test(n))return'🥑';
+if(/tomato/.test(n))return'🍅';if(/carrot/.test(n))return'🥕';
+if(/broccoli/.test(n))return'🥦';if(/lettuce|spinach|kale/.test(n))return'🥬';
+if(/potato/.test(n))return'🥔';if(/sweet potato/.test(n))return'🍠';
+if(/onion/.test(n))return'🧅';if(/garlic/.test(n))return'🧄';
+if(/capsicum|bell pepper/.test(n))return'🫑';if(/mushroom/.test(n))return'🍄';
+if(/corn/.test(n))return'🌽';if(/cucumber/.test(n))return'🥒';
+if(/eggplant|zucchini/.test(n))return'🍆';
+// Shopping — meat/dairy/bakery
+if(/chicken/.test(n))return'🍗';if(/beef|steak|mince/.test(n))return'🥩';
+if(/pork/.test(n))return'🥩';if(/lamb/.test(n))return'🥩';
+if(/bacon|ham/.test(n))return'🥓';if(/sausage|snag/.test(n))return'🌭';
+if(/salmon/.test(n))return'🐟';if(/tuna/.test(n))return'🐟';
+if(/prawn|shrimp/.test(n))return'🦐';
+if(/\bmilk\b/.test(n))return'🥛';if(/cheese/.test(n))return'🧀';
+if(/butter/.test(n))return'🧈';if(/yogh?urt/.test(n))return'🍦';
+if(/\begg/.test(n))return'🥚';if(/bread/.test(n))return'🍞';
+if(/croissant/.test(n))return'🥐';if(/bagel/.test(n))return'🥯';
+// Shopping — pantry
+if(/\bpasta\b|spaghetti|penne/.test(n))return'🍝';if(/\brice\b/.test(n))return'🍚';
+if(/flour/.test(n))return'🌾';if(/\bsugar\b/.test(n))return'🍬';
+if(/\bsalt\b/.test(n))return'🧂';if(/olive oil|vegetable oil/.test(n))return'🫙';
+if(/honey/.test(n))return'🍯';if(/jam|vegemite|peanut butter/.test(n))return'🫙';
+if(/chocolate/.test(n))return'🍫';if(/biscuit|cookie/.test(n))return'🍪';
+if(/nut|almond|cashew/.test(n))return'🥜';if(/bean|lentil|chickpea/.test(n))return'🫘';
+if(/cereal|oat/.test(n))return'🥣';if(/coconut milk/.test(n))return'🥥';
+if(/\bcoffee\b/.test(n))return'☕';if(/\btea\b/.test(n))return'🍵';
+if(/juice/.test(n))return'🧃';if(/soft drink|soda|cola/.test(n))return'🥤';
+if(/\bbeer\b/.test(n))return'🍺';if(/\bwine\b/.test(n))return'🍷';
+// Cleaning supplies / personal care
+if(/dishwash|washing.*up liquid/.test(n))return'🍽️';
+if(/laundry detergent|washing powder/.test(n))return'🧺';
+if(/bleach/.test(n))return'🫧';if(/toilet paper|loo paper/.test(n))return'🧻';
+if(/paper towel/.test(n))return'🧻';if(/bin bag|rubbish bag/.test(n))return'🗑️';
+if(/\bsponge\b/.test(n))return'🧽';if(/shampoo/.test(n))return'🧴';
+if(/conditioner/.test(n))return'🧴';if(/body wash|shower gel/.test(n))return'🧼';
+if(/toothpaste|toothbrush/.test(n))return'🦷';if(/deodorant/.test(n))return'💨';
+if(/razor/.test(n))return'🪒';if(/sunscreen/.test(n))return'☀️';
+if(/paracetamol|ibuprofen|medicine|tablet|pill|vitamin/.test(n))return'💊';
+if(/bandage|plaster/.test(n))return'🩹';if(/makeup|lipstick/.test(n))return'💄';
+// Meals
+if(/breakfast/.test(n))return'🌅';if(/lunch/.test(n))return'🌤️';
+if(/dinner|supper/.test(n))return'🌙';if(/meal prep|batch cook/.test(n))return'🍱';
+if(/pizza/.test(n))return'🍕';if(/burger|hamburger/.test(n))return'🍔';
+if(/\bsalad\b/.test(n))return'🥗';if(/soup/.test(n))return'🍲';
+if(/sandwich|wrap/.test(n))return'🥪';if(/taco|burrito/.test(n))return'🌮';
+if(/curry/.test(n))return'🍛';if(/sushi|ramen/.test(n))return'🍣';
+if(/noodle|pad thai|pho/.test(n))return'🍜';
+if(/stir fry|fried rice/.test(n))return'🥘';if(/roast/.test(n))return'🍖';
+if(/pancake|waffle/.test(n))return'🥞';if(/omelette|scrambled/.test(n))return'🍳';
+if(/toast/.test(n))return'🍞';if(/dessert|cake/.test(n))return'🍰';
+if(/ice cream/.test(n))return'🍦';
+// General fallbacks
+if(/vacuum|vaccum|hoover/.test(n))return'🌀';if(/\bmop\b/.test(n))return'🪣';
+if(/sweep|broom/.test(n))return'🧹';if(/\bdust\b/.test(n))return'💨';
+if(/\bwipe\b/.test(n))return'🧽';if(/scrub/.test(n))return'🪥';
+if(/wash|rinse/.test(n))return'🧼';if(/dishes|dish|plate/.test(n))return'🍽️';
+if(/towel|linen/.test(n))return'🧺';if(/toilet/.test(n))return'🚽';
+if(/bin|trash|rubbish|garbage/.test(n))return'🗑️';
+if(/window/.test(n))return'🪟';if(/mirror/.test(n))return'🪞';
+if(/fridge|refrigerator/.test(n))return'🧊';if(/oven|stove/.test(n))return'🔥';
+if(/organis|organiz|tidy|sort/.test(n))return'📦';
+if(/\bbed\b/.test(n))return'🛏️';if(/shower/.test(n))return'🚿';
+if(/\bbath\b/.test(n))return'🛁';if(/sink|tap|basin/.test(n))return'💧';
+if(/floor|carpet/.test(n))return'🟫';if(/plant/.test(n))return'🌿';
+if(/garden|outdoor/.test(n))return'🌿';
+return'✔️';
+}
+</script>
 
-// ══════════════════════════════════════════════════════════════════════════
-// TEMPLATES
-// ══════════════════════════════════════════════════════════════════════════
-function mk(name,completed=false){return{id:uid(),name,completed};}
-function mz(name,...tasks){return{id:uid(),name,tasks:tasks.map(t=>mk(t))};}
-function mr(name,expanded,...zones){return{id:uid(),name,expanded,zones};}
+<script>
+// ── TEMPLATES ─────────────────────────────────────────────────────────────────
+function uid2(){return Math.random().toString(36).slice(2)+Date.now().toString(36);}
+function mk(name){return{id:uid2(),name:name||'',completed:false,note:''};}
+function mz(name,...tasks){return{id:uid2(),name,tasks:tasks.map(mk)};}
+function mr(name,expanded,...zones){return{id:uid2(),name,expanded,zones};}
 
 function buildSeed(tpl){
-  if(tpl==='cleaning') return {
-    version:1, _seedVersion:2,
-    rooms:[
-      mr('Living Room',true,
-        mz('TV Area','Clear coffee table','Throw away trash','Wipe TV screen','Tidy remotes'),
-        mz('General','Vaccum','Mop floors','Dust surfaces','Clean windows','Wipe light switches')),
-      mr('Kitchen',false,
-        mz('Benchtops','Wipe benchtops','Clean splashback','Wipe appliances'),
-        mz('Sink & Dishes','Do dishes','Clean sink','Wipe tap'),
-        mz('Oven & Stovetop','Clean stovetop','Wipe oven exterior','Clean rangehood filter'),
-        mz('Fridge','Wipe shelves','Check expiry dates','Clean door seals'),
-        mz('Floor','Sweep floor','Mop floor')),
-      mr('Bathroom',false,
-        mz('Shower','Clean shower glass','Scrub shower floor','Clean shower head'),
-        mz('Toilet','Clean toilet bowl','Wipe seat & lid','Clean around base'),
-        mz('Sink & Vanity','Clean sink','Wipe mirror','Wipe benchtop','Empty bin'),
-        mz('Floor','Sweep floor','Mop floor')),
-      mr('Bedroom',false,
-        mz('Bed','Wash sheets','Make bed'),
-        mz('Wardrobe','Put away clothes','Organise wardrobe'),
-        mz('General','Vaccum','Dust surfaces','Wipe skirting boards')),
-      mr('Laundry',false,
-        mz('Washing','Do a load of washing','Hang washing out','Move to dryer'),
-        mz('Folding','Fold clothes','Put away clothes'),
-        mz('General','Clean lint trap','Wipe washing machine','Sweep floor')),
-      mr('Hallway',false,
-        mz('General','Vaccum','Wipe surfaces','Dust','Clean mirrors','Organise shoes & entry')),
-      mr('Garage',false,
-        mz('Storage','Organise shelves','Clear clutter','Wipe surfaces'),
-        mz('Floor','Sweep floor','Mop floor'),
-        mz('Bins','Take out bins','Clean bin area')),
-      mr('Backyard',false,
-        mz('Lawn','Mow lawn','Edge lawn','Rake leaves'),
-        mz('Garden','Weed garden','Water plants','Sweep paths','Clear rubbish')),
-      mr('Front Yard',false,
-        mz('Lawn','Mow lawn','Edge lawn'),
-        mz('Entry','Sweep driveway','Weed garden beds','Water plants','Clear rubbish')),
-    ]};
+  const base={version:1,_seedVersion:2,template:tpl};
+  if(tpl==='cleaning')return{...base,rooms:[
+    mr('Living Room',true,
+      mz('TV Area','Clear coffee table','Throw away trash','Wipe TV screen','Tidy remotes'),
+      mz('General','Vaccum','Mop floors','Dust surfaces','Clean windows','Wipe light switches')),
+    mr('Kitchen',false,
+      mz('Benchtops','Wipe benchtops','Clean splashback','Wipe appliances'),
+      mz('Sink & Dishes','Do dishes','Clean sink','Wipe tap'),
+      mz('Oven & Stovetop','Clean stovetop','Wipe oven exterior','Clean rangehood filter'),
+      mz('Fridge','Wipe shelves','Check expiry dates','Clean door seals'),
+      mz('Floor','Sweep floor','Mop floor')),
+    mr('Bathroom',false,
+      mz('Shower','Clean shower glass','Scrub shower floor','Clean shower head'),
+      mz('Toilet','Clean toilet bowl','Wipe seat & lid','Clean around base'),
+      mz('Sink & Vanity','Clean sink','Wipe mirror','Wipe benchtop','Empty bin'),
+      mz('Floor','Sweep floor','Mop floor')),
+    mr('Bedroom',false,
+      mz('Bed','Wash sheets','Make bed'),
+      mz('Wardrobe','Put away clothes','Organise wardrobe'),
+      mz('General','Vaccum','Dust surfaces','Wipe skirting boards')),
+    mr('Laundry',false,
+      mz('Washing','Do a load of washing','Hang washing out','Move to dryer'),
+      mz('Folding','Fold clothes','Put away clothes'),
+      mz('General','Clean lint trap','Wipe washing machine','Sweep floor')),
+    mr('Hallway',false,mz('General','Vaccum','Wipe surfaces','Dust','Clean mirrors','Organise shoes & entry')),
+    mr('Garage',false,
+      mz('Storage','Organise shelves','Clear clutter','Wipe surfaces'),
+      mz('Floor','Sweep floor','Mop floor'),
+      mz('Bins','Take out bins','Clean bin area')),
+    mr('Backyard',false,
+      mz('Lawn','Mow lawn','Edge lawn','Rake leaves'),
+      mz('Garden','Weed garden','Water plants','Sweep paths','Clear rubbish')),
+    mr('Front Yard',false,
+      mz('Lawn','Mow lawn','Edge lawn'),
+      mz('Entry','Sweep driveway','Weed garden beds','Water plants','Clear rubbish')),
+  ]};
 
-  if(tpl==='bills') return {
-    version:1, _seedVersion:1,
-    rooms:[
-      mr('Bill Calendar',true,
-        mz('Weekly',''),
-        mz('Fortnightly',''),
-        mz('Monthly — Start of Month','Rent / Mortgage — Due 1st','Phone plan — Due 1st','Netflix — Due 3rd'),
-        mz('Monthly — Mid Month','Electricity — Due 15th','Internet / NBN — Due 18th','Spotify — Due 20th'),
-        mz('Monthly — End of Month','Credit card — Due 28th','Health insurance — Due 30th'),
-        mz('Quarterly','Water rates — Due Mar/Jun/Sep/Dec','Council rates — Quarterly'),
-        mz('Annual','Car rego — Due [month]','Home & contents — Due [month]','Car insurance — Due [month]')),
-      mr('Fixed Bills',false,
-        mz('Housing','Rent / Mortgage','Body corporate','Council rates','Strata fees'),
-        mz('Utilities','Electricity','Gas','Water','Internet / NBN','Mobile phone'),
-        mz('Insurance','Car insurance','Home & contents','Health insurance','Life insurance','Income protection')),
-      mr('Subscriptions',false,
-        mz('Streaming','Netflix','Disney+','Stan / Binge','Amazon Prime','Apple TV+','YouTube Premium'),
-        mz('Music & Podcasts','Spotify','Apple Music'),
-        mz('Cloud & Software','iCloud storage','Google One','Adobe CC','Microsoft 365'),
-        mz('Memberships','Gym membership','Amazon Prime','Costco')),
-      mr('Debts & Owed',false,
-        mz('I Owe — Credit','Credit card balance','Afterpay balance','Zip / Humm balance','Car loan','Personal loan'),
-        mz('I Owe — People',''),
-        mz('Owes Me',''),
-        mz('BNPL Upcoming','Afterpay — instalment due','Zip — payment due')),
-      mr('Savings Goals',false,
-        mz('Emergency Fund','3 months expenses target','Current emergency fund balance'),
-        mz('Short Term Goals','Holiday fund','New phone / tech','Car fund','Christmas spending'),
-        mz('Long Term Goals','House deposit','Investment account','Super top-up','Retirement goal')),
-      mr('Income',false,
-        mz('Regular Income','Salary / Wages','Centrelink / Benefits','Rental income','Side hustle income'),
-        mz('One-Off Expected','Tax return','Selling items','Freelance payment','Reimbursement due')),
-      mr('Variable Expenses',false,
-        mz('Food & Drink','Groceries','Takeaway','Coffee','Eating out','Alcohol'),
-        mz('Transport','Fuel / Petrol','Car rego','Car service','Tolls','Parking','Public transport'),
-        mz('Personal','Clothing','Haircut','Gym / Sport','Entertainment','Personal care')),
-      mr('Financial To-Do',false,
-        mz('Actions','Set up direct debit','Open high-interest savings','Compare electricity providers','Review subscriptions','Lodge tax return','Call insurer for better rate'),
-        mz('Review','Compare phone plans','Check credit score','Review budget','Cancel unused subscriptions')),
-    ]};
+  if(tpl==='bills')return{...base,rooms:[
+    mr('Bill Calendar',true,
+      mz('Weekly',''),mz('Fortnightly',''),
+      mz('Monthly — Start of Month','Rent / Mortgage — Due 1st','Phone plan — Due 1st','Netflix — Due 3rd'),
+      mz('Monthly — Mid Month','Electricity — Due 15th','Internet / NBN — Due 18th','Spotify — Due 20th'),
+      mz('Monthly — End of Month','Credit card — Due 28th','Health insurance — Due 30th'),
+      mz('Quarterly','Water rates — Due Mar/Jun/Sep/Dec','Council rates — Quarterly'),
+      mz('Annual','Car rego — Due [month]','Home & contents — Due [month]','Car insurance — Due [month]')),
+    mr('Fixed Bills',false,
+      mz('Housing','Rent / Mortgage','Body corporate','Council rates','Strata fees'),
+      mz('Utilities','Electricity','Gas','Water','Internet / NBN','Mobile phone'),
+      mz('Insurance','Car insurance','Home & contents','Health insurance','Life insurance','Income protection')),
+    mr('Subscriptions',false,
+      mz('Streaming','Netflix','Disney+','Stan / Binge','Amazon Prime','Apple TV+','YouTube Premium'),
+      mz('Music','Spotify','Apple Music'),
+      mz('Cloud & Software','iCloud storage','Google One','Adobe CC','Microsoft 365'),
+      mz('Memberships','Gym membership','Amazon Prime','Costco')),
+    mr('Debts & Owed',false,
+      mz('I Owe — Credit','Credit card balance','Afterpay balance','Zip / Humm balance','Car loan','Personal loan'),
+      mz('I Owe — People',''),mz('Owes Me',''),
+      mz('BNPL Upcoming','Afterpay — instalment due','Zip — payment due')),
+    mr('Savings Goals',false,
+      mz('Emergency Fund','3 months expenses target','Current emergency fund balance'),
+      mz('Short Term Goals','Holiday fund','New phone / tech','Car fund','Christmas spending'),
+      mz('Long Term Goals','House deposit','Investment account','Super top-up','Retirement goal')),
+    mr('Income',false,
+      mz('Regular Income','Salary / Wages','Centrelink / Benefits','Rental income','Side hustle income'),
+      mz('One-Off Expected','Tax return','Selling items','Freelance payment','Reimbursement due')),
+    mr('Variable Expenses',false,
+      mz('Food & Drink','Groceries','Takeaway','Coffee','Eating out','Alcohol'),
+      mz('Transport','Fuel / Petrol','Car rego','Car service','Tolls','Parking','Public transport'),
+      mz('Personal','Clothing','Haircut','Gym / Sport','Entertainment','Personal care')),
+    mr('Financial To-Do',false,
+      mz('Actions','Set up direct debit','Open high-interest savings','Compare electricity providers','Review subscriptions','Lodge tax return'),
+      mz('Review','Compare phone plans','Check credit score','Cancel unused subscriptions')),
+  ]};
 
+  if(tpl==='shopping')return{...base,rooms:[
+    mr('Fresh Produce',true,
+      mz('Fruit','Apples','Bananas','Strawberries','Grapes','Lemons','Oranges','Blueberries','Mango'),
+      mz('Vegetables','Tomatoes','Carrots','Broccoli','Lettuce','Potatoes','Onions','Garlic','Capsicum','Mushrooms')),
+    mr('Meat & Seafood',false,
+      mz('Meat','Chicken breast','Beef mince','Pork','Lamb','Bacon','Sausages'),
+      mz('Seafood','Salmon','Tuna','Prawns','Fish fillets')),
+    mr('Dairy & Eggs',false,
+      mz('Dairy','Milk','Cheese','Butter','Yoghurt','Cream'),mz('Eggs','Eggs')),
+    mr('Bakery',false,mz('Bread','Bread','Rolls','Bagels')),
+    mr('Pantry',false,
+      mz('Dry Goods','Pasta','Rice','Oats / Cereal','Flour'),
+      mz('Canned & Sauces','Canned tomatoes','Pasta sauce','Coconut milk','Baked beans','Olive oil','Soy sauce'),
+      mz('Snacks & Treats','Chocolate','Biscuits','Chips','Nuts','Honey')),
+    mr('Drinks',false,mz('Beverages','Coffee','Tea','Orange juice','Soft drink','Water')),
+    mr('Household',false,
+      mz('Cleaning','Dishwashing liquid','Laundry detergent','Bleach','Toilet paper','Paper towel','Bin bags','Sponge'),
+      mz('Personal Care','Shampoo','Conditioner','Body wash','Toothpaste','Deodorant','Razor','Sunscreen')),
+  ]};
 
-  if(tpl==='shopping') return {
-    version:1, _seedVersion:1,
-    rooms:[
-      mr('Fresh Produce',true,
-        mz('Fruit','Apples','Bananas','Strawberries','Grapes','Lemons','Oranges','Blueberries','Mango'),
-        mz('Vegetables','Tomatoes','Carrots','Broccoli','Lettuce','Potatoes','Onions','Garlic','Capsicum','Mushrooms')),
-      mr('Meat & Seafood',false,
-        mz('Meat','Chicken breast','Beef mince','Pork','Lamb','Bacon','Sausages'),
-        mz('Seafood','Salmon','Tuna','Prawns','Fish fillets')),
-      mr('Dairy & Eggs',false,
-        mz('Dairy','Milk','Cheese','Butter','Yoghurt','Cream'),
-        mz('Eggs','Eggs')),
-      mr('Bakery',false,
-        mz('Bread','Bread','Rolls','Bagels')),
-      mr('Pantry',false,
-        mz('Dry Goods','Pasta','Rice','Oats / Cereal','Flour'),
-        mz('Canned & Sauces','Canned tomatoes','Pasta sauce','Coconut milk','Baked beans','Olive oil','Soy sauce'),
-        mz('Snacks & Treats','Chocolate','Biscuits','Chips','Nuts','Honey')),
-      mr('Drinks',false,
-        mz('Beverages','Coffee','Tea','Orange juice','Soft drink','Water')),
-      mr('Household',false,
-        mz('Cleaning','Dishwashing liquid','Laundry detergent','Bleach','Toilet paper','Paper towel','Bin bags','Sponge'),
-        mz('Personal Care','Shampoo','Conditioner','Body wash','Toothpaste','Deodorant','Razor','Sunscreen')),
-    ]};
+  if(tpl==='meals')return{...base,rooms:[
+    mr('Monday',true,mz('Breakfast',''),mz('Lunch',''),mz('Dinner','')),
+    mr('Tuesday',false,mz('Breakfast',''),mz('Lunch',''),mz('Dinner','')),
+    mr('Wednesday',false,mz('Breakfast',''),mz('Lunch',''),mz('Dinner','')),
+    mr('Thursday',false,mz('Breakfast',''),mz('Lunch',''),mz('Dinner','')),
+    mr('Friday',false,mz('Breakfast',''),mz('Lunch',''),mz('Dinner','')),
+    mr('Saturday',false,mz('Breakfast',''),mz('Lunch',''),mz('Dinner','')),
+    mr('Sunday',false,mz('Breakfast',''),mz('Lunch',''),mz('Dinner','')),
+    mr('Meal Prep',false,
+      mz('Batch Cook','Cook rice','Prep vegetables','Marinate protein','Make pasta sauce'),
+      mz('Shopping Needed','')),
+  ]};
 
-  if(tpl==='meals') return {
-    version:1, _seedVersion:1,
-    rooms:[
-      mr('Monday',true,   mz('Breakfast',''),mz('Lunch',''),mz('Dinner','')),
-      mr('Tuesday',false, mz('Breakfast',''),mz('Lunch',''),mz('Dinner','')),
-      mr('Wednesday',false,mz('Breakfast',''),mz('Lunch',''),mz('Dinner','')),
-      mr('Thursday',false,mz('Breakfast',''),mz('Lunch',''),mz('Dinner','')),
-      mr('Friday',false,  mz('Breakfast',''),mz('Lunch',''),mz('Dinner','')),
-      mr('Saturday',false,mz('Breakfast',''),mz('Lunch',''),mz('Dinner','')),
-      mr('Sunday',false,  mz('Breakfast',''),mz('Lunch',''),mz('Dinner','')),
-      mr('Meal Prep',false,
-        mz('Batch Cook','Cook rice','Prep vegetables','Marinate protein','Make pasta sauce'),
-        mz('Shopping Needed','')),
-    ]};
+  if(tpl==='gaming')return{...base,rooms:[
+    mr('Currently Playing',true,
+      mz('Main Story','Act 1 complete','Act 2 complete','Act 3 complete','Final boss','Ending'),
+      mz('Side Quests','Side quest 1','Side quest 2','Side quest 3','Side quest 4'),
+      mz('Collectibles','Collectible set 1','Collectible set 2','Secret area 1','Hidden item 1'),
+      mz('Trophies & Achievements','Bronze set','Silver set','Gold trophy','Platinum / 100%')),
+    mr('Backlog',false,mz('Up Next','Next game','Game after that','Then this one'),mz('Reinstall','Unfinished run 1','Unfinished run 2')),
+    mr('Wish List',false,mz('To Buy','Wishlist game 1','Wishlist game 2','Wishlist game 3'),mz('Wait for Sale','On sale watch 1','On sale watch 2')),
+    mr('Completed',false,mz('Story Done',''),mz('100% / Platinum','')),
+    mr('DLC & Expansions',false,mz('Owned',''),mz('To Buy','')),
+  ]};
 
-  if(tpl==='games') return {
-    version:1, _seedVersion:1,
-    rooms:[
-      mr('Currently Playing',true,
-        mz('Main Story','Act 1 complete','Act 2 complete','Act 3 complete','Final boss','Ending'),
-        mz('Side Quests','Side quest 1','Side quest 2','Side quest 3','Side quest 4'),
-        mz('Collectibles','Collectible set 1','Collectible set 2','Secret area 1','Hidden item 1'),
-        mz('Trophies & Achievements','Bronze set','Silver set','Gold trophy','Platinum / 100%')),
-      mr('Backlog',false,
-        mz('Up Next','Next game','Game after that','Then this one'),
-        mz('Reinstall','Unfinished run 1','Unfinished run 2')),
-      mr('Wish List',false,
-        mz('To Buy','Wishlist game 1','Wishlist game 2','Wishlist game 3'),
-        mz('Wait for Sale','On sale watch 1','On sale watch 2')),
-      mr('Completed',false,
-        mz('Story Done',''),
-        mz('100% / Platinum','')),
-      mr('DLC & Expansions',false,
-        mz('Owned',''),
-        mz('To Buy','')),
-    ]};
+  if(tpl==='petcare')return{...base,rooms:[
+    mr('Pet 1',true,
+      mz('Daily Care','Morning feed','Evening feed','Fresh water','Clean litter box','Playtime'),
+      mz('Health','Flea treatment','Worming tablet','Vet checkup','Vaccinations up to date','Weight check'),
+      mz('Grooming','Brush coat','Trim nails','Ear check','Eye wipe')),
+    mr('Pet 2',false,
+      mz('Daily Care','Morning feed','Evening feed','Fresh water','Clean litter box','Playtime'),
+      mz('Health','Flea treatment','Worming tablet','Vet checkup','Vaccinations up to date','Weight check'),
+      mz('Grooming','Brush coat','Trim nails','Ear check','Eye wipe')),
+    mr('Pet 3',false,
+      mz('Daily Care','Morning feed','Evening feed','Fresh water','Clean litter box','Playtime'),
+      mz('Health','Flea treatment','Worming tablet','Vet checkup','Vaccinations up to date','Weight check'),
+      mz('Grooming','Brush coat','Trim nails','Ear check','Eye wipe')),
+    mr('Supplies',false,
+      mz('Food & Treats','Dry food','Wet food','Treats','Water filter replacement'),
+      mz('Medical Stock','Flea treatment stock','Worming tablets stock','Ear drops','Eye drops'),
+      mz('Accessories','Collar check','Litter stock','Toys','Bedding wash')),
+  ]};
 
-  if(tpl==='petcare') return {
-    version:1, _seedVersion:1,
-    rooms:[
-      mr('Pet 1',true,
-        mz('Daily Care','Morning feed','Evening feed','Fresh water','Clean litter box','Playtime'),
-        mz('Health','Flea treatment','Worming tablet','Vet checkup','Vaccinations up to date','Weight check'),
-        mz('Grooming','Brush coat','Trim nails','Ear check','Eye wipe')),
-      mr('Pet 2',false,
-        mz('Daily Care','Morning feed','Evening feed','Fresh water','Clean litter box','Playtime'),
-        mz('Health','Flea treatment','Worming tablet','Vet checkup','Vaccinations up to date','Weight check'),
-        mz('Grooming','Brush coat','Trim nails','Ear check','Eye wipe')),
-      mr('Pet 3',false,
-        mz('Daily Care','Morning feed','Evening feed','Fresh water','Clean litter box','Playtime'),
-        mz('Health','Flea treatment','Worming tablet','Vet checkup','Vaccinations up to date','Weight check'),
-        mz('Grooming','Brush coat','Trim nails','Ear check','Eye wipe')),
-      mr('Supplies',false,
-        mz('Food & Treats','Dry food','Wet food','Treats','Water filter replacement'),
-        mz('Medical Stock','Flea treatment stock','Worming tablets stock','Ear drops','Eye drops'),
-        mz('Accessories','Collar check','Litter stock','Toys','Bedding wash')),
-    ]};
+  if(tpl==='car')return{...base,rooms:[
+    mr('Service History',true,
+      mz('Last Services','Last full service','Last oil change','Last tyre rotation','Last air filter','Last cabin filter','Last brake check')),
+    mr('Upcoming Service',false,
+      mz('Service Due','Next service due (km/date)','Tyre rotation due','Brake check due','Air filter due','Oil change due'),
+      mz('Minor Checks','Wiper blade check','Battery check','Coolant level','Tyre pressure check')),
+    mr('Rego & Insurance',false,
+      mz('Registration','Car rego expiry','Green slip / CTP expiry','Roadside assist renewal'),
+      mz('Insurance','Comprehensive insurance renewal','CTP insurance','Contents cover check')),
+    mr('Tyres & Safety',false,
+      mz('Tyres','Tyre tread check','Tyre pressure check','Spare tyre check','Wheel clean'),
+      mz('Safety','Brake check','Headlights check','Wipers working','First aid kit stocked')),
+    mr('Fuel & Costs',false,
+      mz('Running Costs','Fuel log','Toll account top-up','Parking fines to pay','Car wash due')),
+    mr('Car Cleaning',false,
+      mz('Exterior','Exterior wash','Wheel clean','Wipe door seals','Clean windows'),
+      mz('Interior','Interior vacuum','Wipe dashboard','Clean centre console','Vacuum boot')),
+  ]};
 
-  return {version:1,_seedVersion:1,rooms:[]};
+  if(tpl==='study')return{...base,rooms:[
+    mr('Current Course',true,
+      mz('Modules','Module 1 complete','Module 2 complete','Module 3 complete','Module 4 complete','Module 5 complete'),
+      mz('Assignments','Submit assignment 1','Submit assignment 2','Final project due'),
+      mz('Practice','Complete exercises','Code along project','Build practice app')),
+    mr('Reading List',false,
+      mz('Books','Book 1','Book 2','Book 3','Book 4'),
+      mz('Articles & Docs','Article 1','Article 2','Documentation read-through')),
+    mr('Projects',false,
+      mz('In Progress','Build project 1','Build project 2'),
+      mz('Planned','Project idea 1','Project idea 2','Project idea 3')),
+    mr('Notes Review',false,
+      mz('Weekly Review','Review notes from week 1','Review notes from week 2','Review notes from week 3'),
+      mz('Organise','Organise notes by topic','Update cheatsheet','Backup notes')),
+    mr('Goals',false,
+      mz('Course Goals','Complete course','Get certificate','Apply new skill','Start next course'),
+      mz('Career Goals','Update portfolio','Apply for roles','Connect with community')),
+  ]};
+
+  if(tpl==='travel')return{...base,rooms:[
+    mr('Bookings & Docs',true,
+      mz('Flights & Stays','Book flights','Book accommodation','Travel insurance','Airport transfer'),
+      mz('Documents','Passport valid','Visa application','International driving permit','Travel insurance docs')),
+    mr('Packing List',false,
+      mz('Clothes','T-shirts','Underwear','Pants / Shorts','Jacket','Swimwear','Shoes'),
+      mz('Toiletries','Toothpaste','Shampoo','Deodorant','Sunscreen','Medication'),
+      mz('Electronics','Phone charger','Travel adapter','Camera','Earphones','Portable battery'),
+      mz('Documents & Money','Passport','Cash / Cards','Travel insurance docs','Itinerary printed')),
+    mr('Itinerary',false,
+      mz('Day 1','Things to do — Day 1','Restaurant booking — Day 1'),
+      mz('Day 2','Things to do — Day 2','Restaurant booking — Day 2'),
+      mz('Day 3','Things to do — Day 3'),
+      mz('Must-See','Attraction 1','Attraction 2','Attraction 3','Day trip option')),
+    mr('Pre-Departure',false,
+      mz('Home','Notify bank of travel','House sitter arranged','Hold mail / redirect','Pet care sorted'),
+      mz('Phone & Tech','Download offline maps','International roaming on','Check-in online','Save booking refs')),
+    mr('Trip Budget',false,
+      mz('Costs','Flight cost','Accommodation cost','Spending money','Travel insurance cost','Activities budget')),
+  ]};
+
+  if(tpl==='health')return{...base,rooms:[
+    mr('Appointments',true,
+      mz('Book These','GP checkup','Dentist','Optometrist','Specialist referral','Skin check'),
+      mz('Upcoming','Blood test','Flu vaccine','Annual checkup')),
+    mr('Medications & Supplements',false,
+      mz('Prescriptions','Prescription refill due'),
+      mz('Daily Supplements','Vitamin D','Fish oil / Omega','Magnesium','Probiotic','Zinc')),
+    mr('Exercise',false,
+      mz('This Week','Monday workout','Tuesday workout','Thursday workout','Friday workout','Weekend activity'),
+      mz('Goals','Cardio target','Strength target','Flexibility / Stretching','Weekly steps goal')),
+    mr('Mental Health',false,
+      mz('Regular','Therapy / Counselling appointment','Meditation session','Journaling','Social connection — catch up'),
+      mz('Habits','Reduce screen time','Digital detox day','Get outside daily')),
+    mr('Wellness Goals',false,
+      mz('Daily Habits','Drink 2L water daily','8 hours sleep','10k steps daily','Reduce caffeine','Meal prep Sunday'),
+      mz('Monthly Check-ins','Weight check','Review medications','Review goals')),
+  ]};
+
+  // ALL TEMPLATES
+  if(tpl==='all'){
+    const tabs={};
+    TAB_ORDER.forEach(t=>{ const s=buildSeed(t); tabs[t]={rooms:s.rooms}; });
+    return{version:1,_seedVersion:2,template:'all',type:'all',activeTab:'cleaning',tabs};
+  }
+
+  return{version:1,_seedVersion:1,rooms:[]};
 }
 
-// ══════════════════════════════════════════════════════════════════════════
-// START
-// ══════════════════════════════════════════════════════════════════════════
+// ── START ─────────────────────────────────────────────────────────────────────
 init();
 </script>
 </body>
