@@ -9,42 +9,22 @@ async function kv(...args) {
   return (await r.json()).result;
 }
 
-// Filter tabs for view mode — owner password required, read-only
-function filterForView(data) {
-  if (data.type !== 'all') return data;
+function filterTabs(data, visibilityKey, markReadOnly) {
+  if (data.type !== 'all') return markReadOnly ? {...data, readOnly:true} : data;
   const d = JSON.parse(JSON.stringify(data));
   const selected = d.selectedTabs || Object.keys(d.tabs || {});
-  const visible = selected.filter(t => d.tabs?.[t]?.viewVisible !== false);
-  d.selectedTabs = visible;
-  const tabs = {};
-  visible.forEach(t => { tabs[t] = { ...data.tabs[t], readOnly: true }; });
-  d.tabs = tabs;
-  d.activeTab = visible.includes(d.activeTab) ? d.activeTab : (visible[0] || d.activeTab);
-  return d;
-}
-
-// Filter tabs for collaborator mode — collab password required
-function filterForCollab(data) {
-  if (data.type !== 'all') return data;
-  const d = JSON.parse(JSON.stringify(data));
-  const selected = d.selectedTabs || Object.keys(d.tabs || {});
-  const visible = selected.filter(t => d.tabs?.[t]?.collabVisible !== false);
+  const visible = selected.filter(t => d.tabs?.[t]?.[visibilityKey] !== false);
   d.selectedTabs = visible;
   const tabs = {};
   visible.forEach(t => {
     tabs[t] = {
       ...data.tabs[t],
-      readOnly: data.tabs[t]?.collabEditable === false,
+      readOnly: markReadOnly || data.tabs[t]?.collabEditable === false,
     };
   });
   d.tabs = tabs;
   d.activeTab = visible.includes(d.activeTab) ? d.activeTab : (visible[0] || d.activeTab);
   return d;
-}
-
-// For single-template (non-all) spaces in collab/view — return as-is or readOnly
-function withReadOnly(data, readOnly) {
-  return readOnly ? { ...data, readOnly: true } : data;
 }
 
 module.exports = async function handler(req, res) {
@@ -68,26 +48,27 @@ module.exports = async function handler(req, res) {
 
       if (!auth) return res.status(200).json({ status: 'locked' });
 
-      // Owner auth — works for both regular and view mode
-      if (auth === space.passwordHash) {
-        if (isViewMode) {
-          const filtered = space.data.type === 'all'
-            ? filterForView(space.data)
-            : withReadOnly(space.data, true);
-          return res.status(200).json({ status: 'ok', data: filtered, isOwner: false, isView: true });
-        }
-        return res.status(200).json({ status: 'ok', data: space.data, isOwner: true });
+      // Owner — full access or view-mode with owner password fallback
+      if (auth === space.passwordHash && !isViewMode) {
+        return res.status(200).json({ status:'ok', data: space.data, isOwner:true });
       }
 
-      // Collaborator auth
+      // View mode — requires viewHash (separate from owner password)
+      if (isViewMode) {
+        const viewHash = space.viewHash;
+        if (!viewHash) return res.status(200).json({ status:'locked', hint:'view_not_set' });
+        if (auth !== viewHash) return res.status(200).json({ status:'locked' });
+        const filtered = filterTabs(space.data, 'viewVisible', true);
+        return res.status(200).json({ status:'ok', data: filtered, isOwner:false, isView:true });
+      }
+
+      // Collaborator
       if (space.collabHash && auth === space.collabHash) {
-        const filtered = space.data.type === 'all'
-          ? filterForCollab(space.data)
-          : withReadOnly(space.data, false);
-        return res.status(200).json({ status: 'ok', data: filtered, isOwner: false, isCollab: true });
+        const filtered = filterTabs(space.data, 'collabVisible', false);
+        return res.status(200).json({ status:'ok', data: filtered, isOwner:false, isCollab:true });
       }
 
-      return res.status(200).json({ status: 'locked' });
+      return res.status(200).json({ status:'locked' });
     } catch(e) { return res.status(500).json({ error: e.message }); }
   }
 
@@ -97,28 +78,28 @@ module.exports = async function handler(req, res) {
     if (body.action === 'setup') {
       try {
         const existing = await kv('GET', KEY);
-        if (existing) return res.status(409).json({ error: 'Already claimed' });
+        if (existing) return res.status(409).json({ error:'Already claimed' });
         await kv('SET', KEY, JSON.stringify({
           passwordHash: body.passwordHash,
+          viewHash: null,
           collabHash: null,
           data: body.data,
           createdAt: Date.now(),
         }));
-        return res.status(200).json({ ok: true });
-      } catch(e) { return res.status(500).json({ error: e.message }); }
+        return res.status(200).json({ ok:true });
+      } catch(e) { return res.status(500).json({ error:e.message }); }
     }
 
     if (body.action === 'save') {
       try {
         const raw = await kv('GET', KEY);
-        if (!raw) return res.status(404).json({ error: 'Space not found' });
+        if (!raw) return res.status(404).json({ error:'Space not found' });
         const space = JSON.parse(raw);
         const isOwnerAuth  = auth === space.passwordHash;
         const isCollabAuth = space.collabHash && auth === space.collabHash;
-        if (!isOwnerAuth && !isCollabAuth) return res.status(401).json({ error: 'Wrong password' });
+        if (!isOwnerAuth && !isCollabAuth) return res.status(401).json({ error:'Wrong password' });
 
         if (isCollabAuth && body.data.type === 'all') {
-          // Collab: only write back non-readOnly tabs, preserve owner data for hidden/readOnly tabs
           const current = space.data;
           const selected = current.selectedTabs || Object.keys(current.tabs || {});
           selected.forEach(t => {
@@ -134,25 +115,26 @@ module.exports = async function handler(req, res) {
         }
 
         await kv('SET', KEY, JSON.stringify(space));
-        return res.status(200).json({ ok: true });
-      } catch(e) { return res.status(500).json({ error: e.message }); }
+        return res.status(200).json({ ok:true });
+      } catch(e) { return res.status(500).json({ error:e.message }); }
     }
 
     if (body.action === 'set_sharing') {
       try {
         const raw = await kv('GET', KEY);
-        if (!raw) return res.status(404).json({ error: 'Space not found' });
+        if (!raw) return res.status(404).json({ error:'Space not found' });
         const space = JSON.parse(raw);
-        if (auth !== space.passwordHash) return res.status(401).json({ error: 'Owner access required' });
-        space.collabHash = body.collabHash || null;
+        if (auth !== space.passwordHash) return res.status(401).json({ error:'Owner access required' });
+        if (body.viewHash  !== undefined) space.viewHash  = body.viewHash  || null;
+        if (body.collabHash !== undefined) space.collabHash = body.collabHash || null;
         space.data = body.data;
         await kv('SET', KEY, JSON.stringify(space));
-        return res.status(200).json({ ok: true });
-      } catch(e) { return res.status(500).json({ error: e.message }); }
+        return res.status(200).json({ ok:true });
+      } catch(e) { return res.status(500).json({ error:e.message }); }
     }
 
-    return res.status(400).json({ error: 'Unknown action' });
+    return res.status(400).json({ error:'Unknown action' });
   }
 
-  return res.status(405).json({ error: 'Method not allowed' });
+  return res.status(405).json({ error:'Method not allowed' });
 };
