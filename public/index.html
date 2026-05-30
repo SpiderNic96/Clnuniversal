@@ -1357,6 +1357,9 @@ function renderTimeline(){
   updateStats();
 }
 
+function getTemplateType(){
+  return isAllMode() ? (state.activeTab||'cleaning') : (state.template||'cleaning');
+}
 function isCurrentTabEditable(){
   if(isOwner) return true;
   if(isViewMode) return false;
