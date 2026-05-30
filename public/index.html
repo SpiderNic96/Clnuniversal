@@ -187,6 +187,33 @@ body.readonly .add-row{display:none;}
 .modal h2.safe{color:var(--accent);}
 .modal p{font-size:12px;color:var(--muted);margin-bottom:18px;line-height:1.5;}
 .modal-btns{display:flex;gap:8px;justify-content:flex-end;}
+/* ── TO-DO ────────────────────────── */
+.td-priority{display:inline-block;font-size:10px;padding:2px 7px;border-radius:99px;margin-right:6px;font-family:var(--display);font-weight:700;}
+.td-high{background:#ff4d4d22;color:#ff4d4d;border:1px solid #ff4d4d44;}
+.td-mid{background:#fbbf2422;color:#fbbf24;border:1px solid #fbbf2444;}
+.td-low{background:#60a5fa22;color:#60a5fa;border:1px solid #60a5fa44;}
+/* ── FREEHAND NOTES ──────────────── */
+.fn-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);margin-bottom:12px;overflow:hidden;}
+.fn-card-header{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--border);}
+.fn-title{flex:1;background:transparent;border:none;color:var(--text);font-family:var(--display);font-size:18px;font-weight:700;outline:none;}
+.fn-body{padding:12px 14px;}
+.fn-textarea{width:100%;min-height:120px;background:transparent;border:none;color:var(--text);font-family:var(--mono);font-size:13px;outline:none;resize:vertical;line-height:1.6;}
+.fn-textarea::placeholder{color:var(--muted);}
+/* ── MOVIES & TV ─────────────────── */
+.mv-status-bar{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none;margin-bottom:4px;}
+.mv-status-bar::-webkit-scrollbar{display:none;}
+.mv-stab{flex-shrink:0;padding:6px 14px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);font-family:var(--mono);font-size:12px;color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:6px;-webkit-tap-highlight-color:transparent;}
+.mv-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);margin-bottom:10px;overflow:hidden;}
+.mv-card-header{display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;}
+.mv-card-meta{flex:1;min-width:0;}
+.mv-title{width:100%;background:transparent;border:none;color:var(--text);font-family:var(--display);font-size:17px;font-weight:700;outline:none;}
+.mv-stars{font-size:16px;letter-spacing:1px;cursor:pointer;user-select:none;flex-shrink:0;}
+.mv-star{opacity:.3;transition:opacity .1s;}
+.mv-star.on{opacity:1;}
+.mv-sbns{display:flex;gap:4px;flex-shrink:0;}
+.mv-sbn{padding:4px 8px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface2);cursor:pointer;font-size:11px;-webkit-tap-highlight-color:transparent;}
+.mv-sbn.active{border-width:2px;}
+.mv-body{padding:4px 12px 12px;}
 /* ── BUDGET TABLE ─────────────── */
 .bt-table{width:100%;border-collapse:collapse;font-size:12px;}
 .bt-thead th{font-size:10px;color:var(--muted);text-align:left;padding:4px 6px;border-bottom:1px solid var(--border);font-family:var(--mono);}
@@ -279,28 +306,29 @@ body.readonly .add-row{display:none;}
 </div>
 <div class="land-card">
   <h2>How to claim your space</h2>
-  <div class="land-step"><div class="land-num">1</div><p>Pick a number <b>1–50</b> and visit that URL — e.g. <b>/3</b> or <b>/17</b></p></div>
-  <div class="land-step"><div class="land-num">2</div><p><b>Select one or more templates</b> — mix and match. Cleaning + Budget + Shopping, or just one. Each selected template becomes its own tab in your space.</p></div>
-  <div class="land-step" style="margin-bottom:0"><div class="land-num">3</div><p>Set a password. That URL is now <b>yours forever</b>. Bookmark it and share only if you want to.</p></div>
+  <div class="land-step"><div class="land-num">1</div><p>Pick a number <b>1–50</b> and visit that URL — e.g. <b>/4</b> or <b>/23</b></p></div>
+  <div class="land-step"><div class="land-num">2</div><p><b>Select one or more templates</b> — tap to toggle. Pick 1, mix 5, or select all 14. Each becomes its own tab.</p></div>
+  <div class="land-step" style="margin-bottom:0"><div class="land-num">3</div><p>Set your owner password. Your space is now locked to you. Optionally set separate <b>view</b> and <b>collaborator</b> passwords via the 🔐 Sharing button.</p></div>
   <div class="land-urls">e.g. <span>clnuniversal.vercel.app/4</span> &nbsp;·&nbsp; <span>/12</span> &nbsp;·&nbsp; <span>/50</span></div>
 </div>
+
 <div class="land-card" style="border-color:var(--accent);">
   <div style="display:flex;gap:12px;align-items:flex-start;">
-    <span style="font-size:26px;flex-shrink:0;">👥</span>
+    <span style="font-size:26px;flex-shrink:0;">👑</span>
     <div>
-      <div style="font-family:var(--display);font-size:17px;font-weight:700;margin-bottom:6px;">Personal or Shared — 3 Access Levels</div>
+      <div style="font-family:var(--display);font-size:17px;font-weight:700;margin-bottom:8px;">3 Access Levels — 3 Separate Passwords</div>
       <div style="display:flex;flex-direction:column;gap:6px;">
         <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:8px 10px;">
-          <div style="font-size:12px;font-weight:700;color:var(--accent);">👑 Owner</div>
-          <div style="font-size:11px;color:var(--muted);margin-top:2px;">Full access. See all tabs including private ones. Manage sharing settings. Your password.</div>
+          <div style="font-size:12px;font-weight:700;color:var(--accent);">👑 Owner — <span style="font-weight:400;color:var(--muted)">your password · /8</span></div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px;">Full access. See and edit all tabs. Manage sharing settings. No restrictions.</div>
         </div>
         <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:8px 10px;">
-          <div style="font-size:12px;font-weight:700;color:var(--text);">👥 Collaborator</div>
-          <div style="font-size:11px;color:var(--muted);margin-top:2px;">Separate password you share with others. Can view and edit tasks — but private tabs are <b style="color:var(--text)">completely hidden</b> from them. No access to sharing settings.</div>
+          <div style="font-size:12px;font-weight:700;color:var(--text);">👁 View Only — <span style="font-weight:400;color:var(--muted)">view password · /8?view=1</span></div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px;">Read-only access. Requires a <b style="color:var(--text)">separate view password</b> you set — different from your owner password. Only shows tabs you mark as visible in View Mode settings.</div>
         </div>
         <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:8px 10px;">
-          <div style="font-size:12px;font-weight:700;color:var(--muted);">👁 View Only</div>
-          <div style="font-size:11px;color:var(--muted);margin-top:2px;">Anyone with the <b style="color:var(--text)">/N?view=1</b> link can see public tabs. No password. Read-only. Private tabs hidden.</div>
+          <div style="font-size:12px;font-weight:700;color:var(--text);">👥 Collaborator — <span style="font-weight:400;color:var(--muted)">collab password · /8collaborator</span></div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px;">Editable access. Different URL pattern (<b style="color:var(--text)">/8collaborator</b>) + separate password. Only shows tabs marked visible for Collab. Per-tab: can be fully editable (✏️) or read-only (📖).</div>
         </div>
       </div>
     </div>
@@ -311,12 +339,33 @@ body.readonly .add-row{display:none;}
   <div style="display:flex;gap:12px;align-items:flex-start;">
     <span style="font-size:26px;flex-shrink:0;">🔐</span>
     <div>
-      <div style="font-family:var(--display);font-size:17px;font-weight:700;margin-bottom:4px;">Sharing & Private Tabs</div>
-      <p style="font-size:12px;color:var(--muted);line-height:1.6;">When you have a multi-tab space, the <b style="color:var(--text)">🔐 Sharing</b> button (owner only) opens a panel where you can:<br/><br/>
-      — Mark any tab as <b style="color:var(--danger)">🔒 Private</b> — hidden entirely from collaborators and view-only visitors<br/>
-      — Set a separate <b style="color:var(--text)">collaborator password</b> to give others edit access to your public tabs<br/>
-      — Copy a <b style="color:var(--text)">read-only link</b> for anyone to view without a password<br/><br/>
-      Example: Budget & Finance tab set to private, Cleaning and Shopping shared with housemates.</p>
+      <div style="font-family:var(--display);font-size:17px;font-weight:700;margin-bottom:6px;">Sharing Setup (Owner Only)</div>
+      <p style="font-size:12px;color:var(--muted);line-height:1.7;">From inside your space, tap <b style="color:var(--text)">🔐 Sharing</b> in the toolbar. You'll see a grid of your tabs with two columns:<br/><br/>
+      <b style="color:var(--text)">View column</b> — toggle each tab 👁 Show or 🔒 Hide for view mode visitors.<br/>
+      <b style="color:var(--text)">Collab column</b> — toggle each tab Hidden / Visible / or Visible+Editable (✏️) for collaborators.<br/><br/>
+      Set a <b style="color:var(--text)">View password</b> and a <b style="color:var(--text)">Collaborator password</b> — both separate from your owner password. Share the appropriate URL + password with whoever needs it.</p>
+    </div>
+  </div>
+</div>
+
+<div class="land-card" style="border-color:var(--accent);">
+  <div style="display:flex;gap:12px;align-items:flex-start;">
+    <span style="font-size:26px;flex-shrink:0;">📊</span>
+    <div>
+      <div style="font-family:var(--display);font-size:17px;font-weight:700;margin-bottom:4px;">Progress Tracking</div>
+      <p style="font-size:12px;color:var(--muted);line-height:1.6;">Every <b style="color:var(--text)">☑ checkbox</b> counts toward the progress bar at the top. Use <b style="color:var(--text)">🔄 New Month</b> to uncheck all without deleting — great for monthly resets.</p>
+      <div style="margin-top:10px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
+          <span style="font-size:11px;color:var(--muted);">3 rooms · 12 tasks</span>
+          <div style="flex:1;height:4px;background:var(--border);border-radius:99px;overflow:hidden;"><div style="width:58%;height:100%;background:var(--accent);border-radius:99px;"></div></div>
+          <span style="font-size:12px;color:var(--accent);font-family:var(--display);font-weight:700;">58%</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:7px;font-size:11px;font-family:var(--mono);">
+          <span style="width:12px;height:12px;border:1.5px solid var(--accent);background:var(--accent);border-radius:2px;display:inline-block;flex-shrink:0;"></span>
+          <span style="text-decoration:line-through;color:var(--muted);">🌀 Vaccum & mop</span>
+          <span style="color:var(--accent);font-size:10px;margin-left:auto;">✓ counts</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -327,107 +376,67 @@ body.readonly .add-row{display:none;}
     <div>
       <div style="font-family:var(--display);font-size:17px;font-weight:700;margin-bottom:8px;">Features</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:8px 10px;">
-          <div style="font-size:13px;margin-bottom:2px;">📝 Task Notes</div>
-          <div style="font-size:11px;color:var(--muted);">Add a note, amount or due date under any task. Stores with the task.</div>
-        </div>
-        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:8px 10px;">
-          <div style="font-size:13px;margin-bottom:2px;">🔄 New Month</div>
-          <div style="font-size:11px;color:var(--muted);">Uncheck all tasks without deleting them. Perfect for monthly resets.</div>
-        </div>
-        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:8px 10px;">
-          <div style="font-size:13px;margin-bottom:2px;">🎨 Colour Themes</div>
-          <div style="font-size:11px;color:var(--muted);">Each template has its own accent colour. Switches automatically as you tab.</div>
-        </div>
-        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:8px 10px;">
-          <div style="font-size:13px;margin-bottom:2px;">🤖 Smart Emoji</div>
-          <div style="font-size:11px;color:var(--muted);">Type any task — ingredients, bills, games, pets — and get a matching emoji live.</div>
-        </div>
-        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:8px 10px;">
-          <div style="font-size:13px;margin-bottom:2px;">🔄 Live Sync</div>
-          <div style="font-size:11px;color:var(--muted);">Changes from any device appear for all visitors within 12 seconds automatically.</div>
-        </div>
-        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:8px 10px;">
-          <div style="font-size:13px;margin-bottom:2px;">✓ Clear Done</div>
-          <div style="font-size:11px;color:var(--muted);">Archive completed tasks to keep the list clean without losing the structure.</div>
-        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:8px 10px;"><div style="font-size:13px;margin-bottom:2px;">📝 Task Notes</div><div style="font-size:11px;color:var(--muted);">Add a note or amount under any task.</div></div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:8px 10px;"><div style="font-size:13px;margin-bottom:2px;">🔄 New Month</div><div style="font-size:11px;color:var(--muted);">Uncheck all tasks. Structure stays.</div></div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:8px 10px;"><div style="font-size:13px;margin-bottom:2px;">🎨 Colour Themes</div><div style="font-size:11px;color:var(--muted);">Accent colour shifts per template tab.</div></div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:8px 10px;"><div style="font-size:13px;margin-bottom:2px;">🤖 Smart Emoji</div><div style="font-size:11px;color:var(--muted);">Type any task. Emoji matches live.</div></div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:8px 10px;"><div style="font-size:13px;margin-bottom:2px;">🔄 Live Sync</div><div style="font-size:11px;color:var(--muted);">All changes sync across devices.</div></div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:8px 10px;"><div style="font-size:13px;margin-bottom:2px;">⭐ Star Ratings</div><div style="font-size:11px;color:var(--muted);">Movies & TV shows have 5-star ratings.</div></div>
       </div>
     </div>
   </div>
 </div>
-<div class="land-card" style="border-color:var(--accent);">
-  <div style="display:flex;gap:12px;align-items:flex-start;">
-    <span style="font-size:26px;flex-shrink:0;">📊</span>
-    <div>
-      <div style="font-family:var(--display);font-size:17px;font-weight:700;margin-bottom:4px;">Progress Tracking</div>
-      <p style="font-size:12px;color:var(--muted);line-height:1.6;">Every <b style="color:var(--text)">☑ checkbox</b> you tick counts toward the <b style="color:var(--accent)">progress bar</b> at the top. Percentage reflects tasks done across all rooms combined. Use <b style="color:var(--text)">🔄 New Month</b> to uncheck all without deleting.</p>
-      <div style="margin-top:10px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px;">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
-          <span style="font-size:11px;color:var(--muted);">3 rooms · 12 tasks</span>
-          <div style="flex:1;height:4px;background:var(--border);border-radius:99px;overflow:hidden;"><div style="width:58%;height:100%;background:var(--accent);border-radius:99px;"></div></div>
-          <span style="font-size:12px;color:var(--accent);font-family:var(--display);font-weight:700;">58%</span>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:4px;">
-          <div style="display:flex;align-items:center;gap:7px;font-size:11px;font-family:var(--mono);">
-            <span style="width:12px;height:12px;border:1.5px solid var(--accent);background:var(--accent);border-radius:2px;display:inline-block;flex-shrink:0;"></span>
-            <span style="text-decoration:line-through;color:var(--muted);">🌀 Vaccum & mop</span>
-            <span style="color:var(--accent);font-size:10px;margin-left:auto;">✓ counts</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:7px;font-size:11px;font-family:var(--mono);">
-            <span style="width:12px;height:12px;border:1.5px solid var(--muted);border-radius:2px;display:inline-block;flex-shrink:0;"></span>
-            <span style="color:var(--text);">💨 Dust</span>
-            <span style="color:var(--muted);font-size:10px;margin-left:auto;">pending</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div style="font-family:var(--display);font-size:20px;font-weight:800;color:var(--accent);margin:20px 0 14px;letter-spacing:1px;">📋 AVAILABLE TEMPLATES</div>
+
+<div style="font-family:var(--display);font-size:20px;font-weight:800;color:var(--accent);margin:20px 0 14px;letter-spacing:1px;">📋 14 TEMPLATES</div>
+
 <!-- Cleaning -->
 <div class="showcase-card">
-  <div class="sc-header"><span class="sc-icon">🧹</span><div><div class="sc-name">Cleaning</div><div class="sc-desc">Household rooms, zones and tasks for any shared home.</div></div></div>
+  <div class="sc-header"><span class="sc-icon">🧹</span><div><div class="sc-name">Cleaning</div><div class="sc-desc">Household rooms, zones & tasks. Rooms expand to zones which contain tasks.</div></div></div>
   <div class="sc-rooms"><span class="sc-pill">🛋️ Living Room</span><span class="sc-pill">🍳 Kitchen</span><span class="sc-pill">🛁 Bathroom</span><span class="sc-pill">🛏️ Bedroom</span><span class="sc-pill">🫧 Laundry</span><span class="sc-pill">🚪 Hallway</span><span class="sc-pill">🚗 Garage</span><span class="sc-pill">🌳 Backyard</span><span class="sc-pill">🏡 Front Yard</span></div>
   <div class="sc-preview">
-    <div class="sc-zone-label">📺 TV Area</div>
-    <div class="sc-task"><span class="sc-box"></span><span>☕</span> Clear coffee table</div>
+    <div class="sc-zone-label">🗂️ General</div>
     <div class="sc-task"><span class="sc-box sc-checked"></span><span>🌀</span> <span style="text-decoration:line-through;opacity:.5">Vaccum & mop</span></div>
-    <div class="sc-zone-label" style="margin-top:7px">🗂️ Kitchen — Sink & Dishes</div>
-    <div class="sc-task"><span class="sc-box"></span><span>🍽️</span> Do dishes</div>
-    <div class="sc-task"><span class="sc-box"></span><span>💧</span> Clean sink</div>
+    <div class="sc-task"><span class="sc-box"></span><span>💨</span> Dust</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🧱</span> Walls</div>
   </div>
 </div>
+
 <!-- Budget -->
 <div class="showcase-card">
-  <div class="sc-header"><span class="sc-icon">💰</span><div><div class="sc-name">Budget & Finance</div><div class="sc-desc">Bills calendar, savings goals, debts, income & spending tracker.</div></div></div>
-  <div class="sc-rooms"><span class="sc-pill">📅 Bill Calendar</span><span class="sc-pill">📋 Fixed Bills</span><span class="sc-pill">📺 Subscriptions</span><span class="sc-pill">💳 Debts & Owed</span><span class="sc-pill">🏦 Savings Goals</span><span class="sc-pill">💵 Income</span><span class="sc-pill">🛒 Variable Expenses</span><span class="sc-pill">📝 Financial To-Do</span></div>
+  <div class="sc-header"><span class="sc-icon">💰</span><div><div class="sc-name">Budget & Finance</div><div class="sc-desc">Table view — Bill | Amount | Due date. Tick to mark paid.</div></div></div>
+  <div class="sc-rooms"><span class="sc-pill">📅 Bill Calendar</span><span class="sc-pill">📋 Fixed Bills</span><span class="sc-pill">📺 Subscriptions</span><span class="sc-pill">💳 Debts & Owed</span><span class="sc-pill">🏦 Savings Goals</span><span class="sc-pill">💵 Income</span><span class="sc-pill">🛒 Expenses</span><span class="sc-pill">📝 To-Do</span></div>
   <div class="sc-preview">
-    <div class="sc-zone-label">📆 Monthly — Start of Month</div>
-    <div class="sc-task"><span class="sc-box sc-checked"></span><span>🏠</span> <span style="text-decoration:line-through;opacity:.5">Rent / Mortgage — Due 1st</span></div>
-    <div class="sc-task"><span class="sc-box"></span><span>🌐</span> Internet — Due 18th</div>
-    <div class="sc-zone-label" style="margin-top:7px">🆘 Emergency Fund</div>
-    <div class="sc-task"><span class="sc-box"></span><span>🆘</span> 3 months expenses target</div>
-    <div class="sc-zone-label" style="margin-top:7px">🤝 Owes Me</div>
-    <div class="sc-task"><span class="sc-box"></span><span>🤝</span> [Name] — $50</div>
+    <div style="display:grid;grid-template-columns:20px 1fr 60px 50px;gap:4px;font-size:11px;color:var(--muted);padding-bottom:4px;border-bottom:1px solid var(--border);margin-bottom:4px;font-family:var(--display);">
+      <span></span><span>Bill</span><span>Amount</span><span>Due</span>
+    </div>
+    <div style="display:grid;grid-template-columns:20px 1fr 60px 50px;gap:4px;font-size:12px;align-items:center;padding:3px 0;opacity:.45;">
+      <span class="sc-box sc-checked" style="width:12px;height:12px;"></span><span>🏠 Rent</span><span style="color:var(--accent)">$1,800</span><span style="color:var(--muted)">1st</span>
+    </div>
+    <div style="display:grid;grid-template-columns:20px 1fr 60px 50px;gap:4px;font-size:12px;align-items:center;padding:3px 0;">
+      <span class="sc-box"></span><span>⚡ Electricity</span><span style="color:var(--accent)">$145</span><span style="color:var(--muted)">15th</span>
+    </div>
+    <div style="display:grid;grid-template-columns:20px 1fr 60px 50px;gap:4px;font-size:12px;align-items:center;padding:3px 0;">
+      <span class="sc-box"></span><span>🌐 Internet</span><span style="color:var(--accent)">$89</span><span style="color:var(--muted)">18th</span>
+    </div>
   </div>
 </div>
+
 <!-- Shopping -->
 <div class="showcase-card">
-  <div class="sc-header"><span class="sc-icon">🛒</span><div><div class="sc-name">Shopping</div><div class="sc-desc">Grocery & household list. Type any ingredient for a matching emoji.</div></div></div>
+  <div class="sc-header"><span class="sc-icon">🛒</span><div><div class="sc-name">Shopping</div><div class="sc-desc">Flat list per category. Item + qty field. No zone layer.</div></div></div>
   <div class="sc-rooms"><span class="sc-pill">🥦 Fresh Produce</span><span class="sc-pill">🥩 Meat</span><span class="sc-pill">🥛 Dairy</span><span class="sc-pill">🍞 Bakery</span><span class="sc-pill">🗄️ Pantry</span><span class="sc-pill">🥤 Drinks</span><span class="sc-pill">🧴 Household</span></div>
   <div class="sc-preview">
-    <div class="sc-zone-label">🍎 Fruit</div>
-    <div class="sc-task"><span class="sc-box"></span><span>🍎</span> Apples</div>
-    <div class="sc-task"><span class="sc-box sc-checked"></span><span>🍌</span> <span style="text-decoration:line-through;opacity:.5">Bananas</span></div>
-    <div class="sc-zone-label" style="margin-top:7px">🥦 Vegetables</div>
-    <div class="sc-task"><span class="sc-box"></span><span>🍅</span> Tomatoes</div>
-    <div class="sc-task"><span class="sc-box"></span><span>🧄</span> Garlic</div>
+    <div class="sc-task"><span class="sc-box sc-checked"></span><span>🍌</span> <span style="text-decoration:line-through;opacity:.5">Bananas</span> <span style="color:var(--accent);font-size:11px;margin-left:auto;">×2</span></div>
+    <div class="sc-task"><span class="sc-box"></span><span>🍎</span> Apples <span style="color:var(--accent);font-size:11px;margin-left:auto;">×4</span></div>
+    <div class="sc-task"><span class="sc-box"></span><span>🥦</span> Broccoli <span style="color:var(--accent);font-size:11px;margin-left:auto;">×1</span></div>
+    <div class="sc-task"><span class="sc-box"></span><span>🧄</span> Garlic <span style="color:var(--accent);font-size:11px;margin-left:auto;">×1</span></div>
   </div>
 </div>
+
 <!-- Meals -->
 <div class="showcase-card">
-  <div class="sc-header"><span class="sc-icon">🍳</span><div><div class="sc-name">Meal Planning</div><div class="sc-desc">Plan every meal Mon–Sun with a meal prep section.</div></div></div>
-  <div class="sc-rooms"><span class="sc-pill">1️⃣ Monday</span><span class="sc-pill">2️⃣ Tuesday</span><span class="sc-pill">3️⃣ Wednesday</span><span class="sc-pill">4️⃣ Thursday</span><span class="sc-pill">5️⃣ Friday</span><span class="sc-pill">6️⃣ Saturday</span><span class="sc-pill">7️⃣ Sunday</span><span class="sc-pill">🍱 Meal Prep</span></div>
+  <div class="sc-header"><span class="sc-icon">🍳</span><div><div class="sc-name">Meal Planning</div><div class="sc-desc">Day-picker tabs. Tap a day → see Breakfast / Lunch / Dinner slots.</div></div></div>
+  <div class="sc-rooms"><span class="sc-pill">1️⃣ Mon</span><span class="sc-pill">2️⃣ Tue</span><span class="sc-pill">3️⃣ Wed</span><span class="sc-pill">4️⃣ Thu</span><span class="sc-pill">5️⃣ Fri</span><span class="sc-pill">6️⃣ Sat</span><span class="sc-pill">7️⃣ Sun</span><span class="sc-pill">🍱 Meal Prep</span></div>
   <div class="sc-preview">
     <div class="sc-zone-label">1️⃣ Monday</div>
     <div class="sc-task"><span class="sc-box"></span><span>🌅</span> Breakfast — Oats & fruit</div>
@@ -435,112 +444,169 @@ body.readonly .add-row{display:none;}
     <div class="sc-task"><span class="sc-box"></span><span>🌙</span> Dinner — Pasta bolognese</div>
   </div>
 </div>
+
 <!-- Gaming -->
 <div class="showcase-card">
-  <div class="sc-header"><span class="sc-icon">🎮</span><div><div class="sc-name">Gaming</div><div class="sc-desc">Progress, objectives, collectibles, trophies and backlog.</div></div></div>
-  <div class="sc-rooms"><span class="sc-pill">🎮 Currently Playing</span><span class="sc-pill">📋 Backlog</span><span class="sc-pill">⭐ Wish List</span><span class="sc-pill">🏆 Completed</span><span class="sc-pill">📦 DLC</span></div>
+  <div class="sc-header"><span class="sc-icon">🎮</span><div><div class="sc-name">Gaming</div><div class="sc-desc">Kanban status tabs. Move games between Playing / Paused / Done / Wishlist.</div></div></div>
+  <div class="sc-rooms"><span class="sc-pill">🎮 Playing</span><span class="sc-pill">⏸️ Paused</span><span class="sc-pill">🏆 Done</span><span class="sc-pill">⭐ Wishlist</span></div>
   <div class="sc-preview">
-    <div class="sc-zone-label">📖 Main Story</div>
+    <div class="sc-zone-label">🎮 Currently Playing</div>
     <div class="sc-task"><span class="sc-box sc-checked"></span><span>📑</span> <span style="text-decoration:line-through;opacity:.5">Act 1 complete</span></div>
     <div class="sc-task"><span class="sc-box"></span><span>💀</span> Final boss</div>
-    <div class="sc-zone-label" style="margin-top:7px">💎 Collectibles</div>
-    <div class="sc-task"><span class="sc-box"></span><span>🗝️</span> Secret area 1</div>
-    <div class="sc-task"><span class="sc-box"></span><span>🏅</span> Platinum / 100%</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🏅</span> Platinum trophy</div>
   </div>
 </div>
+
 <!-- Pet Care -->
 <div class="showcase-card">
-  <div class="sc-header"><span class="sc-icon">🐾</span><div><div class="sc-name">Pet Care</div><div class="sc-desc">Daily care, health tracking and supplies for up to 3 pets.</div></div></div>
+  <div class="sc-header"><span class="sc-icon">🐾</span><div><div class="sc-name">Pet Care</div><div class="sc-desc">Daily care, health & grooming per pet. Rename Pet 1/2/3 to your pets' names.</div></div></div>
   <div class="sc-rooms"><span class="sc-pill">🐾 Pet 1</span><span class="sc-pill">🐾 Pet 2</span><span class="sc-pill">🐾 Pet 3</span><span class="sc-pill">🛒 Supplies</span></div>
   <div class="sc-preview">
     <div class="sc-zone-label">⭐ Daily Care</div>
     <div class="sc-task"><span class="sc-box sc-checked"></span><span>🍽️</span> <span style="text-decoration:line-through;opacity:.5">Morning feed</span></div>
     <div class="sc-task"><span class="sc-box"></span><span>💧</span> Fresh water</div>
     <div class="sc-task"><span class="sc-box"></span><span>🧹</span> Clean litter box</div>
-    <div class="sc-zone-label" style="margin-top:7px">❤️ Health</div>
-    <div class="sc-task"><span class="sc-box"></span><span>🦟</span> Flea treatment</div>
   </div>
 </div>
+
 <!-- Car -->
 <div class="showcase-card">
-  <div class="sc-header"><span class="sc-icon">🚗</span><div><div class="sc-name">Car Maintenance</div><div class="sc-desc">Service history, upcoming work, rego, insurance and cleaning.</div></div></div>
-  <div class="sc-rooms"><span class="sc-pill">🔧 Service History</span><span class="sc-pill">⏰ Upcoming</span><span class="sc-pill">📋 Rego & Insurance</span><span class="sc-pill">🛞 Tyres & Safety</span><span class="sc-pill">⛽ Fuel & Costs</span><span class="sc-pill">✨ Car Cleaning</span></div>
+  <div class="sc-header"><span class="sc-icon">🚗</span><div><div class="sc-name">Car Maintenance</div><div class="sc-desc">Service history, upcoming work, rego, insurance, tyres and car cleaning.</div></div></div>
+  <div class="sc-rooms"><span class="sc-pill">🔧 Service History</span><span class="sc-pill">⏰ Upcoming</span><span class="sc-pill">📋 Rego & Insurance</span><span class="sc-pill">🛞 Tyres</span><span class="sc-pill">⛽ Costs</span><span class="sc-pill">✨ Cleaning</span></div>
   <div class="sc-preview">
     <div class="sc-zone-label">⏰ Upcoming Service</div>
     <div class="sc-task"><span class="sc-box"></span><span>🔧</span> Next service due</div>
     <div class="sc-task"><span class="sc-box"></span><span>🛞</span> Tyre rotation due</div>
-    <div class="sc-zone-label" style="margin-top:7px">📋 Registration</div>
     <div class="sc-task"><span class="sc-box"></span><span>🚗</span> Car rego expiry</div>
-    <div class="sc-task"><span class="sc-box"></span><span>🛡️</span> Car insurance renewal</div>
   </div>
 </div>
+
 <!-- Study -->
 <div class="showcase-card">
-  <div class="sc-header"><span class="sc-icon">📚</span><div><div class="sc-name">Study & Courses</div><div class="sc-desc">Modules, reading lists, projects, notes and learning goals.</div></div></div>
+  <div class="sc-header"><span class="sc-icon">📚</span><div><div class="sc-name">Study & Courses</div><div class="sc-desc">Standard list with a <b>progress bar per course</b> showing % complete. Red → Yellow → Green.</div></div></div>
   <div class="sc-rooms"><span class="sc-pill">📖 Current Course</span><span class="sc-pill">📚 Reading List</span><span class="sc-pill">🔨 Projects</span><span class="sc-pill">📝 Notes Review</span><span class="sc-pill">🎯 Goals</span></div>
   <div class="sc-preview">
-    <div class="sc-zone-label">📖 Current Course</div>
+    <div style="display:flex;align-items:center;gap:8px;padding:6px 0;">
+      <div style="flex:1;height:5px;background:var(--border);border-radius:99px;overflow:hidden;"><div style="width:75%;height:100%;background:#34d399;border-radius:99px;"></div></div>
+      <span style="font-size:11px;color:#34d399;font-family:var(--display);font-weight:700;">3/4 · 75%</span>
+    </div>
     <div class="sc-task"><span class="sc-box sc-checked"></span><span>📑</span> <span style="text-decoration:line-through;opacity:.5">Module 1 complete</span></div>
     <div class="sc-task"><span class="sc-box"></span><span>📑</span> Module 2 complete</div>
-    <div class="sc-task"><span class="sc-box"></span><span>🔨</span> Build project 1</div>
-    <div class="sc-task"><span class="sc-box"></span><span>🏆</span> Get certificate</div>
   </div>
 </div>
+
 <!-- Travel -->
 <div class="showcase-card">
-  <div class="sc-header"><span class="sc-icon">✈️</span><div><div class="sc-name">Travel Planning</div><div class="sc-desc">Bookings, packing, itinerary, pre-departure and budget.</div></div></div>
-  <div class="sc-rooms"><span class="sc-pill">📋 Bookings & Docs</span><span class="sc-pill">🧳 Packing</span><span class="sc-pill">🗺️ Itinerary</span><span class="sc-pill">🏠 Pre-Departure</span><span class="sc-pill">💰 Trip Budget</span></div>
-  <div class="sc-preview">
-    <div class="sc-zone-label">📋 Bookings & Docs</div>
-    <div class="sc-task"><span class="sc-box sc-checked"></span><span>✈️</span> <span style="text-decoration:line-through;opacity:.5">Book flights</span></div>
-    <div class="sc-task"><span class="sc-box"></span><span>🏨</span> Book accommodation</div>
-    <div class="sc-task"><span class="sc-box"></span><span>🛂</span> Passport valid</div>
-    <div class="sc-zone-label" style="margin-top:7px">🧳 Packing</div>
-    <div class="sc-task"><span class="sc-box"></span><span>👕</span> Clothes</div>
-    <div class="sc-task"><span class="sc-box"></span><span>🔌</span> Travel adapter</div>
+  <div class="sc-header"><span class="sc-icon">✈️</span><div><div class="sc-name">Travel Planning</div><div class="sc-desc">Vertical timeline layout. Each phase has a dot + connector line. Filled dot = complete phase.</div></div></div>
+  <div class="sc-rooms"><span class="sc-pill">📋 Bookings & Docs</span><span class="sc-pill">🧳 Packing</span><span class="sc-pill">🗺️ Itinerary</span><span class="sc-pill">🏠 Pre-Departure</span><span class="sc-pill">💰 Budget</span></div>
+  <div class="sc-preview" style="padding-left:6px;">
+    <div style="display:flex;gap:8px;align-items:flex-start;padding:4px 0;">
+      <div style="display:flex;flex-direction:column;align-items:center;width:14px;flex-shrink:0;padding-top:3px;"><div style="width:10px;height:10px;border-radius:50%;background:var(--accent);"></div><div style="width:2px;height:20px;background:var(--border);margin-top:2px;"></div></div>
+      <div><div style="font-size:12px;font-weight:700;">📋 Bookings & Docs</div><div style="font-size:11px;color:var(--muted);">✓ Flights · ✓ Hotel · ☐ Visa</div></div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:flex-start;padding:4px 0;">
+      <div style="display:flex;flex-direction:column;align-items:center;width:14px;flex-shrink:0;padding-top:3px;"><div style="width:10px;height:10px;border-radius:50%;border:2px solid var(--accent);background:transparent;"></div></div>
+      <div><div style="font-size:12px;font-weight:700;">🧳 Packing</div><div style="font-size:11px;color:var(--muted);">☐ Clothes · ☐ Adapter · ☐ Docs</div></div>
+    </div>
   </div>
 </div>
+
 <!-- Health -->
 <div class="showcase-card">
-  <div class="sc-header"><span class="sc-icon">❤️</span><div><div class="sc-name">Health & Wellness</div><div class="sc-desc">Appointments, meds, exercise, mental health and wellness goals.</div></div></div>
-  <div class="sc-rooms"><span class="sc-pill">🏥 Appointments</span><span class="sc-pill">💊 Medications</span><span class="sc-pill">🏋️ Exercise</span><span class="sc-pill">🧘 Mental Health</span><span class="sc-pill">🎯 Wellness Goals</span></div>
+  <div class="sc-header"><span class="sc-icon">❤️</span><div><div class="sc-name">Health & Wellness</div><div class="sc-desc">Appointments, medications, exercise routine, mental health & wellness goals.</div></div></div>
+  <div class="sc-rooms"><span class="sc-pill">🏥 Appointments</span><span class="sc-pill">💊 Medications</span><span class="sc-pill">🏋️ Exercise</span><span class="sc-pill">🧘 Mental Health</span><span class="sc-pill">🎯 Goals</span></div>
   <div class="sc-preview">
     <div class="sc-zone-label">🏥 Appointments</div>
-    <div class="sc-task"><span class="sc-box"></span><span>🏥</span> GP checkup</div>
     <div class="sc-task"><span class="sc-box sc-checked"></span><span>🦷</span> <span style="text-decoration:line-through;opacity:.5">Dentist</span></div>
-    <div class="sc-zone-label" style="margin-top:7px">🎯 Wellness Goals</div>
+    <div class="sc-task"><span class="sc-box"></span><span>🏥</span> GP checkup</div>
     <div class="sc-task"><span class="sc-box"></span><span>💧</span> Drink 2L water daily</div>
-    <div class="sc-task"><span class="sc-box"></span><span>🚶</span> 10k steps daily</div>
   </div>
 </div>
-<!-- All Templates -->
+
+<!-- To-Do -->
+<div class="showcase-card">
+  <div class="sc-header"><span class="sc-icon">✅</span><div><div class="sc-name">To-Do</div><div class="sc-desc">Projects with priority zones — 🔴 High Priority, 🟡 In Progress, ✅ Done.</div></div></div>
+  <div class="sc-rooms"><span class="sc-pill">💼 Work</span><span class="sc-pill">🏠 Personal</span><span class="sc-pill">💡 Ideas</span><span class="sc-pill">🛒 Shopping</span></div>
+  <div class="sc-preview">
+    <div class="sc-zone-label">🔴 High Priority</div>
+    <div class="sc-task"><span class="sc-box"></span><span>⚡</span> Urgent task 1</div>
+    <div class="sc-task"><span class="sc-box"></span><span>⚡</span> Urgent task 2</div>
+    <div class="sc-zone-label" style="margin-top:7px">🟡 In Progress</div>
+    <div class="sc-task"><span class="sc-box sc-checked"></span><span>✔️</span> <span style="text-decoration:line-through;opacity:.5">Working on this</span></div>
+  </div>
+</div>
+
+<!-- Freehand -->
+<div class="showcase-card">
+  <div class="sc-header"><span class="sc-icon">📝</span><div><div class="sc-name">Freehand Notes</div><div class="sc-desc">Open textarea per note. No zones, no checkboxes — just write.</div></div></div>
+  <div class="sc-rooms"><span class="sc-pill">📝 Quick Notes</span><span class="sc-pill">📝 Meeting Notes</span><span class="sc-pill">📝 Ideas</span></div>
+  <div class="sc-preview">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px;">
+      <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;font-family:var(--display);">📝 Quick Notes</div>
+      <div style="font-size:12px;color:var(--muted);font-family:var(--mono);line-height:1.6;">Write anything here.<br/>No structure required.<br/>Just type and go.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Movies -->
+<div class="showcase-card">
+  <div class="sc-header"><span class="sc-icon">🎬</span><div><div class="sc-name">Movies</div><div class="sc-desc">Kanban-style with status tabs + ★ star ratings. Tap stars to rate.</div></div></div>
+  <div class="sc-rooms"><span class="sc-pill">🔖 Want to Watch</span><span class="sc-pill">▶️ Watching</span><span class="sc-pill">✅ Watched</span></div>
+  <div class="sc-preview">
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px;margin-bottom:6px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+        <span style="font-family:var(--display);font-size:16px;font-weight:700;">The Dark Knight</span>
+        <span style="color:#fbbf24;font-size:15px;">★★★★★</span>
+      </div>
+      <div style="font-size:11px;color:var(--muted);">✅ Watched</div>
+    </div>
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+        <span style="font-family:var(--display);font-size:16px;font-weight:700;">Dune Part 3</span>
+        <span style="font-size:15px;opacity:.3;">★★★★★</span>
+      </div>
+      <div style="font-size:11px;color:var(--muted);">🔖 Want to Watch</div>
+    </div>
+  </div>
+</div>
+
+<!-- TV Shows -->
+<div class="showcase-card">
+  <div class="sc-header"><span class="sc-icon">📺</span><div><div class="sc-name">TV Shows</div><div class="sc-desc">Same as Movies but with season-by-season progress tracking per show.</div></div></div>
+  <div class="sc-rooms"><span class="sc-pill">🔖 Want to Watch</span><span class="sc-pill">▶️ Watching</span><span class="sc-pill">⏸️ On Hold</span><span class="sc-pill">✅ Finished</span></div>
+  <div class="sc-preview">
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+        <span style="font-family:var(--display);font-size:16px;font-weight:700;">Breaking Bad</span>
+        <span style="color:#fbbf24;font-size:15px;">★★★★★</span>
+      </div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;">
+        <span style="font-size:11px;background:var(--accent);color:#000;border-radius:3px;padding:2px 7px;">S1 ✓</span>
+        <span style="font-size:11px;background:var(--accent);color:#000;border-radius:3px;padding:2px 7px;">S2 ✓</span>
+        <span style="font-size:11px;background:var(--surface);border:1px solid var(--border);color:var(--muted);border-radius:3px;padding:2px 7px;">S3</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Mix & Match -->
 <div class="showcase-card" style="border-color:var(--accent);background:var(--surface2);">
-  <div class="sc-header"><span class="sc-icon">⚡</span><div><div class="sc-name" style="color:var(--accent);">MIX & MATCH TEMPLATES</div><div class="sc-desc">Select any combination — or all 10 at once. Each becomes its own tab in one URL.</div></div></div>
+  <div class="sc-header"><span class="sc-icon">⚡</span><div><div class="sc-name" style="color:var(--accent);">MIX & MATCH — 14 TEMPLATES</div><div class="sc-desc">Tap to select any combination. Each template becomes its own tab in one URL.</div></div></div>
   <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;">
-    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">🧹 Clean</span>
-    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">💰 Budget</span>
-    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">🛒 Shop</span>
-    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">🍳 Meals</span>
-    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">🎮 Games</span>
-    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">🐾 Pets</span>
-    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">🚗 Car</span>
-    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">📚 Study</span>
-    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">✈️ Travel</span>
-    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">❤️ Health</span>
+    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">🧹 Clean</span><span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">💰 Budget</span>
+    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">🛒 Shop</span><span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">🍳 Meals</span>
+    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">🎮 Games</span><span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">🐾 Pets</span>
+    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">🚗 Car</span><span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">📚 Study</span>
+    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">✈️ Travel</span><span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">❤️ Health</span>
+    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">✅ To-Do</span><span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">📝 Notes</span>
+    <span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">🎬 Movies</span><span class="sc-pill" style="border-color:var(--accent);color:var(--accent);">📺 TV</span>
   </div>
   <div style="display:flex;flex-direction:column;gap:6px;">
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:8px 10px;font-size:12px;color:var(--muted);">
-      <b style="color:var(--text);">Tap to select, tap again to deselect.</b> Pick 2, 5, or all 10 — only your selected templates load. The ⚡ ALL button toggles everything at once.
-    </div>
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:8px 10px;font-size:12px;color:var(--muted);">
-      <b style="color:var(--text);">Private tabs:</b> After creating, mark any tab as 🔒 Private via the Sharing button. Collaborators won't see it exists — useful for keeping your Budget tab personal while sharing Cleaning with housemates.
-    </div>
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:8px 10px;font-size:12px;color:var(--muted);">
-      <b style="color:var(--text);">Theme colours shift</b> as you switch tabs — lime for cleaning, gold for budget, purple for gaming, pink for pets, and more.
-    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:8px 10px;font-size:12px;color:var(--muted);"><b style="color:var(--text)">Multi-select:</b> Tap cards to toggle. A ✓ badge appears. Hit "Create Space → X templates" when ready.</div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:8px 10px;font-size:12px;color:var(--muted);"><b style="color:var(--text)">Tab bar</b> appears at top when you have 2+ templates. Colour shifts as you switch tabs.</div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:8px 10px;font-size:12px;color:var(--muted);"><b style="color:var(--text)">Per-tab visibility:</b> Use 🔐 Sharing to hide your Budget tab from collaborators while sharing Cleaning with housemates.</div>
   </div>
-</div>
-</div>
+</div></div>
 </div>
 
 <!-- TEMPLATE PICKER -->
@@ -560,7 +626,11 @@ body.readonly .add-row{display:none;}
   <div class="tpl-card" data-tpl="study" onclick="toggleTemplate('study')"><div class="tpl-check"></div><div class="tpl-icon">📚</div><div class="tpl-name">Study & Courses</div><div class="tpl-desc">Modules, projects & goals</div></div>
   <div class="tpl-card" data-tpl="travel" onclick="toggleTemplate('travel')"><div class="tpl-check"></div><div class="tpl-icon">✈️</div><div class="tpl-name">Travel Planning</div><div class="tpl-desc">Bookings, packing & itinerary</div></div>
   <div class="tpl-card" data-tpl="health" onclick="toggleTemplate('health')"><div class="tpl-check"></div><div class="tpl-icon">❤️</div><div class="tpl-name">Health & Wellness</div><div class="tpl-desc">Appointments, exercise & goals</div></div>
-  <div class="tpl-card tpl-all" data-tpl="all" onclick="toggleAllTemplates()"><div class="tpl-check"></div><div class="tpl-icon">⚡</div><div class="tpl-name">ALL TEMPLATES</div><div class="tpl-desc">Select all — every category in one space</div></div>
+  <div class="tpl-card" data-tpl="todo" onclick="toggleTemplate('todo')"><div class="tpl-check"></div><div class="tpl-icon">✅</div><div class="tpl-name">To-Do</div><div class="tpl-desc">Projects, priorities & task tracking</div></div>
+  <div class="tpl-card" data-tpl="freehand" onclick="toggleTemplate('freehand')"><div class="tpl-check"></div><div class="tpl-icon">📝</div><div class="tpl-name">Freehand Notes</div><div class="tpl-desc">Open text notes & free writing</div></div>
+  <div class="tpl-card" data-tpl="movies" onclick="toggleTemplate('movies')"><div class="tpl-check"></div><div class="tpl-icon">🎬</div><div class="tpl-name">Movies</div><div class="tpl-desc">Watch list, star ratings & notes</div></div>
+  <div class="tpl-card" data-tpl="tvshows" onclick="toggleTemplate('tvshows')"><div class="tpl-check"></div><div class="tpl-icon">📺</div><div class="tpl-name">TV Shows</div><div class="tpl-desc">Series tracker with season progress</div></div>
+  <div class="tpl-card tpl-all" data-tpl="all" onclick="toggleAllTemplates()"><div class="tpl-check"></div><div class="tpl-icon">⚡</div><div class="tpl-name">ALL TEMPLATES</div><div class="tpl-desc">Select all 14 — every category in one space</div></div>
 </div>
 <button id="tpl-proceed" class="btn primary tpl-proceed" onclick="proceedToAuth()" style="display:none">Create Space →</button>
 </div>
@@ -633,7 +703,9 @@ body.readonly .add-row{display:none;}
     </div>
 
     <div class="share-section">
-      <div class="share-label">👁 View Mode <span style="font-size:10px;">(owner password · read-only)</span></div>
+      <div class="share-label">👁 View Mode <span style="font-size:10px;">(separate password · read-only)</span></div>
+      <input class="auth-input" type="password" id="view-pwd" placeholder="Set view password (min 4 chars)" style="margin-top:6px;margin-bottom:4px;"/>
+      <div style="font-size:11px;color:var(--muted);">Leave blank to disable view access. Different from your owner password.</div>
       <div class="share-link-box" style="margin-top:6px;">
         <div class="share-link-url" id="view-link-display"></div>
       </div>
@@ -672,18 +744,21 @@ const IS_READONLY   = new URLSearchParams(window.location.search).get('view') ==
 if (SPACE_ID && (SPACE_ID < 1 || SPACE_ID > 50)) window.location.href = '/';
 
 const THEMES = {
-  cleaning:'#c8ff57', bills:'#fbbf24', shopping:'#60a5fa', meals:'#fb923c',
-  gaming:'#a78bfa',   petcare:'#f472b6', car:'#f87171',   study:'#34d399',
-  travel:'#38bdf8',   health:'#fb7185',  all:'#c8ff57',
+  cleaning:'#c8ff57', bills:'#fbbf24',   shopping:'#60a5fa', meals:'#fb923c',
+  gaming:'#a78bfa',   petcare:'#f472b6',  car:'#f87171',      study:'#34d399',
+  travel:'#38bdf8',   health:'#fb7185',   todo:'#60a5fa',     freehand:'#fbbf24',
+  movies:'#f87171',   tvshows:'#a78bfa',  all:'#c8ff57',
 };
 const TAB_META = {
-  cleaning:{icon:'🧹',short:'Clean'}, bills:{icon:'💰',short:'Budget'},
-  shopping:{icon:'🛒',short:'Shop'},  meals:{icon:'🍳',short:'Meals'},
-  gaming:{icon:'🎮',short:'Games'},   petcare:{icon:'🐾',short:'Pets'},
-  car:{icon:'🚗',short:'Car'},        study:{icon:'📚',short:'Study'},
-  travel:{icon:'✈️',short:'Travel'}, health:{icon:'❤️',short:'Health'},
+  cleaning:{icon:'🧹',short:'Clean'},   bills:{icon:'💰',short:'Budget'},
+  shopping:{icon:'🛒',short:'Shop'},    meals:{icon:'🍳',short:'Meals'},
+  gaming:{icon:'🎮',short:'Games'},     petcare:{icon:'🐾',short:'Pets'},
+  car:{icon:'🚗',short:'Car'},          study:{icon:'📚',short:'Study'},
+  travel:{icon:'✈️',short:'Travel'},   health:{icon:'❤️',short:'Health'},
+  todo:{icon:'✅',short:'To-Do'},       freehand:{icon:'📝',short:'Notes'},
+  movies:{icon:'🎬',short:'Movies'},    tvshows:{icon:'📺',short:'TV'},
 };
-const TAB_ORDER=['cleaning','bills','shopping','meals','gaming','petcare','car','study','travel','health'];
+const TAB_ORDER=['cleaning','bills','shopping','meals','gaming','petcare','car','study','travel','health','todo','freehand','movies','tvshows'];
 
 // ── STATE ────────────────────────────────────────────────────────────────────
 let state={rooms:[],version:0};
@@ -875,12 +950,10 @@ function openSharing(){
   const hasTabs = isAllMode();
   document.getElementById('sharing-tab-perms').style.display = hasTabs ? '' : 'none';
   if (hasTabs) renderSharingPerms();
-  const viewUrl = `${location.origin}/${SPACE_ID}?view=1`;
-  const collabUrl = `${location.origin}/${SPACE_ID}collaborator`;
-  document.getElementById('view-link-display').textContent = viewUrl;
-  const collabBox = document.getElementById('collab-link-box');
-  const collabDisp = document.getElementById('collab-link-display');
-  collabBox.style.display = ''; collabDisp.textContent = collabUrl;
+  document.getElementById('view-link-display').textContent = `${location.origin}/${SPACE_ID}?view=1`;
+  document.getElementById('collab-link-display').textContent = `${location.origin}/${SPACE_ID}collaborator`;
+  document.getElementById('collab-link-box').style.display = '';
+  document.getElementById('view-pwd').value = '';
   document.getElementById('collab-pwd').value = '';
   document.getElementById('share-save-result').style.display = 'none';
   document.getElementById('sharingModal').classList.add('open');
@@ -935,26 +1008,26 @@ function toggleTabPerm(tab, perm){
 }
 
 async function saveSharing(){
-  const pwd = document.getElementById('collab-pwd').value.trim();
-  let collabHash = null;
-  if (pwd) {
-    if (pwd.length < 4) { showErr('Min 4 chars for collab password'); return; }
-    collabHash = await sha256(pwd);
-  }
+  const viewPwd  = document.getElementById('view-pwd').value.trim();
+  const collabPwd = document.getElementById('collab-pwd').value.trim();
+  if (viewPwd  && viewPwd.length  < 4) { toast('⚠ View password min 4 chars');  return; }
+  if (collabPwd && collabPwd.length < 4) { toast('⚠ Collab password min 4 chars'); return; }
+  const viewHash  = viewPwd  ? await sha256(viewPwd)  : undefined;
+  const collabHash = collabPwd ? await sha256(collabPwd) : undefined;
   const res = await fetch(`/api/space?id=${SPACE_ID}`, {
-    method: 'POST',
-    headers: {'Content-Type':'application/json', Authorization:`Bearer ${passwordHash}`},
-    body: JSON.stringify({ action:'set_sharing', collabHash, data: state })
+    method:'POST',
+    headers:{'Content-Type':'application/json', Authorization:`Bearer ${passwordHash}`},
+    body: JSON.stringify({ action:'set_sharing', viewHash, collabHash, data: state })
   }).then(r=>r.json()).catch(()=>null);
   if (!res?.ok) { toast('⚠ Save failed'); return; }
   const resultEl = document.getElementById('share-save-result');
   resultEl.style.display = '';
   resultEl.innerHTML = `<div style="background:var(--surface2);border:1px solid var(--accent);border-radius:var(--r);padding:10px 12px;font-size:12px;">
     <div style="color:var(--accent);font-weight:700;margin-bottom:6px;">✓ Sharing saved</div>
-    <div style="color:var(--muted);">View link: <span style="color:var(--text)">${location.origin}/${SPACE_ID}?view=1</span></div>
-    ${collabHash ? `<div style="color:var(--muted);margin-top:3px;">Collab link: <span style="color:var(--text)">${location.origin}/${SPACE_ID}collaborator</span></div>` : ''}
+    ${viewHash  !== undefined ? `<div style="color:var(--muted)">View link: <span style="color:var(--text)">${location.origin}/${SPACE_ID}?view=1</span>${viewPwd?` · pwd: <b>${viewPwd}</b>`:''}</div>` : ''}
+    ${collabHash !== undefined ? `<div style="color:var(--muted);margin-top:3px">Collab: <span style="color:var(--text)">${location.origin}/${SPACE_ID}collaborator</span>${collabPwd?` · pwd: <b>${collabPwd}</b>`:''}</div>` : ''}
   </div>`;
-  toast('🔐 Sharing settings saved!');
+  toast('🔐 Sharing saved!');
   scheduleSave();
 }
 
@@ -1312,6 +1385,10 @@ function render(){
   else if(t==='gaming')   renderKanban();
   else if(t==='study')    renderStudyProgress();
   else if(t==='travel')   renderTimeline();
+  else if(t==='freehand') renderFreehand();
+  else if(t==='movies')   renderMovies();
+  else if(t==='tvshows')  renderTVShows();
+  else if(t==='todo')     renderTodo();
   else renderStandard();
   updateEditability();
 }
@@ -1961,6 +2038,46 @@ function buildSeed(tpl){
       mz('Monthly Check-ins','Weight check','Review medications','Review goals')),
   ]};
 
+
+  if(tpl==='todo')return{...base,rooms:[
+    mr('Work',true,
+      mz('🔴 High Priority','Urgent task 1','Urgent task 2'),
+      mz('🟡 In Progress','Working on this'),
+      mz('✅ Done','Completed example')),
+    mr('Personal',false,
+      mz('🔴 High Priority','Personal urgent item'),
+      mz('📋 To Do','Task 1','Task 2','Task 3','Task 4')),
+    mr('Ideas',false,
+      mz('💡 Ideas','Idea 1','Idea 2','Idea 3')),
+  ]};
+
+  if(tpl==='freehand'){
+    const mrf2=(name,content)=>({id:uid2(),name,expanded:true,zones:[],content:content||''});
+    return{...base,rooms:[
+      mrf2('Quick Notes','Write anything here. This is a free-form note.'),
+      mrf2('Meeting Notes',''),
+      mrf2('Ideas & Brainstorm',''),
+    ]};
+  }
+
+  if(tpl==='movies'){
+    const mrm2=(name,status,rating=0)=>({id:uid2(),name,expanded:false,movieStatus:status,rating,zones:[{id:uid2(),name:'Notes',tasks:[]}]});
+    return{...base,rooms:[
+      mrm2('Movie you want to see','watchlist',0),
+      mrm2('Movie you are watching','watching',0),
+      mrm2('Great movie example','watched',5),
+    ]};
+  }
+
+  if(tpl==='tvshows'){
+    const mrt2=(name,status,rating,...seasons)=>({id:uid2(),name,expanded:false,showStatus:status,rating,zones:[{id:uid2(),name:'Seasons',tasks:seasons.map(mk)}]});
+    return{...base,rooms:[
+      mrt2('Show you want to watch','watchlist',0),
+      mrt2('Show you are watching','watching',0,'Season 1','Season 2'),
+      mrt2('Favourite show example','finished',5,'Season 1','Season 2','Season 3'),
+    ]};
+  }
+
   // MULTI-SELECT or ALL
   if(tpl==='all'||tpl==='multi'){
     const toInclude = tpl==='all' ? [...TAB_ORDER] : [...selectedTemplates];
@@ -1976,6 +2093,77 @@ function buildSeed(tpl){
   return{version:1,_seedVersion:1,rooms:[]};
 }
 
+
+// ── FREEHAND NOTES RENDERER ───────────────────────────────────────────────────
+function updateRoomField(rid,field,val){const r=getActiveRooms().find(r=>r.id===rid);if(r)r[field]=val;scheduleSave();}
+function updateRoomContent(rid,val){updateRoomField(rid,'content',val);}
+function renderFreehand(){
+  const main=document.getElementById('main');
+  const rooms=getActiveRooms();
+  if(!rooms.length){main.innerHTML=`<div class="empty-state"><div class="big">📝</div><p>No notes yet.<br>Hit <b>＋ Room</b> to add one.</p></div>`;updateStats();return;}
+  main.innerHTML=rooms.map(room=>`
+    <div class="fn-card">
+      <div class="fn-card-header">
+        <span style="font-size:20px">📝</span>
+        <input class="fn-title" value="${escHtml(room.name)}" placeholder="Note title…" oninput="renameRoom('${room.id}',this.value)"/>
+        <button class="btn ghost" onclick="removeRoom('${room.id}')">✕</button>
+      </div>
+      <div class="fn-body">
+        <textarea class="fn-textarea" placeholder="Write anything…" oninput="updateRoomContent('${room.id}',this.value)">${escHtml(room.content||'')}</textarea>
+      </div>
+    </div>`).join('');
+  main.innerHTML+=`<button class="btn" style="width:100%" onclick="addRoom()">＋ Add Note</button>`;
+  updateStats();
+}
+
+// ── MOVIES RENDERER ───────────────────────────────────────────────────────────
+const MV_STATUSES=['watchlist','watching','watched'];
+const MV_META={watchlist:{icon:'🔖',label:'Want to Watch',color:'#a78bfa'},watching:{icon:'▶️',label:'Watching',color:'var(--accent)'},watched:{icon:'✅',label:'Watched',color:'#60a5fa'}};
+let _mvStatus='watching';
+function setMvStatus(s){_mvStatus=s;render();}
+function setMvField(rid,field,val){updateRoomField(rid,field,val);}
+function setRating(rid,n,field='rating'){updateRoomField(rid,field,n);render();}
+function renderMovieOrTV(isTV){
+  const main=document.getElementById('main');
+  const rooms=getActiveRooms();
+  const statusField=isTV?'showStatus':'movieStatus';
+  const statuses=isTV?['watchlist','watching','paused','finished']:MV_STATUSES;
+  const meta=isTV?{watchlist:{icon:'🔖',label:'Want to Watch',color:'#a78bfa'},watching:{icon:'▶️',label:'Watching',color:'var(--accent)'},paused:{icon:'⏸️',label:'On Hold',color:'#facc15'},finished:{icon:'✅',label:'Finished',color:'#60a5fa'}}:MV_META;
+  const activeStatus=isTV?(_tvStatus||'watching'):(_mvStatus||'watching');
+  const setFn=isTV?'setTvStatus':'setMvStatus';
+  rooms.forEach(r=>{if(!r[statusField])r[statusField]=isTV?'watching':'watchlist';});
+  const tabs=statuses.map(s=>{
+    const m=meta[s],cnt=rooms.filter(r=>r[statusField]===s).length,act=s===activeStatus;
+    return `<div class="mv-stab" style="${act?`border-color:${m.color};color:${m.color}`:''}" onclick="${setFn}('${s}')">${m.icon} ${m.label}${cnt?`<span class="kb-n">${cnt}</span>`:''}</div>`;
+  }).join('');
+  const visible=rooms.filter(r=>r[statusField]===activeStatus);
+  const cards=visible.map(room=>{
+    const rating=room.rating||0;
+    const stars=[1,2,3,4,5].map(i=>`<span class="mv-star${i<=rating?' on':''}" onclick="setRating('${room.id}',${i},'rating')">${i<=rating?'★':'☆'}</span>`).join('');
+    const sbns=statuses.map(s=>{const m=meta[s],act=room[statusField]===s;return`<button class="mv-sbn${act?' active':''}" style="${act?`background:${m.color};border-color:${m.color};color:#000`:''}" onclick="setMvField('${room.id}','${statusField}','${s}');render()">${m.icon}</button>`;}).join('');
+    const zonesHtml=room.expanded?room.zones.map(zone=>{
+      const th=zone.tasks.map(task=>`<div class="task-item"><div class="task-row"><div class="task-check${task.completed?' done':''}" onclick="toggleTask('${room.id}','${zone.id}','${task.id}')"></div><span class="task-emoji">${getEmoji(task.name,'task')}</span><input class="task-name-input${task.completed?' done':''}" data-task-name="${task.id}" value="${escHtml(task.name)}" placeholder="${isTV?'Season…':'Note…'}" oninput="renameTask('${room.id}','${zone.id}','${task.id}',this.value)"/><button class="btn ghost" onclick="removeTask('${room.id}','${zone.id}','${task.id}')">✕</button></div></div>`).join('');
+      return`<div class="zone"><div class="zone-header"><span class="zone-emoji">${getEmoji(zone.name,'zone')}</span><input class="zone-name-input" value="${escHtml(zone.name)}" oninput="renameZone('${room.id}','${zone.id}',this.value)"/><button class="btn ghost" onclick="removeZone('${room.id}','${zone.id}')">✕</button></div><div class="task-list">${th}</div><div class="add-row" onclick="addTask('${room.id}','${zone.id}')"> Add ${isTV?'season':'note'}</div></div>`;
+    }).join(''):'';
+    return`<div class="mv-card"><div class="mv-card-header" onclick="toggleRoom('${room.id}')">
+      <div class="mv-card-meta">
+        <input class="mv-title" value="${escHtml(room.name)}" placeholder="${isTV?'Show name…':'Movie title…'}" oninput="renameRoom('${room.id}',this.value)" onclick="event.stopPropagation()"/>
+        <div class="mv-stars" onclick="event.stopPropagation()">${stars}</div>
+      </div>
+      <div class="mv-sbns" onclick="event.stopPropagation()">${sbns}</div>
+    </div>${room.expanded?`<div class="mv-body">${zonesHtml}<div style="display:flex;gap:6px;margin-top:4px"><button class="btn" style="font-size:12px" onclick="addZone('${room.id}')">＋ Zone</button><button class="btn danger" style="font-size:12px" onclick="removeRoom('${room.id}')">✕ Remove</button></div></div>`:''}</div>`;
+  }).join('');
+  main.innerHTML=`<div class="mv-status-bar">${tabs}</div>${cards||`<div class="empty-state"><div class="big">${meta[activeStatus].icon}</div><p>Nothing in ${meta[activeStatus].label}.</p></div>`}<button class="btn" style="width:100%;margin-top:4px" onclick="addRoom()">＋ Add ${isTV?'Show':'Movie'}</button>`;
+  updateStats();
+}
+let _tvStatus='watching';
+function setTvStatus(s){_tvStatus=s;render();}
+function renderMovies(){renderMovieOrTV(false);}
+function renderTVShows(){renderMovieOrTV(true);}
+
+// ── TO-DO RENDERER ────────────────────────────────────────────────────────────
+// To-Do uses standard renderer — it is naturally a checklist
+function renderTodo(){ renderStandard(); }
 // ── START ─────────────────────────────────────────────────────────────────────
 init();
 </script>
