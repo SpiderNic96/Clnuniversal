@@ -58,7 +58,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:14
 .tpl-desc{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4;}
 .tpl-all{grid-column:span 2;border-color:var(--accent) !important;background:var(--surface2);}
 .tpl-all .tpl-name{color:var(--accent);}
-.tpl-proceed{width:100%;margin-top:14px;padding:12px;font-size:14px;display:none;}
+.tpl-proceed{width:100%;margin-top:14px;padding:12px;font-size:14px;}
+/* Hide Vercel injected toolbar */
+vercel-live-feedback,#__vercel-toolbar,[data-vercel-toolbar],.__vercel-toolbar{display:none!important;}
 /* SHARING MODAL */
 .share-tab-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);}
 .share-tab-row:last-child{border-bottom:none;}
@@ -473,7 +475,7 @@ body.readonly .add-row{display:none;}
   <div class="tpl-card" data-tpl="health" onclick="toggleTemplate('health')"><div class="tpl-check"></div><div class="tpl-icon">❤️</div><div class="tpl-name">Health & Wellness</div><div class="tpl-desc">Appointments, exercise & goals</div></div>
   <div class="tpl-card tpl-all" data-tpl="all" onclick="toggleAllTemplates()"><div class="tpl-check"></div><div class="tpl-icon">⚡</div><div class="tpl-name">ALL TEMPLATES</div><div class="tpl-desc">Select all — every category in one space</div></div>
 </div>
-<button id="tpl-proceed" class="btn primary tpl-proceed" onclick="proceedToAuth()">Create Space →</button>
+<button id="tpl-proceed" class="btn primary tpl-proceed" onclick="proceedToAuth()" style="display:none">Create Space →</button>
 </div>
 </div>
 </div>
@@ -554,6 +556,7 @@ body.readonly .add-row{display:none;}
     </div>
   </div>
 </div>
+<div class="modal-overlay" id="monthResetModal">
   <div class="modal"><h2 class="safe">🔄 New Month?</h2><p>Unchecks all tasks without deleting anything. Perfect for a monthly reset.</p>
   <div class="modal-btns"><button class="btn" onclick="closeMonthReset()">Cancel</button><button class="btn primary" onclick="confirmMonthReset()">Reset Progress</button></div></div>
 </div>
@@ -683,7 +686,7 @@ function refreshPickerUI(){
   const btn=document.getElementById('tpl-proceed');
   if(!btn) return;
   if(selectedTemplates.size===0){ btn.style.display='none'; return; }
-  btn.style.display='';
+  btn.style.display='block';
   const n=selectedTemplates.size;
   btn.textContent = n===1
     ? `Create Space — ${TAB_META[[...selectedTemplates][0]]?.short||'Custom'} →`
