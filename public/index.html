@@ -61,6 +61,17 @@ body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:14
 .tpl-proceed{width:100%;margin-top:14px;padding:12px;font-size:14px;}
 /* Hide Vercel injected toolbar */
 vercel-live-feedback,#__vercel-toolbar,[data-vercel-toolbar],.__vercel-toolbar{display:none!important;}
+/* Per-tab read-only state */
+#main[data-editable="false"] .add-row,
+#main[data-editable="false"] .sl-add-row,
+#main[data-editable="false"] .mc-add-meal,
+#main[data-editable="false"] .btn.ghost,
+#main[data-editable="false"] .bt-add-row,
+#main[data-editable="false"] .kb-sbns,
+#main[data-editable="false"] button.btn.danger,
+#main[data-editable="false"] button.btn:not(.ro-safe){display:none!important;}
+#main[data-editable="false"] input,
+#main[data-editable="false"] textarea{pointer-events:none;}
 /* SHARING MODAL */
 .share-tab-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);}
 .share-tab-row:last-child{border-bottom:none;}
@@ -606,27 +617,41 @@ body.readonly .add-row{display:none;}
   <div class="modal-btns"><button class="btn" onclick="closeReset()">Cancel</button><button class="btn danger" onclick="confirmReset()">Yes, Reset</button></div></div>
 </div>
 <div class="modal-overlay" id="sharingModal">
-  <div class="modal" style="max-width:380px;">
+  <div class="modal" style="max-width:420px;overflow-y:auto;max-height:90vh;">
     <h2 class="safe">🔐 Sharing & Access</h2>
 
-    <div id="sharing-tabs-section" style="display:none">
-      <p style="font-size:12px;color:var(--muted);margin-bottom:10px;">Choose which tabs collaborators can see. Private tabs are completely hidden from them.</p>
-      <div id="sharing-tabs-list"></div>
+    <div id="sharing-tab-perms" style="display:none;margin-bottom:14px;">
+      <div style="font-size:12px;color:var(--muted);margin-bottom:8px;">Set tab visibility and edit permissions for each access mode.</div>
+      <div style="display:grid;grid-template-columns:1fr auto auto;gap:0;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;">
+        <div style="padding:6px 10px;font-size:10px;color:var(--muted);font-family:var(--display);font-weight:700;border-bottom:1px solid var(--border);">TAB</div>
+        <div style="padding:6px 10px;font-size:10px;color:var(--muted);font-family:var(--display);font-weight:700;border-bottom:1px solid var(--border);text-align:center;">VIEW</div>
+        <div style="padding:6px 10px;font-size:10px;color:var(--muted);font-family:var(--display);font-weight:700;border-bottom:1px solid var(--border);text-align:center;">COLLAB</div>
+        <div id="sharing-perms-rows"></div>
+        <div id="sharing-perms-view-col"></div>
+        <div id="sharing-perms-collab-col"></div>
+      </div>
     </div>
 
     <div class="share-section">
-      <div class="share-label">👁 Read-Only Link <span style="font-size:10px;">(no password needed)</span></div>
-      <button class="btn" style="width:100%;font-size:12px;" onclick="copyReadOnly();closeSharing();">Copy Read-Only Link</button>
+      <div class="share-label">👁 View Mode <span style="font-size:10px;">(owner password · read-only)</span></div>
+      <div class="share-link-box" style="margin-top:6px;">
+        <div class="share-link-url" id="view-link-display"></div>
+      </div>
+      <button class="btn" style="width:100%;margin-top:6px;font-size:12px;" onclick="copyViewLink()">Copy View Link</button>
     </div>
 
     <div class="share-section">
-      <div class="share-label">👥 Collaborator Access <span style="font-size:10px;">(requires password)</span></div>
+      <div class="share-label">👥 Collaborator <span style="font-size:10px;">(separate password · editable tabs)</span></div>
+      <div class="share-link-box" id="collab-link-box" style="margin-top:6px;display:none;">
+        <div class="share-link-url" id="collab-link-display"></div>
+      </div>
       <input class="auth-input" type="password" id="collab-pwd" placeholder="Set collaborator password (min 4 chars)" style="margin-top:6px;margin-bottom:0;"/>
-      <div style="font-size:11px;color:var(--muted);margin-top:4px;">Leave blank to disable collaborator access.</div>
-      <div id="share-result" class="share-link-box" style="display:none;margin-top:10px;"></div>
+      <div style="font-size:11px;color:var(--muted);margin-top:3px;">Leave blank to disable collaborator access.</div>
     </div>
 
-    <div class="modal-btns" style="margin-top:16px;">
+    <div id="share-save-result" style="display:none;margin-top:10px;"></div>
+
+    <div class="modal-btns" style="margin-top:14px;">
       <button class="btn" onclick="closeSharing()">Cancel</button>
       <button class="btn primary" onclick="saveSharing()">Save</button>
     </div>
@@ -639,10 +664,12 @@ body.readonly .add-row{display:none;}
 
 <script>
 // ── CONSTANTS ────────────────────────────────────────────────────────────────
-const PM = window.location.pathname.match(/^\/(\d+)$/);
-const SPACE_ID = PM ? parseInt(PM[1]) : null;
-const IS_READONLY = new URLSearchParams(window.location.search).get('view')==='1';
-if (SPACE_ID && (SPACE_ID<1||SPACE_ID>50)) window.location.href='/';
+const PM_OWNER  = window.location.pathname.match(/^\/(\d+)$/);
+const PM_COLLAB = window.location.pathname.match(/^\/(\d+)collaborator$/);
+const SPACE_ID    = PM_OWNER ? parseInt(PM_OWNER[1]) : PM_COLLAB ? parseInt(PM_COLLAB[1]) : null;
+const IS_COLLAB_URL = !!PM_COLLAB;
+const IS_READONLY   = new URLSearchParams(window.location.search).get('view') === '1';
+if (SPACE_ID && (SPACE_ID < 1 || SPACE_ID > 50)) window.location.href = '/';
 
 const THEMES = {
   cleaning:'#c8ff57', bills:'#fbbf24', shopping:'#60a5fa', meals:'#fb923c',
@@ -663,7 +690,7 @@ let state={rooms:[],version:0};
 let passwordHash = SPACE_ID ? (sessionStorage.getItem(`pwd-${SPACE_ID}`)||null) : null;
 let selectedTpl=null, authMode='setup';
 let saveTimer=null, pollTimer=null, hasPendingChanges=false, lastKnownVersion=0;
-let isOwner=false;
+let isOwner=false, isViewMode=false, isCollabMode=false;
 let selectedTemplates=new Set(); // for multi-select picker
 
 // ── THEME ────────────────────────────────────────────────────────────────────
@@ -693,9 +720,11 @@ async function sha256(s){
 }
 
 // ── API ───────────────────────────────────────────────────────────────────────
-async function apiGet(view=false){
-  const url=view?`/api/space?id=${SPACE_ID}&view=1`:`/api/space?id=${SPACE_ID}`;
-  const r=await fetch(url,{headers:passwordHash?{Authorization:`Bearer ${passwordHash}`}:{}});
+async function apiGet(forceView=false){
+  const viewParam = (forceView || IS_READONLY) ? '&view=1' : '';
+  const r=await fetch(`/api/space?id=${SPACE_ID}${viewParam}`,{
+    headers: passwordHash ? {Authorization:`Bearer ${passwordHash}`} : {}
+  });
   return r.json();
 }
 async function apiSetup(pwdHash,data){
@@ -713,15 +742,12 @@ function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classL
 // ── INIT ─────────────────────────────────────────────────────────────────────
 async function init(){
   if(!SPACE_ID){showScreen('screen-landing');return;}
-  if(IS_READONLY){
-    document.body.classList.add('readonly');
-    document.getElementById('roBadge').style.display='';
-    const res=await apiGet(true).catch(()=>null);
-    if(!res||res.status!=='ok'){setSyncBadge('error');showScreen('screen-app');render();return;}
-    state=res.data; lastKnownVersion=state.version||0;
-    applyTheme(detectTheme()); renderTabBar(); showScreen('screen-app'); render(); setSyncBadge('synced');
-    return;
-  }
+
+  // View mode and collab mode both need password — show login immediately
+  if(IS_READONLY){ showAuthLogin('view'); return; }
+  if(IS_COLLAB_URL){ showAuthLogin('collab'); return; }
+
+  // Owner flow
   const res=await apiGet().catch(()=>null);
   if(!res){setSyncBadge('error');showScreen('screen-app');return;}
   if(res.status==='unclaimed'){
@@ -729,16 +755,12 @@ async function init(){
     else{document.getElementById('tpl-space-label').textContent=`Space /${SPACE_ID} is unclaimed — pick your templates`;showScreen('screen-template');}
     return;
   }
-  if(res.status==='locked'){showAuthLogin();return;}
+  if(res.status==='locked'){showAuthLogin('owner');return;}
   if(res.status==='ok'){
-    state=res.data; isOwner=res.isOwner===true; lastKnownVersion=state.version||0;
+    state=res.data; isOwner=res.isOwner===true; isViewMode=!!res.isView; isCollabMode=!!res.isCollab;
+    lastKnownVersion=state.version||0;
     applyTheme(detectTheme()); renderTabBar(); showSharingBtn(); showScreen('screen-app'); render(); setSyncBadge('synced'); startPolling();
   }
-}
-
-function showSharingBtn(){
-  const btn=document.getElementById('btn-sharing');
-  if(btn) btn.style.display = isOwner ? '' : 'none';
 }
 
 // ── TEMPLATE MULTI-SELECT ────────────────────────────────────────────────────
@@ -773,20 +795,23 @@ function proceedToAuth(){
   selectedTpl = selectedTemplates.size===1 ? [...selectedTemplates][0] : 'multi';
   showAuthSetup();
 }
+function showSharingBtn(){const btn=document.getElementById('btn-sharing');if(btn)btn.style.display=isOwner?'':'none';}
 function showAuthSetup(){
   authMode='setup';
   document.getElementById('auth-title').textContent=`Lock Space /${SPACE_ID}`;
   document.getElementById('auth-sub').textContent='Set a password to lock this space.';
   document.getElementById('auth-confirm').style.display='';
-  document.getElementById('auth-note').textContent='⚠ No recovery. Don\'t forget it.';
+  document.getElementById('auth-note').textContent="⚠ No recovery. Don't forget it.";
   document.getElementById('auth-err').style.display='none';
   document.getElementById('auth-pwd').value=''; document.getElementById('auth-confirm').value='';
   showScreen('screen-auth');
 }
-function showAuthLogin(){
-  authMode='login';
-  document.getElementById('auth-title').textContent=`Space /${SPACE_ID}`;
-  document.getElementById('auth-sub').textContent='Enter your password to continue.';
+function showAuthLogin(mode='owner'){
+  authMode=mode;
+  const titles={owner:`Space /${SPACE_ID}`,view:`View Space /${SPACE_ID} — Read Only`,collab:`Collaborator — Space /${SPACE_ID}`};
+  const subs={owner:'Enter your password to continue.',view:'Enter the owner password to view this space.',collab:'Enter the collaborator password to continue.'};
+  document.getElementById('auth-title').textContent=titles[mode]||titles.owner;
+  document.getElementById('auth-sub').textContent=subs[mode]||subs.owner;
   document.getElementById('auth-confirm').style.display='none';
   document.getElementById('auth-note').textContent='';
   document.getElementById('auth-err').style.display='none';
@@ -796,26 +821,31 @@ function showAuthLogin(){
 async function submitAuth(){
   const pwd=document.getElementById('auth-pwd').value.trim();
   const conf=document.getElementById('auth-confirm').value.trim();
-  const err=document.getElementById('auth-err');
   if(!pwd){showErr('Enter a password');return;}
   if(authMode==='setup'){
-    if(pwd!==conf){showErr('Passwords don\'t match');return;}
+    if(pwd!==conf){showErr("Passwords don't match");return;}
     if(pwd.length<4){showErr('Minimum 4 characters');return;}
     const hash=await sha256(pwd);
     const seed=buildSeed(selectedTpl);
     const res=await apiSetup(hash,seed).catch(()=>null);
     if(!res||!res.ok){showErr(res?.error||'Setup failed');return;}
     passwordHash=hash; sessionStorage.setItem(`pwd-${SPACE_ID}`,hash);
-    state=seed; lastKnownVersion=0; isOwner=true;
+    state=seed; lastKnownVersion=0; isOwner=true; isViewMode=false; isCollabMode=false;
     applyTheme(detectTheme()); renderTabBar(); showSharingBtn(); showScreen('screen-app'); render(); setSyncBadge('synced'); startPolling();
     toast(`✅ Space /${SPACE_ID} is yours!`);
   } else {
     const hash=await sha256(pwd); passwordHash=hash;
     const res=await apiGet().catch(()=>null);
     if(!res||res.status!=='ok'){passwordHash=null;showErr('Wrong password');return;}
-    passwordHash=hash; sessionStorage.setItem(`pwd-${SPACE_ID}`,hash);
-    state=res.data; lastKnownVersion=state.version||0; isOwner=res.isOwner===true;
-    applyTheme(detectTheme()); renderTabBar(); showSharingBtn(); showScreen('screen-app'); render(); setSyncBadge('synced'); startPolling();
+    sessionStorage.setItem(`pwd-${SPACE_ID}`,hash);
+    state=res.data; isOwner=res.isOwner===true; isViewMode=!!res.isView; isCollabMode=!!res.isCollab;
+    lastKnownVersion=state.version||0;
+    document.body.classList.toggle('readonly', isViewMode);
+    const badge=document.getElementById('roBadge');
+    badge.style.display=(isViewMode||isCollabMode)?'':'none';
+    badge.textContent=isViewMode?'👁 View Only':'👥 Collaborator';
+    applyTheme(detectTheme()); renderTabBar(); showSharingBtn(); showScreen('screen-app'); render(); setSyncBadge('synced');
+    if(!isViewMode) startPolling();
   }
 }
 function showErr(m){const e=document.getElementById('auth-err');e.textContent=m;e.style.display='block';}
@@ -842,64 +872,97 @@ function renderTabBar(){
 // ── SHARING ───────────────────────────────────────────────────────────────────
 function openSharing(){
   if(!isOwner) return;
-  const hasTabs=isAllMode();
-  document.getElementById('sharing-tabs-section').style.display=hasTabs?'':'none';
-  if(hasTabs) renderSharingTabList();
-  document.getElementById('collab-pwd').value='';
-  document.getElementById('share-result').style.display='none';
+  const hasTabs = isAllMode();
+  document.getElementById('sharing-tab-perms').style.display = hasTabs ? '' : 'none';
+  if (hasTabs) renderSharingPerms();
+  const viewUrl = `${location.origin}/${SPACE_ID}?view=1`;
+  const collabUrl = `${location.origin}/${SPACE_ID}collaborator`;
+  document.getElementById('view-link-display').textContent = viewUrl;
+  const collabBox = document.getElementById('collab-link-box');
+  const collabDisp = document.getElementById('collab-link-display');
+  collabBox.style.display = ''; collabDisp.textContent = collabUrl;
+  document.getElementById('collab-pwd').value = '';
+  document.getElementById('share-save-result').style.display = 'none';
   document.getElementById('sharingModal').classList.add('open');
 }
 function closeSharing(){ document.getElementById('sharingModal').classList.remove('open'); }
 
-function renderSharingTabList(){
-  const selected=state.selectedTabs||TAB_ORDER;
-  document.getElementById('sharing-tabs-list').innerHTML=selected.map(t=>{
-    const m=TAB_META[t]||{icon:'📋',short:t};
-    const priv=state.tabs?.[t]?.private||false;
-    return `<div class="share-tab-row">
-      <span class="share-tab-icon">${m.icon}</span>
-      <div style="flex:1"><div class="share-tab-name">${m.short}</div>
-        <div class="share-tab-note">${priv?'Hidden from collaborators':'Visible to collaborators'}</div>
-      </div>
-      <button class="btn privacy-btn ${priv?'is-private':'is-visible'}" onclick="toggleTabPrivacy('${t}')">
-        ${priv?'🔒 Private':'👁 Visible'}
-      </button>
+function renderSharingPerms(){
+  const selected = state.selectedTabs || TAB_ORDER;
+  const rowsEl  = document.getElementById('sharing-perms-rows');
+  const viewEl  = document.getElementById('sharing-perms-view-col');
+  const collEl  = document.getElementById('sharing-perms-collab-col');
+  const rowStyle = 'padding:7px 10px;font-size:13px;border-top:1px solid var(--border);display:flex;align-items:center;gap:6px;';
+  const cellStyle= 'padding:7px 10px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:center;gap:3px;';
+
+  rowsEl.innerHTML = selected.map(t => {
+    const m = TAB_META[t] || {icon:'📋', short:t};
+    return `<div style="${rowStyle}">${m.icon} <span style="font-size:12px;color:var(--text)">${m.short}</span></div>`;
+  }).join('');
+
+  viewEl.innerHTML = selected.map(t => {
+    const tab = state.tabs?.[t] || {};
+    const vis = tab.viewVisible !== false;
+    return `<div style="${cellStyle}">
+      <button class="btn" style="font-size:11px;padding:3px 8px;${vis?`background:var(--accent);color:#000;border-color:var(--accent)`:''}"
+        onclick="toggleTabPerm('${t}','view')">${vis ? '👁 Show' : '🔒 Hide'}</button>
+    </div>`;
+  }).join('');
+
+  collEl.innerHTML = selected.map(t => {
+    const tab = state.tabs?.[t] || {};
+    const vis  = tab.collabVisible !== false;
+    const edit = tab.collabEditable !== false;
+    if (!vis) return `<div style="${cellStyle}"><button class="btn" style="font-size:11px;padding:3px 8px;color:var(--danger);border-color:var(--danger)" onclick="toggleTabPerm('${t}','collabVisible')">🔒 Hidden</button></div>`;
+    return `<div style="${cellStyle}">
+      <button class="btn" style="font-size:11px;padding:3px 6px;background:var(--surface2)" onclick="toggleTabPerm('${t}','collabVisible')">👁</button>
+      <button class="btn" style="font-size:11px;padding:3px 6px;${edit?`background:var(--accent);color:#000;border-color:var(--accent)`:''}" onclick="toggleTabPerm('${t}','collabEditable')">${edit?'✏️':'📖'}</button>
     </div>`;
   }).join('');
 }
 
-function toggleTabPrivacy(tab){
-  if(!state.tabs?.[tab]) return;
-  state.tabs[tab].private = !state.tabs[tab].private;
-  renderSharingTabList();
+function toggleTabPerm(tab, perm){
+  if (!state.tabs?.[tab]) return;
+  if (perm === 'view') {
+    state.tabs[tab].viewVisible = state.tabs[tab].viewVisible === false ? true : false;
+  } else if (perm === 'collabVisible') {
+    state.tabs[tab].collabVisible = state.tabs[tab].collabVisible === false ? true : false;
+  } else if (perm === 'collabEditable') {
+    state.tabs[tab].collabEditable = state.tabs[tab].collabEditable === false ? true : false;
+  }
+  renderSharingPerms();
   renderTabBar();
 }
 
 async function saveSharing(){
-  const pwd=document.getElementById('collab-pwd').value.trim();
-  let collabHash=null;
-  if(pwd){ if(pwd.length<4){showErr('Min 4 characters for collab password');return;} collabHash=await sha256(pwd); }
-  const res=await fetch(`/api/space?id=${SPACE_ID}`,{
-    method:'POST',
-    headers:{'Content-Type':'application/json',Authorization:`Bearer ${passwordHash}`},
-    body:JSON.stringify({action:'set_sharing',collabHash,data:state})
+  const pwd = document.getElementById('collab-pwd').value.trim();
+  let collabHash = null;
+  if (pwd) {
+    if (pwd.length < 4) { showErr('Min 4 chars for collab password'); return; }
+    collabHash = await sha256(pwd);
+  }
+  const res = await fetch(`/api/space?id=${SPACE_ID}`, {
+    method: 'POST',
+    headers: {'Content-Type':'application/json', Authorization:`Bearer ${passwordHash}`},
+    body: JSON.stringify({ action:'set_sharing', collabHash, data: state })
   }).then(r=>r.json()).catch(()=>null);
-  if(!res?.ok){toast('⚠ Save failed');return;}
-  const shareUrl=`${window.location.origin}/${SPACE_ID}`;
-  const resultEl=document.getElementById('share-result');
-  resultEl.style.display='';
-  resultEl.innerHTML=`<div class="share-link-url">${shareUrl}</div>
-    ${pwd?`<div class="share-link-pwd">Collab password: <b>${pwd}</b></div>`:'<div style="color:var(--muted);font-size:11px;margin-top:3px;">Collaborator access disabled</div>'}
-    ${isAllMode()?`<div style="color:var(--muted);font-size:11px;margin-top:3px;">Private tabs hidden from collaborators ✓</div>`:''}`;
-  navigator.clipboard?.writeText(shareUrl);
-  toast('🔐 Sharing saved!');
+  if (!res?.ok) { toast('⚠ Save failed'); return; }
+  const resultEl = document.getElementById('share-save-result');
+  resultEl.style.display = '';
+  resultEl.innerHTML = `<div style="background:var(--surface2);border:1px solid var(--accent);border-radius:var(--r);padding:10px 12px;font-size:12px;">
+    <div style="color:var(--accent);font-weight:700;margin-bottom:6px;">✓ Sharing saved</div>
+    <div style="color:var(--muted);">View link: <span style="color:var(--text)">${location.origin}/${SPACE_ID}?view=1</span></div>
+    ${collabHash ? `<div style="color:var(--muted);margin-top:3px;">Collab link: <span style="color:var(--text)">${location.origin}/${SPACE_ID}collaborator</span></div>` : ''}
+  </div>`;
+  toast('🔐 Sharing settings saved!');
   scheduleSave();
 }
 
-function copyReadOnly(){
-  const url=`${window.location.origin}/${SPACE_ID}?view=1`;
-  navigator.clipboard?.writeText(url).then(()=>toast('🔗 Read-only link copied!'));
+function copyViewLink(){
+  const url=`${location.origin}/${SPACE_ID}?view=1`;
+  navigator.clipboard?.writeText(url).then(()=>toast('👁 View link copied!'));
 }
+function copyReadOnly(){ copyViewLink(); }
 function switchTab(tab){
   if(!isAllMode())return;
   state.activeTab=tab;
@@ -1221,18 +1284,36 @@ function renderTimeline(){
   updateStats();
 }
 
-function getTemplateType(){
-  return isAllMode() ? (state.activeTab||'cleaning') : (state.template||'cleaning');
+function isCurrentTabEditable(){
+  if(isOwner) return true;
+  if(isViewMode) return false;
+  if(isCollabMode){
+    if(!isAllMode()) return true;
+    const tab=state.tabs?.[state.activeTab||'cleaning'];
+    return tab?.readOnly !== true;
+  }
+  return true;
+}
+function updateEditability(){
+  const main=document.getElementById('main');
+  if(main) main.dataset.editable = isCurrentTabEditable() ? 'true' : 'false';
+  // Hide toolbar edit buttons for view/non-editable modes
+  const editBtns=['btn-add-room'];
+  const editable=isCurrentTabEditable()&&!isViewMode;
+  document.querySelectorAll('.toolbar .btn:not(#btn-sharing)').forEach(b=>{
+    if(!b.classList.contains('ro-safe')) b.style.display=editable?'':'none';
+  });
 }
 function render(){
   const t=getTemplateType();
-  if(t==='bills')    return renderBudgetTable();
-  if(t==='shopping') return renderShoppingList();
-  if(t==='meals')    return renderMealCalendar();
-  if(t==='gaming')   return renderKanban();
-  if(t==='study')    return renderStudyProgress();
-  if(t==='travel')   return renderTimeline();
-  renderStandard();
+  if(t==='bills')    renderBudgetTable();
+  else if(t==='shopping') renderShoppingList();
+  else if(t==='meals')    renderMealCalendar();
+  else if(t==='gaming')   renderKanban();
+  else if(t==='study')    renderStudyProgress();
+  else if(t==='travel')   renderTimeline();
+  else renderStandard();
+  updateEditability();
 }
 function renderStandard(){
   const main=document.getElementById('main');
