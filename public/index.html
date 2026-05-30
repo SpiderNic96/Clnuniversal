@@ -230,24 +230,25 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;}
 
     <!-- BILLS -->
     <div class="showcase-card">
-      <div class="sc-header"><span class="sc-icon">💸</span><div><div class="sc-name">Bill Paying</div><div class="sc-desc">Every recurring payment tracked in one place. Never miss a due date.</div></div></div>
+      <div class="sc-header"><span class="sc-icon">💰</span><div><div class="sc-name">Budget & Finance</div><div class="sc-desc">Full financial planning — bills, calendar, debts, savings goals, income & spending.</div></div></div>
       <div class="sc-rooms">
-        <span class="sc-pill">🏠 Housing</span><span class="sc-pill">⚡ Utilities</span><span class="sc-pill">🛡️ Insurance</span><span class="sc-pill">📺 Subscriptions</span><span class="sc-pill">💰 Finance</span>
+        <span class="sc-pill">📅 Bill Calendar</span><span class="sc-pill">📋 Fixed Bills</span><span class="sc-pill">📺 Subscriptions</span><span class="sc-pill">💳 Debts & Owed</span><span class="sc-pill">🏦 Savings Goals</span><span class="sc-pill">💵 Income</span><span class="sc-pill">🛒 Variable Expenses</span><span class="sc-pill">📝 Financial To-Do</span>
       </div>
       <div class="sc-preview">
-        <div class="sc-zone-label">🏠 Rent & Property</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🏠</span> Rent / Mortgage</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🏛️</span> Council rates</div>
-        <div class="sc-zone-label" style="margin-top:8px">⚡ Essential Utilities</div>
-        <div class="sc-task"><span class="sc-box"></span><span>⚡</span> Electricity</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🌐</span> Internet / NBN</div>
-        <div class="sc-task"><span class="sc-box"></span><span>📱</span> Mobile phone</div>
-        <div class="sc-zone-label" style="margin-top:8px">📺 Streaming</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🎬</span> Netflix</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🎵</span> Spotify</div>
-        <div class="sc-zone-label" style="margin-top:8px">💰 Finance</div>
-        <div class="sc-task"><span class="sc-box"></span><span>💳</span> Credit card</div>
-        <div class="sc-task"><span class="sc-box"></span><span>🏦</span> Savings transfer</div>
+        <div class="sc-zone-label">📆 Monthly — Start of Month</div>
+        <div class="sc-task"><span class="sc-box sc-checked"></span><span>🏠</span> <span style="text-decoration:line-through;opacity:.5">Rent / Mortgage — Due 1st</span></div>
+        <div class="sc-task"><span class="sc-box"></span><span>🌐</span> Internet / NBN — Due 18th</div>
+        <div class="sc-task"><span class="sc-box"></span><span>💳</span> Credit card — Due 28th</div>
+        <div class="sc-zone-label" style="margin-top:8px">🆘 Emergency Fund</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🆘</span> 3 months expenses target</div>
+        <div class="sc-zone-label" style="margin-top:8px">🎯 Short Term Goals</div>
+        <div class="sc-task"><span class="sc-box"></span><span>✈️</span> Holiday fund</div>
+        <div class="sc-task"><span class="sc-box"></span><span>📱</span> New phone / tech</div>
+        <div class="sc-zone-label" style="margin-top:8px">🤝 Owes Me</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🤝</span> [Name] — $50</div>
+        <div class="sc-zone-label" style="margin-top:8px">🔍 Review</div>
+        <div class="sc-task"><span class="sc-box"></span><span>🔍</span> Compare electricity providers</div>
+        <div class="sc-task"><span class="sc-box"></span><span>❌</span> Cancel unused subscriptions</div>
       </div>
     </div>
 
@@ -352,9 +353,9 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;}
           <div class="tpl-desc">Rooms, zones & household tasks</div>
         </div>
         <div class="tpl-card" onclick="selectTemplate('bills')">
-          <div class="tpl-icon">💸</div>
-          <div class="tpl-name">Bill Paying</div>
-          <div class="tpl-desc">Track recurring bills & payments</div>
+          <div class="tpl-icon">💰</div>
+          <div class="tpl-name">Budget & Finance</div>
+          <div class="tpl-desc">Bills, savings, debts, income & financial planning</div>
         </div>
         <div class="tpl-card" onclick="selectTemplate('shopping')">
           <div class="tpl-icon">🛒</div>
@@ -789,6 +790,13 @@ function getEmoji(name,type){
     if(/\bdlc\b|expansion|season pass/.test(n)) return'📦';
     if(/\bpet\b|cat|dog|bunny|rabbit|bird|hamster/.test(n)) return'🐾';
     if(/supply|supplies/.test(n)) return'🛒';
+    if(/bill calendar|due date/.test(n)) return'📅';
+    if(/fixed bill|recurring bill/.test(n)) return'📋';
+    if(/debt|owed|credit/.test(n))  return'💳';
+    if(/saving|goal/.test(n))       return'🏦';
+    if(/income|earning/.test(n))    return'💵';
+    if(/variable expense|spending/.test(n)) return'🛒';
+    if(/financial.*to.do|money.*action/.test(n)) return'📝';
     if(/housing|property/.test(n)) return'🏠';
     if(/utilit/.test(n)) return'⚡';
     if(/insurance/.test(n)) return'🛡️';
@@ -834,6 +842,26 @@ function getEmoji(name,type){
     if(/food|treat|feed/.test(n)) return'🍽️';
     if(/litter/.test(n))          return'🧹';
     if(/accessori|toy/.test(n))   return'🎯';
+    if(/bill calendar|due date/.test(n)) return'📅';
+    if(/weekly/.test(n))            return'📅';
+    if(/fortnightly/.test(n))       return'📅';
+    if(/monthly/.test(n))           return'📆';
+    if(/quarterly/.test(n))         return'📅';
+    if(/\bannual\b/.test(n))        return'📅';
+    if(/fixed bill|recurring/.test(n)) return'📋';
+    if(/i owe|credit|bnpl/.test(n)) return'💳';
+    if(/owes me/.test(n))           return'🤝';
+    if(/upcoming|instalment/.test(n)) return'⏰';
+    if(/emergency fund/.test(n))    return'🆘';
+    if(/short term/.test(n))        return'🎯';
+    if(/long term/.test(n))         return'📈';
+    if(/regular income/.test(n))    return'💵';
+    if(/one.off|expected/.test(n))  return'💰';
+    if(/food|drink/.test(n))        return'🍽️';
+    if(/transport/.test(n))         return'🚗';
+    if(/personal/.test(n))          return'👤';
+    if(/actions|to.do/.test(n))     return'✅';
+    if(/review/.test(n))            return'🔍';
     if(/tv|television|media/.test(n)) return'📺';
     if(/general|misc|other/.test(n)) return'🗂️';
     if(/new zone/.test(n)) return'🗂️';
@@ -1093,6 +1121,49 @@ function getEmoji(name,type){
   if(/ice cream/.test(n)) return'🍦';
   if(/snack/.test(n))    return'🍎';
 
+  // ── FINANCIAL / BUDGET ──────────────────────────────────────────────────
+  if(/bill calendar|due date|payment date/.test(n))     return'📅';
+  if(/start of month|end of month|mid month/.test(n))   return'📆';
+  if(/fortnightly/.test(n))        return'📅';
+  if(/quarterly/.test(n))          return'📅';
+  if(/\bannual\b/.test(n))         return'📅';
+  if(/emergency fund/.test(n))     return'🆘';
+  if(/house deposit|home deposit/.test(n)) return'🏠';
+  if(/holiday fund|travel fund/.test(n))   return'✈️';
+  if(/christmas|xmas/.test(n))     return'🎄';
+  if(/investment account|investing/.test(n)) return'📈';
+  if(/super|retirement/.test(n))   return'👴';
+  if(/tax return|lodge tax/.test(n)) return'🧾';
+  if(/centrelink|benefit|welfare/.test(n)) return'🏛️';
+  if(/salary|wages|pay cheque|paycheck/.test(n)) return'💵';
+  if(/side hustle|freelance|freelanc/.test(n)) return'💻';
+  if(/reimbursement|reimburse/.test(n)) return'🤝';
+  if(/selling item|sell item/.test(n)) return'🏷️';
+  if(/rental income/.test(n))      return'🏠';
+  if(/afterpay|zip pay|humm|bnpl|buy now/.test(n)) return'💳';
+  if(/car loan/.test(n))           return'🚗';
+  if(/personal loan/.test(n))      return'💰';
+  if(/owes me|owe me/.test(n))     return'🤝';
+  if(/i owe|i need to pay/.test(n)) return'💸';
+  if(/credit score/.test(n))       return'📊';
+  if(/direct debit|autopay|auto pay/.test(n)) return'🔄';
+  if(/cancel.*sub|unused sub/.test(n)) return'❌';
+  if(/compare.*plan|better rate|review.*plan/.test(n)) return'🔍';
+  if(/high.interest savings|savings account/.test(n))  return'🏦';
+  if(/fuel|petrol/.test(n))        return'⛽';
+  if(/car rego|registration/.test(n)) return'🚗';
+  if(/car service|mechanic/.test(n)) return'🔧';
+  if(/\btoll\b/.test(n))           return'🛣️';
+  if(/\bparking\b/.test(n))        return'🅿️';
+  if(/public transport|bus|train|tram/.test(n)) return'🚌';
+  if(/takeaway|takeout/.test(n))   return'🥡';
+  if(/eating out|restaurant|dining/.test(n)) return'🍽️';
+  if(/haircut|barber|hairdress/.test(n)) return'✂️';
+  if(/\bclothing\b|clothes shop/.test(n)) return'👕';
+  if(/income protection/.test(n))  return'🛡️';
+  if(/body corporate|strata/.test(n)) return'🏢';
+  if(/budget|financial plan/.test(n)) return'📊';
+
   // ── GAMING ──────────────────────────────────────────────────────────────
   if(/platinum/.test(n))         return'🏅';
   if(/100%/.test(n))             return'💯';
@@ -1243,18 +1314,44 @@ function buildSeed(tpl){
   if(tpl==='bills') return {
     version:1, _seedVersion:1,
     rooms:[
-      mr('Housing',true,
-        mz('Rent & Property','Rent / Mortgage','Council rates','Body corporate','Strata fees')),
-      mr('Utilities',true,
-        mz('Essential','Electricity','Gas','Water','Internet / NBN','Mobile phone')),
-      mr('Insurance',false,
-        mz('Policies','Car insurance','Home & contents','Health insurance','Life insurance')),
+      mr('Bill Calendar',true,
+        mz('Weekly',''),
+        mz('Fortnightly',''),
+        mz('Monthly — Start of Month','Rent / Mortgage — Due 1st','Phone plan — Due 1st','Netflix — Due 3rd'),
+        mz('Monthly — Mid Month','Electricity — Due 15th','Internet / NBN — Due 18th','Spotify — Due 20th'),
+        mz('Monthly — End of Month','Credit card — Due 28th','Health insurance — Due 30th'),
+        mz('Quarterly','Water rates — Due Mar/Jun/Sep/Dec','Council rates — Quarterly'),
+        mz('Annual','Car rego — Due [month]','Home & contents — Due [month]','Car insurance — Due [month]')),
+      mr('Fixed Bills',false,
+        mz('Housing','Rent / Mortgage','Body corporate','Council rates','Strata fees'),
+        mz('Utilities','Electricity','Gas','Water','Internet / NBN','Mobile phone'),
+        mz('Insurance','Car insurance','Home & contents','Health insurance','Life insurance','Income protection')),
       mr('Subscriptions',false,
-        mz('Streaming','Netflix','Disney+','Stan / Binge','Amazon Prime','Apple TV+'),
-        mz('Storage & Other','Spotify','iCloud storage','Google One','YouTube Premium')),
-      mr('Finance',false,
-        mz('Payments','Credit card','Personal loan','Car loan','Afterpay / Zip','Savings transfer')),
+        mz('Streaming','Netflix','Disney+','Stan / Binge','Amazon Prime','Apple TV+','YouTube Premium'),
+        mz('Music & Podcasts','Spotify','Apple Music'),
+        mz('Cloud & Software','iCloud storage','Google One','Adobe CC','Microsoft 365'),
+        mz('Memberships','Gym membership','Amazon Prime','Costco')),
+      mr('Debts & Owed',false,
+        mz('I Owe — Credit','Credit card balance','Afterpay balance','Zip / Humm balance','Car loan','Personal loan'),
+        mz('I Owe — People',''),
+        mz('Owes Me',''),
+        mz('BNPL Upcoming','Afterpay — instalment due','Zip — payment due')),
+      mr('Savings Goals',false,
+        mz('Emergency Fund','3 months expenses target','Current emergency fund balance'),
+        mz('Short Term Goals','Holiday fund','New phone / tech','Car fund','Christmas spending'),
+        mz('Long Term Goals','House deposit','Investment account','Super top-up','Retirement goal')),
+      mr('Income',false,
+        mz('Regular Income','Salary / Wages','Centrelink / Benefits','Rental income','Side hustle income'),
+        mz('One-Off Expected','Tax return','Selling items','Freelance payment','Reimbursement due')),
+      mr('Variable Expenses',false,
+        mz('Food & Drink','Groceries','Takeaway','Coffee','Eating out','Alcohol'),
+        mz('Transport','Fuel / Petrol','Car rego','Car service','Tolls','Parking','Public transport'),
+        mz('Personal','Clothing','Haircut','Gym / Sport','Entertainment','Personal care')),
+      mr('Financial To-Do',false,
+        mz('Actions','Set up direct debit','Open high-interest savings','Compare electricity providers','Review subscriptions','Lodge tax return','Call insurer for better rate'),
+        mz('Review','Compare phone plans','Check credit score','Review budget','Cancel unused subscriptions')),
     ]};
+
 
   if(tpl==='shopping') return {
     version:1, _seedVersion:1,
