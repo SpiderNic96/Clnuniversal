@@ -1818,8 +1818,7 @@ function uid2(){return Math.random().toString(36).slice(2)+Date.now().toString(3
 function mk(name){return{id:uid2(),name:name||'',completed:false,note:''};}
 function mkb(name){return{...mk(name),amount:'',dueDate:''};}   // budget item
 function mks(name){return{...mk(name),qty:''};}                  // shopping item
-function mzf(factory,name,...tasks){return{id:uid2(),name,tasks:tasks.map(factory);};}
-function mz(name,...tasks){return mzf(mk,name,...tasks);}
+function mzf(factory,name,...tasks){return{id:uid2(),name,tasks:tasks.map(factory)};}function mz(name,...tasks){return mzf(mk,name,...tasks);}
 function mr(name,expanded,...zones){return{id:uid2(),name,expanded,zones};}
 
 function buildSeed(tpl){
