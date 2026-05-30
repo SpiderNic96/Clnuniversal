@@ -176,6 +176,82 @@ body.readonly .add-row{display:none;}
 .modal h2.safe{color:var(--accent);}
 .modal p{font-size:12px;color:var(--muted);margin-bottom:18px;line-height:1.5;}
 .modal-btns{display:flex;gap:8px;justify-content:flex-end;}
+/* ── BUDGET TABLE ─────────────── */
+.bt-table{width:100%;border-collapse:collapse;font-size:12px;}
+.bt-thead th{font-size:10px;color:var(--muted);text-align:left;padding:4px 6px;border-bottom:1px solid var(--border);font-family:var(--mono);}
+.bt-zone-sep{display:block;font-size:11px;color:var(--muted);font-family:var(--display);padding:6px 6px 2px;letter-spacing:.3px;}
+.bt-row td{padding:5px 6px;border-bottom:1px solid var(--border);}
+.bt-row:last-child td{border-bottom:none;}
+.bt-row.bt-paid td{opacity:.45;}
+.bt-check-cell{width:24px;vertical-align:middle;}
+.bt-name-cell{vertical-align:middle;}
+.bt-amount-cell{width:64px;vertical-align:middle;}
+.bt-due-cell{width:54px;vertical-align:middle;}
+.bt-del-cell{width:24px;vertical-align:middle;}
+.bt-name-wrap{display:flex;align-items:center;gap:6px;}
+.bt-name-input{flex:1;background:transparent;border:none;color:var(--text);font-family:var(--mono);font-size:12px;outline:none;min-width:0;}
+.bt-name-input.done{text-decoration:line-through;color:var(--muted);}
+.bt-field{width:100%;background:transparent;border:none;color:var(--accent);font-family:var(--mono);font-size:12px;outline:none;}
+.bt-field::placeholder{color:var(--border);}
+.bt-add-row td{padding:6px 8px;cursor:pointer;color:var(--muted);font-size:12px;}
+.bt-add-row:hover td{color:var(--accent);}
+/* ── SHOPPING LIST ────────────── */
+.sl-category{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:10px;}
+.sl-cat-header{display:flex;align-items:center;gap:10px;padding:9px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.sl-cat-icon{font-size:20px;flex-shrink:0;}
+.sl-cat-name{flex:1;background:transparent;border:none;color:var(--text);font-family:var(--display);font-size:16px;font-weight:700;outline:none;}
+.sl-cat-count{font-size:11px;color:var(--muted);flex-shrink:0;}
+.sl-row{display:flex;align-items:center;gap:8px;padding:7px 10px;border-bottom:1px solid var(--border);}
+.sl-row:last-child{border-bottom:none;}
+.sl-row.sl-done{opacity:.45;}
+.sl-name-input{flex:1;background:transparent;border:none;color:var(--text);font-family:var(--mono);font-size:13px;outline:none;}
+.sl-name-input.done{text-decoration:line-through;}
+.sl-qty{width:44px;background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--accent);font-family:var(--mono);font-size:12px;text-align:center;padding:3px 4px;outline:none;}
+.sl-add-row{padding:7px 10px;color:var(--muted);font-size:12px;cursor:pointer;border-top:1px solid var(--border);}
+.sl-add-row:hover{color:var(--accent);}
+/* ── MEAL CALENDAR ────────────── */
+.mc-day-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none;}
+.mc-day-tabs::-webkit-scrollbar{display:none;}
+.mc-day-tab{flex-shrink:0;padding:6px 13px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);font-family:var(--mono);font-size:12px;color:var(--muted);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .15s;}
+.mc-day-tab.active{background:var(--accent);border-color:var(--accent);color:#000;font-weight:700;}
+.mc-day-name{font-family:var(--display);font-size:20px;font-weight:800;color:var(--text);margin-bottom:10px;letter-spacing:.5px;}
+.mc-meal-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);margin-bottom:8px;overflow:hidden;}
+.mc-meal-label{font-family:var(--display);font-size:13px;font-weight:600;color:var(--muted);padding:7px 10px 5px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px;}
+.mc-meal-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-bottom:1px solid var(--border);}
+.mc-meal-item:last-child{border-bottom:none;}
+.mc-meal-input{flex:1;background:transparent;border:none;color:var(--text);font-family:var(--mono);font-size:13px;outline:none;}
+.mc-meal-input.mc-done{color:var(--muted);text-decoration:line-through;}
+.mc-add-meal{padding:5px 10px;color:var(--muted);font-size:12px;cursor:pointer;border-top:1px solid var(--border);}
+/* ── KANBAN ───────────────────── */
+.kb-status-bar{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none;margin-bottom:4px;}
+.kb-status-bar::-webkit-scrollbar{display:none;}
+.kb-stab{flex-shrink:0;padding:6px 14px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);font-family:var(--mono);font-size:12px;color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:6px;-webkit-tap-highlight-color:transparent;}
+.kb-stab .kb-n{background:var(--surface2);border-radius:99px;padding:1px 7px;font-size:10px;}
+.kb-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);margin-bottom:10px;overflow:hidden;}
+.kb-card-header{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;cursor:pointer;}
+.kb-card-meta{flex:1;min-width:0;}
+.kb-game-name{width:100%;background:transparent;border:none;color:var(--text);font-family:var(--display);font-size:17px;font-weight:700;outline:none;}
+.kb-prog-wrap{height:4px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:5px 0 3px;}
+.kb-prog-bar{height:100%;background:var(--accent);border-radius:99px;transition:width .3s;}
+.kb-prog-lbl{font-size:11px;color:var(--muted);}
+.kb-sbns{display:flex;gap:4px;flex-shrink:0;}
+.kb-sbn{width:26px;height:26px;border-radius:50%;border:1px solid var(--border);background:var(--surface2);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;padding:0;-webkit-tap-highlight-color:transparent;}
+.kb-sbn.active{border-width:2px;}
+.kb-body{padding:4px 12px 12px;}
+/* ── STUDY PROGRESS ───────────── */
+.sp-bar-row{display:flex;align-items:center;gap:10px;padding:7px 12px;background:var(--surface2);border-bottom:1px solid var(--border);}
+.sp-bar-wrap{flex:1;height:6px;background:var(--border);border-radius:99px;overflow:hidden;}
+.sp-bar{height:100%;border-radius:99px;transition:width .4s;}
+.sp-lbl{font-size:11px;font-family:var(--display);font-weight:700;min-width:58px;text-align:right;}
+/* ── TRAVEL TIMELINE ──────────── */
+.tl-wrap{display:flex;flex-direction:column;}
+.tl-item{display:flex;gap:0;margin-bottom:0;}
+.tl-spine{display:flex;flex-direction:column;align-items:center;width:22px;flex-shrink:0;padding-top:14px;}
+.tl-dot{width:13px;height:13px;border-radius:50%;border:2px solid var(--accent);background:var(--bg);flex-shrink:0;z-index:1;}
+.tl-dot.done{background:var(--accent);}
+.tl-connector{flex:1;width:2px;background:var(--border);min-height:16px;}
+.tl-node{flex:1;padding:6px 0 14px 10px;min-width:0;}
+.tl-node-header{display:flex;align-items:center;gap:8px;cursor:pointer;padding:2px 0;}
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
@@ -880,9 +956,19 @@ function addZone(rid){
 function removeZone(rid,zid){const r=getActiveRooms().find(r=>r.id===rid);if(!r)return;r.zones=r.zones.filter(z=>z.id!==zid);render();scheduleSave();}
 function renameZone(rid,zid,n){const r=getActiveRooms().find(r=>r.id===rid);const z=r?.zones.find(z=>z.id===zid);if(z)z.name=n;scheduleSave();}
 function addTask(rid,zid){
+  const tpl=getTemplateType();
+  let t={id:uid(),name:'',completed:false,note:''};
+  if(tpl==='bills'){t.amount='';t.dueDate='';}
+  if(tpl==='shopping'){t.qty='';}
   const r=getActiveRooms().find(r=>r.id===rid);const z=r?.zones.find(z=>z.id===zid);if(!z)return;
-  const t={id:uid(),name:'',completed:false,note:''};z.tasks.push(t);render();scheduleSave();
+  z.tasks.push(t);render();scheduleSave();
   setTimeout(()=>{const e=document.querySelector(`[data-task-name="${t.id}"]`);if(e)e.focus();},50);
+}
+function updateTaskField(rid,zid,tid,field,val){
+  const r=getActiveRooms().find(r=>r.id===rid);
+  const z=r?.zones.find(z=>z.id===zid);
+  const t=z?.tasks.find(t=>t.id===tid);
+  if(t)t[field]=val;scheduleSave();
 }
 function removeTask(rid,zid,tid){const r=getActiveRooms().find(r=>r.id===rid);const z=r?.zones.find(z=>z.id===zid);if(!z)return;z.tasks=z.tasks.filter(t=>t.id!==tid);render();scheduleSave();}
 function toggleTask(rid,zid,tid){const r=getActiveRooms().find(r=>r.id===rid);const z=r?.zones.find(z=>z.id===zid);const t=z?.tasks.find(t=>t.id===tid);if(t)t.completed=!t.completed;render();scheduleSave();}
@@ -910,7 +996,245 @@ function updateStats(){
 }
 function escHtml(s){if(!s)return'';return s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
+// ── TEMPLATE RENDERERS ────────────────────────────────────────────────────────
+
+// UI state (not persisted)
+let _kanbanStatus='playing', _mealDayId=null;
+
+// ── BUDGET TABLE ──────────────────────────────────────────────────────────────
+function renderBudgetTable(){
+  const main=document.getElementById('main');
+  const rooms=getActiveRooms();
+  if(!rooms.length){main.innerHTML=`<div class="empty-state"><div class="big">💰</div><p>No categories yet.<br>Hit <b>＋ Room</b> to add one.</p></div>`;updateStats();return;}
+  main.innerHTML=rooms.map(room=>{
+    let total=0,paid=0;
+    room.zones.forEach(z=>z.tasks.forEach(t=>{total++;if(t.completed)paid++;}));
+    const rowsHtml=room.zones.map(zone=>{
+      const zRows=zone.tasks.map(task=>`
+        <tr class="bt-row${task.completed?' bt-paid':''}">
+          <td class="bt-check-cell"><div class="task-check${task.completed?' done':''}" onclick="toggleTask('${room.id}','${zone.id}','${task.id}')"></div></td>
+          <td class="bt-name-cell"><div class="bt-name-wrap"><span>${getEmoji(task.name,'task')}</span><input class="bt-name-input${task.completed?' done':''}" data-task-name="${task.id}" value="${escHtml(task.name)}" placeholder="Bill…" oninput="renameTask('${room.id}','${zone.id}','${task.id}',this.value)"/></div></td>
+          <td class="bt-amount-cell"><input class="bt-field" value="${escHtml(task.amount||'')}" placeholder="$0" oninput="updateTaskField('${room.id}','${zone.id}','${task.id}','amount',this.value)"/></td>
+          <td class="bt-due-cell"><input class="bt-field" value="${escHtml(task.dueDate||'')}" placeholder="Due" oninput="updateTaskField('${room.id}','${zone.id}','${task.id}','dueDate',this.value)"/></td>
+          <td class="bt-del-cell"><button class="btn ghost" onclick="removeTask('${room.id}','${zone.id}','${task.id}')">✕</button></td>
+        </tr>`).join('');
+      return `<tr><td colspan="5"><span class="bt-zone-sep">${getEmoji(zone.name,'zone')} ${escHtml(zone.name)}</span></td></tr>
+              ${zRows}
+              <tr class="bt-add-row" onclick="addTask('${room.id}','${zone.id}')"><td colspan="5">＋ Add item</td></tr>`;
+    }).join('');
+    return `<div class="room-card">
+      <div class="room-header${room.expanded?' open':''}" onclick="toggleRoom('${room.id}')">
+        <span class="room-chevron">▶</span><span class="room-emoji">${getEmoji(room.name,'room')}</span>
+        <input class="room-name-input" value="${escHtml(room.name)}" placeholder="Category…" oninput="renameRoom('${room.id}',this.value)" onclick="event.stopPropagation()"/>
+        ${total>0?`<span class="room-task-count${paid===total?' all-done':''}">${paid}/${total} paid</span>`:''}
+      </div>
+      <div class="room-body${room.expanded?' open':''}">
+        <table class="bt-table"><thead><tr><th class="bt-thead"></th><th class="bt-thead">Bill</th><th class="bt-thead">Amount</th><th class="bt-thead">Due</th><th></th></tr></thead>
+        <tbody>${rowsHtml}</tbody></table>
+        <div style="display:flex;gap:6px;margin-top:8px;">
+          <button class="btn" style="font-size:12px" onclick="addZone('${room.id}')">＋ Section</button>
+          <button class="btn danger" style="font-size:12px" onclick="removeRoom('${room.id}')">✕ Remove</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  updateStats();
+}
+
+// ── SHOPPING LIST ─────────────────────────────────────────────────────────────
+function addShoppingItem(rid){
+  const r=getActiveRooms().find(r=>r.id===rid);if(!r)return;
+  if(!r.zones.length)r.zones.push({id:uid(),name:'Items',tasks:[]});
+  addTask(rid,r.zones[0].id);
+}
+function renderShoppingList(){
+  const main=document.getElementById('main');
+  const rooms=getActiveRooms();
+  if(!rooms.length){main.innerHTML=`<div class="empty-state"><div class="big">🛒</div><p>No categories yet.<br>Hit <b>＋ Room</b> to add one.</p></div>`;updateStats();return;}
+  main.innerHTML=rooms.map(room=>{
+    const allTasks=room.zones.flatMap(z=>z.tasks.map(t=>({...t,zoneId:z.id})));
+    const total=allTasks.length, left=allTasks.filter(t=>!t.completed).length;
+    const itemsHtml=allTasks.map(task=>`
+      <div class="sl-row${task.completed?' sl-done':''}">
+        <div class="task-check${task.completed?' done':''}" onclick="toggleTask('${room.id}','${task.zoneId}','${task.id}')"></div>
+        <span class="task-emoji">${getEmoji(task.name,'task')}</span>
+        <input class="sl-name-input${task.completed?' done':''}" data-task-name="${task.id}" value="${escHtml(task.name)}" placeholder="item…"
+          oninput="renameTask('${room.id}','${task.zoneId}','${task.id}',this.value)"/>
+        <input class="sl-qty" value="${escHtml(task.qty||'')}" placeholder="qty"
+          oninput="updateTaskField('${room.id}','${task.zoneId}','${task.id}','qty',this.value)"/>
+        <button class="btn ghost" onclick="removeTask('${room.id}','${task.zoneId}','${task.id}')">✕</button>
+      </div>`).join('');
+    return `<div class="sl-category">
+      <div class="sl-cat-header" onclick="toggleRoom('${room.id}')">
+        <span class="sl-cat-icon">${getEmoji(room.name,'room')}</span>
+        <input class="sl-cat-name" value="${escHtml(room.name)}" placeholder="Category…"
+          oninput="renameRoom('${room.id}',this.value)" onclick="event.stopPropagation()"/>
+        ${total>0?`<span class="sl-cat-count">${left} left</span>`:''}
+        <span style="color:var(--muted);font-size:11px;margin-left:4px;">${room.expanded?'▼':'▶'}</span>
+      </div>
+      ${room.expanded?`<div>${itemsHtml}<div class="sl-add-row" onclick="addShoppingItem('${room.id}')">＋ Add item</div></div>`:''}
+    </div>`;
+  }).join('');
+  main.innerHTML+=`<button class="btn" style="width:100%;margin-top:4px" onclick="addRoom()">＋ Add Category</button>`;
+  updateStats();
+}
+
+// ── MEAL CALENDAR ─────────────────────────────────────────────────────────────
+function renderMealCalendar(){
+  const main=document.getElementById('main');
+  const rooms=getActiveRooms();
+  if(!rooms.length){main.innerHTML=`<div class="empty-state"><div class="big">🍳</div><p>No days yet.</p></div>`;updateStats();return;}
+  const dayNames=['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
+  const dayAbbr={monday:'Mon',tuesday:'Tue',wednesday:'Wed',thursday:'Thu',friday:'Fri',saturday:'Sat',sunday:'Sun'};
+  const dayRooms=rooms.filter(r=>dayNames.some(d=>r.name.toLowerCase().includes(d)));
+  const otherRooms=rooms.filter(r=>!dayNames.some(d=>r.name.toLowerCase().includes(d)));
+  if(!_mealDayId||!dayRooms.find(r=>r.id===_mealDayId)) _mealDayId=dayRooms[0]?.id||null;
+  const activeRoom=dayRooms.find(r=>r.id===_mealDayId)||dayRooms[0];
+  const tabs=dayRooms.map(r=>{
+    const key=dayNames.find(d=>r.name.toLowerCase().includes(d));
+    return `<div class="mc-day-tab${r.id===_mealDayId?' active':''}" onclick="setMealDay('${r.id}')">${dayAbbr[key]||r.name.slice(0,3)}</div>`;
+  }).join('');
+  let dayContent='';
+  if(activeRoom){
+    dayContent=activeRoom.zones.map(zone=>`
+      <div class="mc-meal-section">
+        <div class="mc-meal-label">${getEmoji(zone.name,'zone')} ${escHtml(zone.name)}</div>
+        ${zone.tasks.map(task=>`
+          <div class="mc-meal-item">
+            <div class="task-check${task.completed?' done':''}" onclick="toggleTask('${activeRoom.id}','${zone.id}','${task.id}')"></div>
+            <span class="task-emoji">${getEmoji(task.name,'task')}</span>
+            <input class="mc-meal-input${task.completed?' mc-done':''}" data-task-name="${task.id}"
+              value="${escHtml(task.name)}" placeholder="what's for ${escHtml(zone.name.toLowerCase())}…"
+              oninput="renameTask('${activeRoom.id}','${zone.id}','${task.id}',this.value)"/>
+            <button class="btn ghost" onclick="removeTask('${activeRoom.id}','${zone.id}','${task.id}')">✕</button>
+          </div>`).join('')}
+        <div class="mc-add-meal" onclick="addTask('${activeRoom.id}','${zone.id}')">＋ Add option</div>
+      </div>`).join('');
+  }
+  const otherHtml=otherRooms.map(room=>{
+    let rt=0,rd=0;room.zones.forEach(z=>z.tasks.forEach(t=>{rt++;if(t.completed)rd++;}));
+    const allDone=rt>0&&rd===rt;
+    const zonesHtml=room.zones.map(zone=>{
+      const th=zone.tasks.map(task=>`<div class="task-item"><div class="task-row"><div class="task-check${task.completed?' done':''}" onclick="toggleTask('${room.id}','${zone.id}','${task.id}')"></div><span class="task-emoji">${getEmoji(task.name,'task')}</span><input class="task-name-input${task.completed?' done':''}" data-task-name="${task.id}" value="${escHtml(task.name)}" placeholder="task…" oninput="renameTask('${room.id}','${zone.id}','${task.id}',this.value)"/><button class="btn ghost" onclick="removeTask('${room.id}','${zone.id}','${task.id}')">✕</button></div></div>`).join('');
+      return `<div class="zone"><div class="zone-header"><span class="zone-emoji">${getEmoji(zone.name,'zone')}</span><input class="zone-name-input" value="${escHtml(zone.name)}" placeholder="zone…" oninput="renameZone('${room.id}','${zone.id}',this.value)"/><button class="btn ghost" onclick="removeZone('${room.id}','${zone.id}')">✕</button></div><div class="task-list">${th}</div><div class="add-row" onclick="addTask('${room.id}','${zone.id}')"> Add item</div></div>`;
+    }).join('');
+    return `<div class="room-card"><div class="room-header${room.expanded?' open':''}" onclick="toggleRoom('${room.id}')"><span class="room-chevron">▶</span><span class="room-emoji">${getEmoji(room.name,'room')}</span><input class="room-name-input" value="${escHtml(room.name)}" placeholder="Name…" oninput="renameRoom('${room.id}',this.value)" onclick="event.stopPropagation()"/>${rt>0?`<span class="room-task-count${allDone?' all-done':''}">${rd}/${rt}${allDone?' ✓':''}</span>`:''}</div><div class="room-body${room.expanded?' open':''}">${zonesHtml}<div style="display:flex;gap:6px"><button class="btn" style="font-size:12px" onclick="addZone('${room.id}')">＋ Zone</button><button class="btn danger" style="font-size:12px" onclick="removeRoom('${room.id}')">✕ Remove</button></div></div></div>`;
+  }).join('');
+  main.innerHTML=`<div class="mc-day-tabs">${tabs}</div>${activeRoom?`<div class="mc-day-name">${activeRoom.name}</div><div>${dayContent}</div>`:''}<div style="margin-top:12px">${otherHtml}</div>`;
+  updateStats();
+}
+function setMealDay(id){_mealDayId=id;render();}
+
+// ── KANBAN ────────────────────────────────────────────────────────────────────
+const KB_STATUSES=['playing','paused','done','wishlist'];
+const KB_META={playing:{icon:'🎮',label:'Playing',color:'var(--accent)'},paused:{icon:'⏸️',label:'Paused',color:'#facc15'},done:{icon:'🏆',label:'Done',color:'#60a5fa'},wishlist:{icon:'⭐',label:'Wishlist',color:'#a78bfa'}};
+function setKanbanStatus(s){_kanbanStatus=s;render();}
+function setGameStatus(rid,s){const r=getActiveRooms().find(r=>r.id===rid);if(r){r.gameStatus=s;}scheduleSave();render();}
+function renderKanban(){
+  const main=document.getElementById('main');
+  const rooms=getActiveRooms();
+  rooms.forEach(r=>{if(!r.gameStatus)r.gameStatus='playing';});
+  const tabs=KB_STATUSES.map(s=>{
+    const m=KB_META[s],cnt=rooms.filter(r=>r.gameStatus===s).length;
+    const active=s===_kanbanStatus;
+    return `<div class="kb-stab" style="${active?`border-color:${m.color};color:${m.color}`:''}" onclick="setKanbanStatus('${s}')">${m.icon} ${m.label}${cnt?`<span class="kb-n">${cnt}</span>`:''}`;
+  }).join('</div>');
+  const visible=rooms.filter(r=>r.gameStatus===_kanbanStatus);
+  const cards=visible.map(room=>{
+    let total=0,done=0;room.zones.forEach(z=>z.tasks.forEach(t=>{total++;if(t.completed)done++;}));
+    const pct=total?Math.round(done/total*100):0;
+    const zonesHtml=room.expanded?room.zones.map(zone=>{
+      const th=zone.tasks.map(task=>`<div class="task-item"><div class="task-row"><div class="task-check${task.completed?' done':''}" onclick="toggleTask('${room.id}','${zone.id}','${task.id}')"></div><span class="task-emoji">${getEmoji(task.name,'task')}</span><input class="task-name-input${task.completed?' done':''}" data-task-name="${task.id}" value="${escHtml(task.name)}" placeholder="objective…" oninput="renameTask('${room.id}','${zone.id}','${task.id}',this.value)"/><button class="btn ghost" onclick="removeTask('${room.id}','${zone.id}','${task.id}')">✕</button></div></div>`).join('');
+      return `<div class="zone"><div class="zone-header"><span class="zone-emoji">${getEmoji(zone.name,'zone')}</span><input class="zone-name-input" value="${escHtml(zone.name)}" oninput="renameZone('${room.id}','${zone.id}',this.value)"/><button class="btn ghost" onclick="removeZone('${room.id}','${zone.id}')">✕</button></div><div class="task-list">${th}</div><div class="add-row" onclick="addTask('${room.id}','${zone.id}')"> Add objective</div></div>`;
+    }).join(''):'';
+    const sbns=KB_STATUSES.map(s=>{const m=KB_META[s],act=room.gameStatus===s;return `<button class="kb-sbn${act?' active':''}" style="${act?`background:${m.color};border-color:${m.color};color:#000`:''}" onclick="setGameStatus('${room.id}','${s}')" title="${m.label}">${m.icon}</button>`;}).join('');
+    return `<div class="kb-card">
+      <div class="kb-card-header" onclick="toggleRoom('${room.id}')">
+        <span class="room-emoji" style="font-size:20px">${getEmoji(room.name,'room')}</span>
+        <div class="kb-card-meta">
+          <input class="kb-game-name" value="${escHtml(room.name)}" placeholder="Game name…" oninput="renameRoom('${room.id}',this.value)" onclick="event.stopPropagation()"/>
+          ${total?`<div class="kb-prog-wrap"><div class="kb-prog-bar" style="width:${pct}%"></div></div><div class="kb-prog-lbl">${done}/${total} · ${pct}%</div>`:`<div class="kb-prog-lbl" style="color:var(--muted)">No objectives yet</div>`}
+        </div>
+        <div class="kb-sbns" onclick="event.stopPropagation()">${sbns}</div>
+      </div>
+      ${room.expanded?`<div class="kb-body">${zonesHtml}<div style="display:flex;gap:6px;margin-top:4px"><button class="btn" style="font-size:12px" onclick="addZone('${room.id}')">＋ Zone</button><button class="btn danger" style="font-size:12px" onclick="removeRoom('${room.id}')">✕ Remove</button></div></div>`:''}
+    </div>`;
+  }).join('');
+  main.innerHTML=`<div class="kb-status-bar">${tabs}</div>${cards||`<div class="empty-state"><div class="big">${KB_META[_kanbanStatus].icon}</div><p>No games in ${KB_META[_kanbanStatus].label}.</p></div>`}<button class="btn" style="width:100%;margin-top:4px" onclick="addRoom()">＋ Add Game</button>`;
+  updateStats();
+}
+
+// ── STUDY PROGRESS ────────────────────────────────────────────────────────────
+function renderStudyProgress(){
+  const main=document.getElementById('main');
+  const rooms=getActiveRooms();
+  if(!rooms.length){main.innerHTML=`<div class="empty-state"><div class="big">📚</div><p>No courses yet.</p></div>`;updateStats();return;}
+  main.innerHTML=rooms.map(room=>{
+    let total=0,done=0;room.zones.forEach(z=>z.tasks.forEach(t=>{total++;if(t.completed)done++;}));
+    const pct=total?Math.round(done/total*100):0;
+    const col=pct>=80?'#34d399':pct>=40?'#fbbf24':'#f87171';
+    const zonesHtml=room.zones.map(zone=>{
+      const th=zone.tasks.map(task=>`<div class="task-item"><div class="task-row"><div class="task-check${task.completed?' done':''}" onclick="toggleTask('${room.id}','${zone.id}','${task.id}')"></div><span class="task-emoji">${getEmoji(task.name,'task')}</span><input class="task-name-input${task.completed?' done':''}" data-task-name="${task.id}" value="${escHtml(task.name)}" placeholder="task…" oninput="renameTask('${room.id}','${zone.id}','${task.id}',this.value)"/><button class="btn ghost" onclick="removeTask('${room.id}','${zone.id}','${task.id}')">✕</button></div></div>`).join('');
+      return `<div class="zone"><div class="zone-header"><span class="zone-emoji">${getEmoji(zone.name,'zone')}</span><input class="zone-name-input" value="${escHtml(zone.name)}" placeholder="section…" oninput="renameZone('${room.id}','${zone.id}',this.value)"/><button class="btn ghost" onclick="removeZone('${room.id}','${zone.id}')">✕</button></div><div class="task-list">${th}</div><div class="add-row" onclick="addTask('${room.id}','${zone.id}')"> Add task</div></div>`;
+    }).join('');
+    return `<div class="room-card">
+      <div class="room-header${room.expanded?' open':''}" onclick="toggleRoom('${room.id}')">
+        <span class="room-chevron">▶</span><span class="room-emoji">${getEmoji(room.name,'room')}</span>
+        <input class="room-name-input" value="${escHtml(room.name)}" placeholder="Course…" oninput="renameRoom('${room.id}',this.value)" onclick="event.stopPropagation()"/>
+      </div>
+      ${total?`<div class="sp-bar-row"><div class="sp-bar-wrap"><div class="sp-bar" style="width:${pct}%;background:${col}"></div></div><span class="sp-lbl" style="color:${col}">${done}/${total} · ${pct}%</span></div>`:''}
+      <div class="room-body${room.expanded?' open':''}">
+        ${zonesHtml}
+        <div style="display:flex;gap:6px"><button class="btn" style="font-size:12px" onclick="addZone('${room.id}')">＋ Section</button><button class="btn danger" style="font-size:12px" onclick="removeRoom('${room.id}')">✕ Remove</button></div>
+      </div>
+    </div>`;
+  }).join('');
+  updateStats();
+}
+
+// ── TRAVEL TIMELINE ───────────────────────────────────────────────────────────
+function renderTimeline(){
+  const main=document.getElementById('main');
+  const rooms=getActiveRooms();
+  if(!rooms.length){main.innerHTML=`<div class="empty-state"><div class="big">✈️</div><p>No phases yet.</p></div>`;updateStats();return;}
+  const items=rooms.map((room,idx)=>{
+    let total=0,done=0;room.zones.forEach(z=>z.tasks.forEach(t=>{total++;if(t.completed)done++;}));
+    const allDone=total>0&&done===total;
+    const zonesHtml=room.zones.map(zone=>{
+      const th=zone.tasks.map(task=>`<div class="task-row" style="padding:6px 8px 2px"><div class="task-check${task.completed?' done':''}" onclick="toggleTask('${room.id}','${zone.id}','${task.id}')"></div><span class="task-emoji">${getEmoji(task.name,'task')}</span><input class="task-name-input${task.completed?' done':''}" data-task-name="${task.id}" value="${escHtml(task.name)}" placeholder="item…" oninput="renameTask('${room.id}','${zone.id}','${task.id}',this.value)"/><button class="btn ghost" onclick="removeTask('${room.id}','${zone.id}','${task.id}')">✕</button></div>`).join('');
+      return `<div class="zone" style="margin-bottom:6px"><div class="zone-header"><span class="zone-emoji">${getEmoji(zone.name,'zone')}</span><input class="zone-name-input" value="${escHtml(zone.name)}" oninput="renameZone('${room.id}','${zone.id}',this.value)"/><button class="btn ghost" onclick="removeZone('${room.id}','${zone.id}')">✕</button></div><div>${th}</div><div class="add-row" onclick="addTask('${room.id}','${zone.id}')"> Add item</div></div>`;
+    }).join('');
+    return `<div class="tl-item">
+      <div class="tl-spine"><div class="tl-dot${allDone?' done':''}"></div>${idx<rooms.length-1?'<div class="tl-connector"></div>':''}</div>
+      <div class="tl-node">
+        <div class="tl-node-header" onclick="toggleRoom('${room.id}')">
+          <span class="room-emoji">${getEmoji(room.name,'room')}</span>
+          <input class="room-name-input" value="${escHtml(room.name)}" placeholder="Phase…" oninput="renameRoom('${room.id}',this.value)" onclick="event.stopPropagation()"/>
+          ${total?`<span class="room-task-count${allDone?' all-done':''}">${done}/${total}${allDone?' ✓':''}</span>`:''}
+          <span style="color:var(--muted);font-size:11px">${room.expanded?'▼':'▶'}</span>
+        </div>
+        ${room.expanded?`<div style="margin-top:6px">${zonesHtml}<div style="display:flex;gap:6px;margin-top:4px"><button class="btn" style="font-size:12px" onclick="addZone('${room.id}')">＋ Section</button><button class="btn danger" style="font-size:12px" onclick="removeRoom('${room.id}')">✕ Remove</button></div></div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+  main.innerHTML=`<div class="tl-wrap">${items}</div><button class="btn" style="width:100%;margin-top:8px" onclick="addRoom()">＋ Add Phase</button>`;
+  updateStats();
+}
+
+function getTemplateType(){
+  return isAllMode() ? (state.activeTab||'cleaning') : (state.template||'cleaning');
+}
 function render(){
+  const t=getTemplateType();
+  if(t==='bills')    return renderBudgetTable();
+  if(t==='shopping') return renderShoppingList();
+  if(t==='meals')    return renderMealCalendar();
+  if(t==='gaming')   return renderKanban();
+  if(t==='study')    return renderStudyProgress();
+  if(t==='travel')   return renderTimeline();
+  renderStandard();
+}
+function renderStandard(){
   const main=document.getElementById('main');
   const rooms=getActiveRooms();
   if(rooms.length===0){
@@ -1334,7 +1658,10 @@ return'✔️';
 // ── TEMPLATES ─────────────────────────────────────────────────────────────────
 function uid2(){return Math.random().toString(36).slice(2)+Date.now().toString(36);}
 function mk(name){return{id:uid2(),name:name||'',completed:false,note:''};}
-function mz(name,...tasks){return{id:uid2(),name,tasks:tasks.map(mk)};}
+function mkb(name){return{...mk(name),amount:'',dueDate:''};}   // budget item
+function mks(name){return{...mk(name),qty:''};}                  // shopping item
+function mzf(factory,name,...tasks){return{id:uid2(),name,tasks:tasks.map(factory);};}
+function mz(name,...tasks){return mzf(mk,name,...tasks);}
 function mr(name,expanded,...zones){return{id:uid2(),name,expanded,zones};}
 
 function buildSeed(tpl){
@@ -1377,59 +1704,59 @@ function buildSeed(tpl){
 
   if(tpl==='bills')return{...base,rooms:[
     mr('Bill Calendar',true,
-      mz('Weekly',''),mz('Fortnightly',''),
-      mz('Monthly — Start of Month','Rent / Mortgage — Due 1st','Phone plan — Due 1st','Netflix — Due 3rd'),
-      mz('Monthly — Mid Month','Electricity — Due 15th','Internet / NBN — Due 18th','Spotify — Due 20th'),
-      mz('Monthly — End of Month','Credit card — Due 28th','Health insurance — Due 30th'),
-      mz('Quarterly','Water rates — Due Mar/Jun/Sep/Dec','Council rates — Quarterly'),
-      mz('Annual','Car rego — Due [month]','Home & contents — Due [month]','Car insurance — Due [month]')),
+      mzf(mkb,'Weekly'),mzf(mkb,'Fortnightly'),
+      mzf(mkb,'Monthly — Start of Month','Rent / Mortgage','Phone plan','Netflix'),
+      mzf(mkb,'Monthly — Mid Month','Electricity','Internet / NBN','Spotify'),
+      mzf(mkb,'Monthly — End of Month','Credit card','Health insurance'),
+      mzf(mkb,'Quarterly','Water rates','Council rates'),
+      mzf(mkb,'Annual','Car rego','Home & contents','Car insurance')),
     mr('Fixed Bills',false,
-      mz('Housing','Rent / Mortgage','Body corporate','Council rates','Strata fees'),
-      mz('Utilities','Electricity','Gas','Water','Internet / NBN','Mobile phone'),
-      mz('Insurance','Car insurance','Home & contents','Health insurance','Life insurance','Income protection')),
+      mzf(mkb,'Housing','Rent / Mortgage','Body corporate','Council rates','Strata fees'),
+      mzf(mkb,'Utilities','Electricity','Gas','Water','Internet / NBN','Mobile phone'),
+      mzf(mkb,'Insurance','Car insurance','Home & contents','Health insurance','Life insurance','Income protection')),
     mr('Subscriptions',false,
-      mz('Streaming','Netflix','Disney+','Stan / Binge','Amazon Prime','Apple TV+','YouTube Premium'),
-      mz('Music','Spotify','Apple Music'),
-      mz('Cloud & Software','iCloud storage','Google One','Adobe CC','Microsoft 365'),
-      mz('Memberships','Gym membership','Amazon Prime','Costco')),
+      mzf(mkb,'Streaming','Netflix','Disney+','Stan / Binge','Amazon Prime','Apple TV+','YouTube Premium'),
+      mzf(mkb,'Music','Spotify','Apple Music'),
+      mzf(mkb,'Cloud & Software','iCloud storage','Google One','Adobe CC','Microsoft 365'),
+      mzf(mkb,'Memberships','Gym membership','Amazon Prime','Costco')),
     mr('Debts & Owed',false,
-      mz('I Owe — Credit','Credit card balance','Afterpay balance','Zip / Humm balance','Car loan','Personal loan'),
-      mz('I Owe — People',''),mz('Owes Me',''),
-      mz('BNPL Upcoming','Afterpay — instalment due','Zip — payment due')),
+      mzf(mkb,'I Owe — Credit','Credit card balance','Afterpay balance','Zip / Humm balance','Car loan','Personal loan'),
+      mzf(mkb,'I Owe — People'),mzf(mkb,'Owes Me'),
+      mzf(mkb,'BNPL Upcoming','Afterpay — instalment due','Zip — payment due')),
     mr('Savings Goals',false,
-      mz('Emergency Fund','3 months expenses target','Current emergency fund balance'),
-      mz('Short Term Goals','Holiday fund','New phone / tech','Car fund','Christmas spending'),
-      mz('Long Term Goals','House deposit','Investment account','Super top-up','Retirement goal')),
+      mzf(mk,'Emergency Fund','3 months expenses target','Current emergency fund balance'),
+      mzf(mk,'Short Term Goals','Holiday fund','New phone / tech','Car fund','Christmas spending'),
+      mzf(mk,'Long Term Goals','House deposit','Investment account','Super top-up','Retirement goal')),
     mr('Income',false,
-      mz('Regular Income','Salary / Wages','Centrelink / Benefits','Rental income','Side hustle income'),
-      mz('One-Off Expected','Tax return','Selling items','Freelance payment','Reimbursement due')),
+      mzf(mkb,'Regular Income','Salary / Wages','Centrelink / Benefits','Rental income','Side hustle income'),
+      mzf(mkb,'One-Off Expected','Tax return','Selling items','Freelance payment','Reimbursement due')),
     mr('Variable Expenses',false,
-      mz('Food & Drink','Groceries','Takeaway','Coffee','Eating out','Alcohol'),
-      mz('Transport','Fuel / Petrol','Car rego','Car service','Tolls','Parking','Public transport'),
-      mz('Personal','Clothing','Haircut','Gym / Sport','Entertainment','Personal care')),
+      mzf(mkb,'Food & Drink','Groceries','Takeaway','Coffee','Eating out','Alcohol'),
+      mzf(mkb,'Transport','Fuel / Petrol','Car rego','Car service','Tolls','Parking','Public transport'),
+      mzf(mkb,'Personal','Clothing','Haircut','Gym / Sport','Entertainment','Personal care')),
     mr('Financial To-Do',false,
-      mz('Actions','Set up direct debit','Open high-interest savings','Compare electricity providers','Review subscriptions','Lodge tax return'),
-      mz('Review','Compare phone plans','Check credit score','Cancel unused subscriptions')),
+      mzf(mk,'Actions','Set up direct debit','Open high-interest savings','Compare electricity providers','Review subscriptions','Lodge tax return'),
+      mzf(mk,'Review','Compare phone plans','Check credit score','Cancel unused subscriptions')),
   ]};
 
   if(tpl==='shopping')return{...base,rooms:[
     mr('Fresh Produce',true,
-      mz('Fruit','Apples','Bananas','Strawberries','Grapes','Lemons','Oranges','Blueberries','Mango'),
-      mz('Vegetables','Tomatoes','Carrots','Broccoli','Lettuce','Potatoes','Onions','Garlic','Capsicum','Mushrooms')),
+      mzf(mks,'Fruit','Apples','Bananas','Strawberries','Grapes','Lemons','Oranges','Blueberries','Mango'),
+      mzf(mks,'Vegetables','Tomatoes','Carrots','Broccoli','Lettuce','Potatoes','Onions','Garlic','Capsicum','Mushrooms')),
     mr('Meat & Seafood',false,
-      mz('Meat','Chicken breast','Beef mince','Pork','Lamb','Bacon','Sausages'),
-      mz('Seafood','Salmon','Tuna','Prawns','Fish fillets')),
+      mzf(mks,'Meat','Chicken breast','Beef mince','Pork','Lamb','Bacon','Sausages'),
+      mzf(mks,'Seafood','Salmon','Tuna','Prawns','Fish fillets')),
     mr('Dairy & Eggs',false,
-      mz('Dairy','Milk','Cheese','Butter','Yoghurt','Cream'),mz('Eggs','Eggs')),
-    mr('Bakery',false,mz('Bread','Bread','Rolls','Bagels')),
+      mzf(mks,'Dairy','Milk','Cheese','Butter','Yoghurt','Cream'),mzf(mks,'Eggs','Eggs')),
+    mr('Bakery',false,mzf(mks,'Bread','Bread','Rolls','Bagels')),
     mr('Pantry',false,
-      mz('Dry Goods','Pasta','Rice','Oats / Cereal','Flour'),
-      mz('Canned & Sauces','Canned tomatoes','Pasta sauce','Coconut milk','Baked beans','Olive oil','Soy sauce'),
-      mz('Snacks & Treats','Chocolate','Biscuits','Chips','Nuts','Honey')),
-    mr('Drinks',false,mz('Beverages','Coffee','Tea','Orange juice','Soft drink','Water')),
+      mzf(mks,'Dry Goods','Pasta','Rice','Oats / Cereal','Flour'),
+      mzf(mks,'Canned & Sauces','Canned tomatoes','Pasta sauce','Coconut milk','Baked beans','Olive oil','Soy sauce'),
+      mzf(mks,'Snacks & Treats','Chocolate','Biscuits','Chips','Nuts','Honey')),
+    mr('Drinks',false,mzf(mks,'Beverages','Coffee','Tea','Orange juice','Soft drink','Water')),
     mr('Household',false,
-      mz('Cleaning','Dishwashing liquid','Laundry detergent','Bleach','Toilet paper','Paper towel','Bin bags','Sponge'),
-      mz('Personal Care','Shampoo','Conditioner','Body wash','Toothpaste','Deodorant','Razor','Sunscreen')),
+      mzf(mks,'Cleaning','Dishwashing liquid','Laundry detergent','Bleach','Toilet paper','Paper towel','Bin bags','Sponge'),
+      mzf(mks,'Personal Care','Shampoo','Conditioner','Body wash','Toothpaste','Deodorant','Razor','Sunscreen')),
   ]};
 
   if(tpl==='meals')return{...base,rooms:[
