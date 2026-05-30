@@ -45,14 +45,35 @@ body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:14
 .tpl-wrap h1{font-family:var(--display);font-size:26px;font-weight:800;color:var(--accent);margin-bottom:4px;}
 .tpl-wrap p{font-size:12px;color:var(--muted);margin-bottom:18px;}
 .tpl-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.tpl-card{background:var(--surface);border:2px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent;}
+.tpl-card{background:var(--surface);border:2px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent;position:relative;}
 .tpl-card:active{opacity:.7;transform:scale(.97);}
-.tpl-card:hover{border-color:var(--accent);}
+.tpl-card:hover{border-color:var(--muted);}
+.tpl-card.tpl-selected{border-color:var(--accent);background:var(--surface2);}
+.tpl-check{position:absolute;top:8px;right:8px;width:18px;height:18px;border:1.5px solid var(--muted);border-radius:50%;background:transparent;transition:all .2s;}
+.tpl-selected .tpl-check{background:var(--accent);border-color:var(--accent);}
+.tpl-selected .tpl-check::after{content:'✓';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;color:#000;font-weight:900;}
 .tpl-icon{font-size:28px;margin-bottom:6px;}
 .tpl-name{font-family:var(--display);font-size:17px;font-weight:700;color:var(--text);}
+.tpl-selected .tpl-name{color:var(--accent);}
 .tpl-desc{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4;}
 .tpl-all{grid-column:span 2;border-color:var(--accent) !important;background:var(--surface2);}
 .tpl-all .tpl-name{color:var(--accent);}
+.tpl-proceed{width:100%;margin-top:14px;padding:12px;font-size:14px;display:none;}
+/* SHARING MODAL */
+.share-tab-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);}
+.share-tab-row:last-child{border-bottom:none;}
+.share-tab-icon{font-size:18px;flex-shrink:0;}
+.share-tab-name{flex:1;font-size:13px;color:var(--text);}
+.share-tab-note{font-size:11px;color:var(--muted);margin-top:1px;}
+.privacy-btn{font-size:11px;padding:4px 10px;}
+.privacy-btn.is-private{background:var(--surface2);border-color:var(--danger);color:var(--danger);}
+.privacy-btn.is-visible{background:var(--surface2);border-color:var(--accent);color:var(--accent);}
+.share-section{margin-top:14px;padding-top:14px;border-top:1px solid var(--border);}
+.share-label{font-size:12px;color:var(--muted);margin-bottom:6px;}
+.share-link-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px;font-size:12px;margin-top:8px;}
+.share-link-url{color:var(--accent);word-break:break-all;}
+.share-link-pwd{color:var(--text);margin-top:4px;}
+.lock-icon{font-size:10px;margin-left:2px;opacity:.7;}
 /* AUTH */
 #screen-auth{align-items:center;justify-content:center;padding:24px;flex:1;}
 .auth-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:26px 22px;max-width:360px;width:100%;}
@@ -367,18 +388,19 @@ body.readonly .add-row{display:none;}
 <h1>🧠 TASK CMD</h1>
 <p id="tpl-space-label">Choose a template for your space</p>
 <div class="tpl-grid">
-  <div class="tpl-card" onclick="selectTemplate('cleaning')"><div class="tpl-icon">🧹</div><div class="tpl-name">Cleaning</div><div class="tpl-desc">Household rooms, zones & tasks</div></div>
-  <div class="tpl-card" onclick="selectTemplate('bills')"><div class="tpl-icon">💰</div><div class="tpl-name">Budget & Finance</div><div class="tpl-desc">Bills, savings, debts & income</div></div>
-  <div class="tpl-card" onclick="selectTemplate('shopping')"><div class="tpl-icon">🛒</div><div class="tpl-name">Shopping</div><div class="tpl-desc">Groceries & household goods</div></div>
-  <div class="tpl-card" onclick="selectTemplate('meals')"><div class="tpl-icon">🍳</div><div class="tpl-name">Meal Planning</div><div class="tpl-desc">Weekly meals & meal prep</div></div>
-  <div class="tpl-card" onclick="selectTemplate('gaming')"><div class="tpl-icon">🎮</div><div class="tpl-name">Gaming</div><div class="tpl-desc">Progress, collectibles & backlog</div></div>
-  <div class="tpl-card" onclick="selectTemplate('petcare')"><div class="tpl-icon">🐾</div><div class="tpl-name">Pet Care</div><div class="tpl-desc">Feeding, health & grooming</div></div>
-  <div class="tpl-card" onclick="selectTemplate('car')"><div class="tpl-icon">🚗</div><div class="tpl-name">Car Maintenance</div><div class="tpl-desc">Service, rego & tyres</div></div>
-  <div class="tpl-card" onclick="selectTemplate('study')"><div class="tpl-icon">📚</div><div class="tpl-name">Study & Courses</div><div class="tpl-desc">Modules, projects & goals</div></div>
-  <div class="tpl-card" onclick="selectTemplate('travel')"><div class="tpl-icon">✈️</div><div class="tpl-name">Travel Planning</div><div class="tpl-desc">Bookings, packing & itinerary</div></div>
-  <div class="tpl-card" onclick="selectTemplate('health')"><div class="tpl-icon">❤️</div><div class="tpl-name">Health & Wellness</div><div class="tpl-desc">Appointments, exercise & goals</div></div>
-  <div class="tpl-card tpl-all" onclick="selectTemplate('all')"><div class="tpl-icon">⚡</div><div class="tpl-name">ALL TEMPLATES</div><div class="tpl-desc">Every category in one space — swipe between tabs</div></div>
+  <div class="tpl-card" data-tpl="cleaning" onclick="toggleTemplate('cleaning')"><div class="tpl-check"></div><div class="tpl-icon">🧹</div><div class="tpl-name">Cleaning</div><div class="tpl-desc">Household rooms, zones & tasks</div></div>
+  <div class="tpl-card" data-tpl="bills" onclick="toggleTemplate('bills')"><div class="tpl-check"></div><div class="tpl-icon">💰</div><div class="tpl-name">Budget & Finance</div><div class="tpl-desc">Bills, savings, debts & income</div></div>
+  <div class="tpl-card" data-tpl="shopping" onclick="toggleTemplate('shopping')"><div class="tpl-check"></div><div class="tpl-icon">🛒</div><div class="tpl-name">Shopping</div><div class="tpl-desc">Groceries & household goods</div></div>
+  <div class="tpl-card" data-tpl="meals" onclick="toggleTemplate('meals')"><div class="tpl-check"></div><div class="tpl-icon">🍳</div><div class="tpl-name">Meal Planning</div><div class="tpl-desc">Weekly meals & meal prep</div></div>
+  <div class="tpl-card" data-tpl="gaming" onclick="toggleTemplate('gaming')"><div class="tpl-check"></div><div class="tpl-icon">🎮</div><div class="tpl-name">Gaming</div><div class="tpl-desc">Progress, collectibles & backlog</div></div>
+  <div class="tpl-card" data-tpl="petcare" onclick="toggleTemplate('petcare')"><div class="tpl-check"></div><div class="tpl-icon">🐾</div><div class="tpl-name">Pet Care</div><div class="tpl-desc">Feeding, health & grooming</div></div>
+  <div class="tpl-card" data-tpl="car" onclick="toggleTemplate('car')"><div class="tpl-check"></div><div class="tpl-icon">🚗</div><div class="tpl-name">Car Maintenance</div><div class="tpl-desc">Service, rego & tyres</div></div>
+  <div class="tpl-card" data-tpl="study" onclick="toggleTemplate('study')"><div class="tpl-check"></div><div class="tpl-icon">📚</div><div class="tpl-name">Study & Courses</div><div class="tpl-desc">Modules, projects & goals</div></div>
+  <div class="tpl-card" data-tpl="travel" onclick="toggleTemplate('travel')"><div class="tpl-check"></div><div class="tpl-icon">✈️</div><div class="tpl-name">Travel Planning</div><div class="tpl-desc">Bookings, packing & itinerary</div></div>
+  <div class="tpl-card" data-tpl="health" onclick="toggleTemplate('health')"><div class="tpl-check"></div><div class="tpl-icon">❤️</div><div class="tpl-name">Health & Wellness</div><div class="tpl-desc">Appointments, exercise & goals</div></div>
+  <div class="tpl-card tpl-all" data-tpl="all" onclick="toggleAllTemplates()"><div class="tpl-check"></div><div class="tpl-icon">⚡</div><div class="tpl-name">ALL TEMPLATES</div><div class="tpl-desc">Select all — every category in one space</div></div>
 </div>
+<button id="tpl-proceed" class="btn primary tpl-proceed" onclick="proceedToAuth()">Create Space →</button>
 </div>
 </div>
 </div>
@@ -420,7 +442,8 @@ body.readonly .add-row{display:none;}
   <button class="btn" onclick="collapseAll()">📁</button>
   <button class="btn" onclick="clearCompleted()">✓ Clear</button>
   <button class="btn" onclick="openMonthReset()">🔄 New Month</button>
-  <button class="btn" onclick="copyShareLink()">🔗 Share</button>
+  <button id="btn-sharing" class="btn" onclick="openSharing()" style="display:none">🔐 Sharing</button>
+  <button class="btn" onclick="copyReadOnly()">🔗</button>
   <button class="btn danger" onclick="openReset()">🗑</button>
 </div>
 <main id="main"></main>
@@ -431,7 +454,33 @@ body.readonly .add-row{display:none;}
   <div class="modal"><h2 class="danger">⚠ Reset Everything?</h2><p>Wipes all rooms, zones and tasks. No undo.</p>
   <div class="modal-btns"><button class="btn" onclick="closeReset()">Cancel</button><button class="btn danger" onclick="confirmReset()">Yes, Reset</button></div></div>
 </div>
-<div class="modal-overlay" id="monthResetModal">
+<div class="modal-overlay" id="sharingModal">
+  <div class="modal" style="max-width:380px;">
+    <h2 class="safe">🔐 Sharing & Access</h2>
+
+    <div id="sharing-tabs-section" style="display:none">
+      <p style="font-size:12px;color:var(--muted);margin-bottom:10px;">Choose which tabs collaborators can see. Private tabs are completely hidden from them.</p>
+      <div id="sharing-tabs-list"></div>
+    </div>
+
+    <div class="share-section">
+      <div class="share-label">👁 Read-Only Link <span style="font-size:10px;">(no password needed)</span></div>
+      <button class="btn" style="width:100%;font-size:12px;" onclick="copyReadOnly();closeSharing();">Copy Read-Only Link</button>
+    </div>
+
+    <div class="share-section">
+      <div class="share-label">👥 Collaborator Access <span style="font-size:10px;">(requires password)</span></div>
+      <input class="auth-input" type="password" id="collab-pwd" placeholder="Set collaborator password (min 4 chars)" style="margin-top:6px;margin-bottom:0;"/>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px;">Leave blank to disable collaborator access.</div>
+      <div id="share-result" class="share-link-box" style="display:none;margin-top:10px;"></div>
+    </div>
+
+    <div class="modal-btns" style="margin-top:16px;">
+      <button class="btn" onclick="closeSharing()">Cancel</button>
+      <button class="btn primary" onclick="saveSharing()">Save</button>
+    </div>
+  </div>
+</div>
   <div class="modal"><h2 class="safe">🔄 New Month?</h2><p>Unchecks all tasks without deleting anything. Perfect for a monthly reset.</p>
   <div class="modal-btns"><button class="btn" onclick="closeMonthReset()">Cancel</button><button class="btn primary" onclick="confirmMonthReset()">Reset Progress</button></div></div>
 </div>
@@ -462,6 +511,8 @@ let state={rooms:[],version:0};
 let passwordHash = SPACE_ID ? (sessionStorage.getItem(`pwd-${SPACE_ID}`)||null) : null;
 let selectedTpl=null, authMode='setup';
 let saveTimer=null, pollTimer=null, hasPendingChanges=false, lastKnownVersion=0;
+let isOwner=false;
+let selectedTemplates=new Set(); // for multi-select picker
 
 // ── THEME ────────────────────────────────────────────────────────────────────
 function applyTheme(tpl){
@@ -522,19 +573,54 @@ async function init(){
   const res=await apiGet().catch(()=>null);
   if(!res){setSyncBadge('error');showScreen('screen-app');return;}
   if(res.status==='unclaimed'){
-    if(SPACE_ID===1){selectedTpl='cleaning';showAuthSetup();}
-    else{document.getElementById('tpl-space-label').textContent=`Space /${SPACE_ID} is unclaimed — choose a template`;showScreen('screen-template');}
+    if(SPACE_ID===1){selectedTemplates.add('cleaning');selectedTpl='cleaning';showAuthSetup();}
+    else{document.getElementById('tpl-space-label').textContent=`Space /${SPACE_ID} is unclaimed — pick your templates`;showScreen('screen-template');}
     return;
   }
   if(res.status==='locked'){showAuthLogin();return;}
   if(res.status==='ok'){
-    state=res.data; lastKnownVersion=state.version||0;
-    applyTheme(detectTheme()); renderTabBar(); showScreen('screen-app'); render(); setSyncBadge('synced'); startPolling();
+    state=res.data; isOwner=res.isOwner===true; lastKnownVersion=state.version||0;
+    applyTheme(detectTheme()); renderTabBar(); showSharingBtn(); showScreen('screen-app'); render(); setSyncBadge('synced'); startPolling();
   }
 }
 
-// ── AUTH ──────────────────────────────────────────────────────────────────────
-function selectTemplate(tpl){selectedTpl=tpl;showAuthSetup();}
+function showSharingBtn(){
+  const btn=document.getElementById('btn-sharing');
+  if(btn) btn.style.display = isOwner ? '' : 'none';
+}
+
+// ── TEMPLATE MULTI-SELECT ────────────────────────────────────────────────────
+function toggleTemplate(tpl){
+  if(selectedTemplates.has(tpl)) selectedTemplates.delete(tpl);
+  else selectedTemplates.add(tpl);
+  refreshPickerUI();
+}
+function toggleAllTemplates(){
+  if(selectedTemplates.size===TAB_ORDER.length) selectedTemplates.clear();
+  else TAB_ORDER.forEach(t=>selectedTemplates.add(t));
+  refreshPickerUI();
+}
+function refreshPickerUI(){
+  TAB_ORDER.forEach(t=>{
+    const c=document.querySelector(`[data-tpl="${t}"]`);
+    if(c) c.classList.toggle('tpl-selected', selectedTemplates.has(t));
+  });
+  const allCard=document.querySelector('[data-tpl="all"]');
+  if(allCard) allCard.classList.toggle('tpl-selected', selectedTemplates.size===TAB_ORDER.length);
+  const btn=document.getElementById('tpl-proceed');
+  if(!btn) return;
+  if(selectedTemplates.size===0){ btn.style.display='none'; return; }
+  btn.style.display='';
+  const n=selectedTemplates.size;
+  btn.textContent = n===1
+    ? `Create Space — ${TAB_META[[...selectedTemplates][0]]?.short||'Custom'} →`
+    : `Create Space — ${n} templates →`;
+}
+function proceedToAuth(){
+  if(selectedTemplates.size===0) return;
+  selectedTpl = selectedTemplates.size===1 ? [...selectedTemplates][0] : 'multi';
+  showAuthSetup();
+}
 function showAuthSetup(){
   authMode='setup';
   document.getElementById('auth-title').textContent=`Lock Space /${SPACE_ID}`;
@@ -568,16 +654,16 @@ async function submitAuth(){
     const res=await apiSetup(hash,seed).catch(()=>null);
     if(!res||!res.ok){showErr(res?.error||'Setup failed');return;}
     passwordHash=hash; sessionStorage.setItem(`pwd-${SPACE_ID}`,hash);
-    state=seed; lastKnownVersion=0;
-    applyTheme(detectTheme()); renderTabBar(); showScreen('screen-app'); render(); setSyncBadge('synced'); startPolling();
+    state=seed; lastKnownVersion=0; isOwner=true;
+    applyTheme(detectTheme()); renderTabBar(); showSharingBtn(); showScreen('screen-app'); render(); setSyncBadge('synced'); startPolling();
     toast(`✅ Space /${SPACE_ID} is yours!`);
   } else {
     const hash=await sha256(pwd); passwordHash=hash;
     const res=await apiGet().catch(()=>null);
     if(!res||res.status!=='ok'){passwordHash=null;showErr('Wrong password');return;}
-    sessionStorage.setItem(`pwd-${SPACE_ID}`,hash);
-    state=res.data; lastKnownVersion=state.version||0;
-    applyTheme(detectTheme()); renderTabBar(); showScreen('screen-app'); render(); setSyncBadge('synced'); startPolling();
+    passwordHash=hash; sessionStorage.setItem(`pwd-${SPACE_ID}`,hash);
+    state=res.data; lastKnownVersion=state.version||0; isOwner=res.isOwner===true;
+    applyTheme(detectTheme()); renderTabBar(); showSharingBtn(); showScreen('screen-app'); render(); setSyncBadge('synced'); startPolling();
   }
 }
 function showErr(m){const e=document.getElementById('auth-err');e.textContent=m;e.style.display='block';}
@@ -587,13 +673,80 @@ function renderTabBar(){
   const bar=document.getElementById('tab-bar');
   if(!isAllMode()){bar.style.display='none';return;}
   bar.style.display='flex';
-  bar.innerHTML=TAB_ORDER.map(t=>{
-    const m=TAB_META[t], active=state.activeTab===t;
-    return `<div class="tab-pill${active?' active':''}" onclick="switchTab('${t}')"><span class="ti">${m.icon}</span><span class="tl">${m.short}</span></div>`;
+  const selected = state.selectedTabs || TAB_ORDER;
+  bar.innerHTML=selected.map(t=>{
+    const m=TAB_META[t]; if(!m)return'';
+    const active=state.activeTab===t;
+    const priv = state.tabs?.[t]?.private && isOwner;
+    return `<div class="tab-pill${active?' active':''}" onclick="switchTab('${t}')">
+      <span class="ti">${m.icon}${priv?'<span class="lock-icon">🔒</span>':''}</span>
+      <span class="tl">${m.short}</span>
+    </div>`;
   }).join('');
-  // Update title sub
   const m=TAB_META[state.activeTab||'cleaning'];
   document.getElementById('appTitleSub').textContent=m?m.short:'CMD';
+}
+
+// ── SHARING ───────────────────────────────────────────────────────────────────
+function openSharing(){
+  if(!isOwner) return;
+  const hasTabs=isAllMode();
+  document.getElementById('sharing-tabs-section').style.display=hasTabs?'':'none';
+  if(hasTabs) renderSharingTabList();
+  document.getElementById('collab-pwd').value='';
+  document.getElementById('share-result').style.display='none';
+  document.getElementById('sharingModal').classList.add('open');
+}
+function closeSharing(){ document.getElementById('sharingModal').classList.remove('open'); }
+
+function renderSharingTabList(){
+  const selected=state.selectedTabs||TAB_ORDER;
+  document.getElementById('sharing-tabs-list').innerHTML=selected.map(t=>{
+    const m=TAB_META[t]||{icon:'📋',short:t};
+    const priv=state.tabs?.[t]?.private||false;
+    return `<div class="share-tab-row">
+      <span class="share-tab-icon">${m.icon}</span>
+      <div style="flex:1"><div class="share-tab-name">${m.short}</div>
+        <div class="share-tab-note">${priv?'Hidden from collaborators':'Visible to collaborators'}</div>
+      </div>
+      <button class="btn privacy-btn ${priv?'is-private':'is-visible'}" onclick="toggleTabPrivacy('${t}')">
+        ${priv?'🔒 Private':'👁 Visible'}
+      </button>
+    </div>`;
+  }).join('');
+}
+
+function toggleTabPrivacy(tab){
+  if(!state.tabs?.[tab]) return;
+  state.tabs[tab].private = !state.tabs[tab].private;
+  renderSharingTabList();
+  renderTabBar();
+}
+
+async function saveSharing(){
+  const pwd=document.getElementById('collab-pwd').value.trim();
+  let collabHash=null;
+  if(pwd){ if(pwd.length<4){showErr('Min 4 characters for collab password');return;} collabHash=await sha256(pwd); }
+  const res=await fetch(`/api/space?id=${SPACE_ID}`,{
+    method:'POST',
+    headers:{'Content-Type':'application/json',Authorization:`Bearer ${passwordHash}`},
+    body:JSON.stringify({action:'set_sharing',collabHash,data:state})
+  }).then(r=>r.json()).catch(()=>null);
+  if(!res?.ok){toast('⚠ Save failed');return;}
+  const shareUrl=`${window.location.origin}/${SPACE_ID}`;
+  const resultEl=document.getElementById('share-result');
+  resultEl.style.display='';
+  resultEl.innerHTML=`<div class="share-link-url">${shareUrl}</div>
+    ${pwd?`<div class="share-link-pwd">Collab password: <b>${pwd}</b></div>`:'<div style="color:var(--muted);font-size:11px;margin-top:3px;">Collaborator access disabled</div>'}
+    ${isAllMode()?`<div style="color:var(--muted);font-size:11px;margin-top:3px;">Private tabs hidden from collaborators ✓</div>`:''}`;
+  navigator.clipboard?.writeText(shareUrl);
+  toast('🔐 Sharing saved!');
+  scheduleSave();
+}
+
+function copyReadOnly(){
+  const url=`${window.location.origin}/${SPACE_ID}?view=1`;
+  navigator.clipboard?.writeText(url).then(()=>toast('🔗 Read-only link copied!'));
 }
 function switchTab(tab){
   if(!isAllMode())return;
@@ -660,7 +813,7 @@ function toggleTask(rid,zid,tid){const r=getActiveRooms().find(r=>r.id===rid);co
 function renameTask(rid,zid,tid,n){const r=getActiveRooms().find(r=>r.id===rid);const z=r?.zones.find(z=>z.id===zid);const t=z?.tasks.find(t=>t.id===tid);if(t)t.name=n;scheduleSave();}
 function renameNote(rid,zid,tid,n){const r=getActiveRooms().find(r=>r.id===rid);const z=r?.zones.find(z=>z.id===zid);const t=z?.tasks.find(t=>t.id===tid);if(t)t.note=n;scheduleSave();}
 function clearCompleted(){let c=0;getActiveRooms().forEach(r=>r.zones.forEach(z=>{const b=z.tasks.length;z.tasks=z.tasks.filter(t=>!t.completed);c+=b-z.tasks.length;}));render();scheduleSave();toast(c>0?`🧹 Cleared ${c} task${c!==1?'s':''}`:'Nothing to clear');}
-function copyShareLink(){const url=`${window.location.origin}/${SPACE_ID}?view=1`;navigator.clipboard?.writeText(url).then(()=>toast('🔗 Share link copied!'));}
+// copyShareLink replaced by copyReadOnly + openSharing
 function openReset(){document.getElementById('resetModal').classList.add('open');}
 function closeReset(){document.getElementById('resetModal').classList.remove('open');}
 function confirmReset(){state={...state,rooms:[],version:(state.version||0)+1};if(isAllMode())state.tabs[state.activeTab].rooms=[];closeReset();render();apiSave(state);toast('🗑 Reset');}
@@ -1324,11 +1477,16 @@ function buildSeed(tpl){
       mz('Monthly Check-ins','Weight check','Review medications','Review goals')),
   ]};
 
-  // ALL TEMPLATES
-  if(tpl==='all'){
+  // MULTI-SELECT or ALL
+  if(tpl==='all'||tpl==='multi'){
+    const toInclude = tpl==='all' ? [...TAB_ORDER] : [...selectedTemplates];
     const tabs={};
-    TAB_ORDER.forEach(t=>{ const s=buildSeed(t); tabs[t]={rooms:s.rooms}; });
-    return{version:1,_seedVersion:2,template:'all',type:'all',activeTab:'cleaning',tabs};
+    toInclude.forEach(t=>{
+      const s=buildSeed(t);
+      tabs[t]={rooms:s.rooms, private:false};
+    });
+    return{version:1,_seedVersion:2,template:tpl,type:'all',
+      activeTab:toInclude[0], selectedTabs:toInclude, tabs};
   }
 
   return{version:1,_seedVersion:1,rooms:[]};
