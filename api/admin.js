@@ -60,10 +60,35 @@ function genericCleaning() {
 }
 
 module.exports = async function handler(req, res) {
-  const { id, secret } = req.query;
-
+  const { id, secret, action } = req.query;
   if (secret !== 'TASKADMIN2026') return res.status(401).json({ error: 'Unauthorized' });
 
+  // List all claimed spaces
+  if (action === 'list') {
+    try {
+      const results = [];
+      for (let i = 1; i <= 50; i++) {
+        const raw = await kv('GET', `space-${i}`);
+        if (raw) {
+          const space = JSON.parse(raw);
+          const d = space.data || {};
+          results.push({
+            id: i,
+            url: `/${i}`,
+            type: d.type || 'single',
+            template: d.template || 'unknown',
+            tabs: d.selectedTabs || (d.type === 'all' ? Object.keys(d.tabs || {}) : null),
+            rooms: d.type === 'all' ? null : (d.rooms?.length || 0),
+            hasCollab: !!space.collabHash,
+            createdAt: space.createdAt ? new Date(space.createdAt).toLocaleDateString() : '?'
+          });
+        }
+      }
+      return res.status(200).json({ claimed: results.length, spaces: results });
+    } catch(e) { return res.status(500).json({ error: e.message }); }
+  }
+
+  // Reset a space
   const spaceId = parseInt(id);
   if (!spaceId || spaceId < 1 || spaceId > 50) return res.status(400).json({ error: 'Invalid space' });
 
