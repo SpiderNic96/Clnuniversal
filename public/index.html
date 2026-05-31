@@ -260,6 +260,9 @@ body.readonly .add-row{display:none;}
 .mc-meal-input{flex:1;background:transparent;border:none;color:var(--text);font-family:var(--mono);font-size:13px;outline:none;}
 .mc-meal-input.mc-done{color:var(--muted);text-decoration:line-through;}
 .mc-add-meal{padding:5px 10px;color:var(--muted);font-size:12px;cursor:pointer;border-top:1px solid var(--border);}
+/* ── KANBAN ZONE (per-game section) ─────────────────────────────────────────── */
+.kg-zone{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);margin-bottom:8px;overflow:hidden;}
+.kg-zone-header{display:flex;align-items:center;gap:6px;padding:7px 10px;border-bottom:1px solid var(--border);}
 /* ── KANBAN ───────────────────── */
 .kb-status-bar{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none;margin-bottom:4px;}
 .kb-status-bar::-webkit-scrollbar{display:none;}
@@ -1266,32 +1269,56 @@ const KB_STATUSES=['playing','paused','done','wishlist'];
 const KB_META={playing:{icon:'🎮',label:'Playing',color:'var(--accent)'},paused:{icon:'⏸️',label:'Paused',color:'#facc15'},done:{icon:'🏆',label:'Done',color:'#60a5fa'},wishlist:{icon:'⭐',label:'Wishlist',color:'#a78bfa'}};
 function setKanbanStatus(s){_kanbanStatus=s;render();}
 function setGameStatus(rid,s){const r=getActiveRooms().find(r=>r.id===rid);if(r){r.gameStatus=s;}scheduleSave();render();}
+function addKbRoom(){
+  const r={id:uid(),name:'',expanded:true,gameStatus:_kanbanStatus,zones:[{id:uid(),name:'Objectives',tasks:[]}]};
+  getActiveRooms().push(r);render();scheduleSave();
+  setTimeout(()=>{const inputs=document.querySelectorAll('.kb-game-name');if(inputs.length)inputs[inputs.length-1].focus();},60);
+}
 function renderKanban(){
   const main=document.getElementById('main');
   const rooms=getActiveRooms();
   rooms.forEach(r=>{if(!r.gameStatus)r.gameStatus='playing';});
-  // Fixed: each tab properly closed with </div>
+  const statusColors={playing:'var(--accent)',paused:'#facc15',done:'#60a5fa',wishlist:'#a78bfa'};
   const tabs=KB_STATUSES.map(s=>{
     const m=KB_META[s],cnt=rooms.filter(r=>r.gameStatus===s).length;
     const active=s===_kanbanStatus;
-    return `<div class="kb-stab" style="${active?`border-color:${m.color};color:${m.color}`:''}" onclick="setKanbanStatus('${s}')">${m.icon} ${m.label}${cnt?`<span class="kb-n">${cnt}</span>`:''}</div>`;
+    return `<div class="kb-stab" style="${active?`border-color:${m.color};color:${m.color};background:${m.color}18`:''}" onclick="setKanbanStatus('${s}')">${m.icon} ${m.label}${cnt?`<span class="kb-n">${cnt}</span>`:''}</div>`;
   }).join('');
   const visible=rooms.filter(r=>r.gameStatus===_kanbanStatus);
   const cards=visible.map(room=>{
+    const statusColor=statusColors[room.gameStatus]||'var(--accent)';
     let total=0,done=0;(room.zones||[]).forEach(z=>(z.tasks||[]).forEach(t=>{total++;if(t.completed)done++;}));
     const pct=total?Math.round(done/total*100):0;
     const zonesHtml=room.expanded?(room.zones||[]).map(zone=>{
       const th=(zone.tasks||[]).map(task=>`<div class="task-item"><div class="task-row"><div class="task-check${task.completed?' done':''}" onclick="toggleTask('${room.id}','${zone.id}','${task.id}')"></div><span class="task-emoji">${getEmoji(task.name,'task')}</span><input class="task-name-input${task.completed?' done':''}" data-task-name="${task.id}" value="${escHtml(task.name)}" placeholder="objective…" oninput="renameTask('${room.id}','${zone.id}','${task.id}',this.value)"/><button class="btn ghost" onclick="removeTask('${room.id}','${zone.id}','${task.id}')">✕</button></div></div>`).join('');
-      return `<div class="zone"><div class="zone-header"><span class="zone-emoji">${getEmoji(zone.name,'zone')}</span><input class="zone-name-input" value="${escHtml(zone.name)}" oninput="renameZone('${room.id}','${zone.id}',this.value)"/><button class="btn ghost" onclick="removeZone('${room.id}','${zone.id}')">✕</button></div><div class="task-list">${th}</div><div class="add-row" onclick="addTask('${room.id}','${zone.id}')"> Add objective</div></div>`;
+      const zdone=(zone.tasks||[]).filter(t=>t.completed).length;
+      const ztotal=(zone.tasks||[]).length;
+      return `<div class="kg-zone"><div class="kg-zone-header"><span style="font-size:14px">${getEmoji(zone.name,'zone')}</span><input class="zone-name-input" style="flex:1;font-size:13px;font-weight:600" value="${escHtml(zone.name)}" oninput="renameZone('${room.id}','${zone.id}',this.value)"/>${ztotal?`<span style="font-size:10px;color:var(--muted);margin-right:4px">${zdone}/${ztotal}</span>`:''}<button class="btn ghost" onclick="removeZone('${room.id}','${zone.id}')">✕</button></div><div class="task-list">${th}</div><div class="add-row" onclick="addTask('${room.id}','${zone.id}')"> Add objective</div></div>`;
     }).join(''):'';
     const sbns=KB_STATUSES.map(s=>{
       const m=KB_META[s],act=room.gameStatus===s;
       return `<button class="kb-sbn${act?' active':''}" style="${act?`background:${m.color};border-color:${m.color};color:#000`:''}" onclick="setGameStatus('${room.id}','${s}')" title="${m.label}">${m.icon}</button>`;
     }).join('');
-    return `<div class="kb-card"><div class="kb-card-header" onclick="toggleRoom('${room.id}')"><span style="font-size:20px;flex-shrink:0">${getEmoji(room.name,'room')}</span><div class="kb-card-meta"><input class="kb-game-name" value="${escHtml(room.name)}" placeholder="Game title…" oninput="renameRoom('${room.id}',this.value)" onclick="event.stopPropagation()"/>${total?`<div class="kb-prog-wrap"><div class="kb-prog-bar" style="width:${pct}%"></div></div><div class="kb-prog-lbl">${done}/${total} · ${pct}%</div>`:`<div class="kb-prog-lbl" style="color:var(--muted)">tap to add objectives</div>`}</div><div class="kb-sbns" onclick="event.stopPropagation()">${sbns}</div></div>${room.expanded?`<div class="kb-body">${zonesHtml}<div style="display:flex;gap:6px;margin-top:4px"><button class="btn" style="font-size:12px" onclick="addZone('${room.id}')">＋ Zone</button><button class="btn danger" style="font-size:12px" onclick="removeRoom('${room.id}')">✕ Remove</button></div></div>`:''}</div>`;
+    const progBar=total?`<div style="height:3px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:5px 0 3px"><div style="height:100%;width:${pct}%;background:${statusColor};border-radius:99px;transition:width .3s"></div></div><div style="font-size:11px;color:var(--muted)">${done}/${total} objectives · ${pct}%</div>`:'<div style="font-size:11px;color:var(--muted);margin-top:4px">No objectives yet — expand to add zones & tasks</div>';
+    return `<div class="kb-card" style="border-left:3px solid ${statusColor}">
+      <div class="kb-card-header" onclick="toggleRoom('${room.id}')">
+        <div class="kb-card-meta">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px">
+            <span style="font-size:22px;flex-shrink:0">${getEmoji(room.name,'room')}</span>
+            <input class="kb-game-name" value="${escHtml(room.name)}" placeholder="Game title…" oninput="renameRoom('${room.id}',this.value)" onclick="event.stopPropagation()"/>
+          </div>
+          ${progBar}
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;margin-left:8px" onclick="event.stopPropagation()">
+          ${sbns}
+          <span style="font-size:10px;color:var(--muted);text-align:center">${room.expanded?'▲ hide':'▼ more'}</span>
+        </div>
+      </div>
+      ${room.expanded?`<div class="kb-body" style="border-top:1px solid var(--border)">${zonesHtml}<div style="display:flex;gap:6px;padding:8px 12px 4px"><button class="btn" style="font-size:12px" onclick="addZone('${room.id}')">＋ Add Zone</button><button class="btn danger" style="font-size:12px" onclick="removeRoom('${room.id}')">✕ Remove Game</button></div></div>`:''}
+    </div>`;
   }).join('');
-  const emptyHtml=`<div class="empty-state"><div class="big">${KB_META[_kanbanStatus].icon}</div><p>No games in ${KB_META[_kanbanStatus].label}.</p></div>`;
-  main.innerHTML=`<div style="width:100%"><div class="kb-status-bar">${tabs}</div><div style="display:flex;flex-direction:column;gap:0">${cards||emptyHtml}</div><button class="btn" style="width:100%;margin-top:8px" onclick="addRoom()">＋ Add Game</button></div>`;
+  const emptyHtml=`<div class="empty-state"><div class="big">${KB_META[_kanbanStatus].icon}</div><p>No games in <b>${KB_META[_kanbanStatus].label}</b>.<br><span style="font-size:12px;color:var(--muted)">Tap + Add Game, then use the 🎮⏸️🏆⭐ buttons on each card to move between columns.</span></p></div>`;
+  main.innerHTML=`<div style="width:100%"><div class="kb-status-bar">${tabs}</div><div style="display:flex;flex-direction:column;gap:0">${cards||emptyHtml}</div><button class="btn" style="width:100%;margin-top:8px" onclick="addKbRoom()">＋ Add Game</button></div>`;
   updateStats();
 }
 // ── STUDY PROGRESS ────────────────────────────────────────────────────────────
@@ -1927,13 +1954,20 @@ function buildSeed(tpl){
   ]};
 
   if(tpl==='gaming'){
-    const mrg=(name,status)=>({id:uid2(),name,expanded:false,gameStatus:status,zones:[{id:uid2(),name:'Objectives',tasks:[]}]});
+    const mrgz=(name,status,...zones)=>({id:uid2(),name,expanded:false,gameStatus:status,zones:zones.map(([zn,...tasks])=>({id:uid2(),name:zn,tasks:tasks.map(mk)}))});
     return{...base,rooms:[
-      mrg('My Current Game','playing'),
-      mrg('Game 2 — Playing','playing'),
-      mrg('Game on hold','paused'),
-      mrg('Game I want to play','wishlist'),
-      mrg('Game I finished','done'),
+      mrgz('My Current Game','playing',
+        ['📖 Main Story','Act 1','Act 2','Final boss'],
+        ['🗺️ Side Quests','Side quest 1','Side quest 2'],
+        ['🏆 Trophies','Platinum target']),
+      mrgz('Another Game','playing',
+        ['📖 Story','Chapter 1','Chapter 2'],
+        ['💎 Collectibles','Set A','Set B']),
+      mrgz('Game on hold','paused',
+        ['📖 Progress','Where I left off']),
+      mrgz('Want to buy','wishlist',[]),
+      mrgz('Finished game','done',
+        ['🏆 Trophies','Platinum ✓']),
     ]};
   }
 
