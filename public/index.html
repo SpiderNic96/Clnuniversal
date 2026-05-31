@@ -1480,360 +1480,748 @@ function toast(m){const el=document.getElementById('toast');el.textContent=m;el.
 </script>
 
 <script>
-// ── EMOJI ─────────────────────────────────────────────────────────────────────
-function getEmoji(name,type){
-const n=(name||'').toLowerCase();
-if(type==='room'){
-  if(/paigee/.test(n)&&/bath/.test(n))return'👧🛁';
-  if(/paigee/.test(n)&&/bed/.test(n))return'👧🛏️';
-  if(/\bnic\b/.test(n)&&/bath/.test(n))return'👦🛁';
-  if(/\bnic\b/.test(n)&&/bed/.test(n))return'👦🛏️';
-  if(/kitchen|cook|stove/.test(n))return'🍳';
-  if(/bathroom|ensuite|toilet room|wc/.test(n))return'🛁';
-  if(/bedroom|bed room|master|guest room/.test(n))return'🛏️';
-  if(/living|lounge|sitting|family/.test(n))return'🛋️';
-  if(/girls|girl/.test(n))return'🧸';if(/boys|boy/.test(n))return'🎮';
-  if(/kids|child|nursery|play/.test(n))return'🧸';
-  if(/garage|car port/.test(n))return'🚗';
-  if(/laundry|washing|utility/.test(n))return'🫧';
-  if(/office|study|work/.test(n))return'💻';
-  if(/dining|dinner room/.test(n))return'🍽️';
-  if(/hall|corridor|entry|foyer|stair/.test(n))return'🚪';
-  if(/front yard|front garden/.test(n))return'🏡';
-  if(/backyard|back yard|back garden/.test(n))return'🌳';
-  if(/garden|yard|outdoor|outside|patio|deck/.test(n))return'🌿';
-  if(/basement|cellar/.test(n))return'🏚️';
-  if(/attic|loft|storage|spare/.test(n))return'📦';
-  if(/gym|workout|exercise/.test(n))return'🏋️';
-  if(/pool|spa/.test(n))return'🏊';
-  if(/pantry|cupboard/.test(n))return'🗄️';
-  // Finance rooms
-  if(/bill calendar|due date/.test(n))return'📅';
-  if(/fixed bill|recurring bill/.test(n))return'📋';
-  if(/subscri|streaming/.test(n))return'📺';
-  if(/debt|owed|credit/.test(n))return'💳';
-  if(/saving|goal/.test(n))return'🏦';
-  if(/income|earning/.test(n))return'💵';
-  if(/variable expense|spending/.test(n))return'🛒';
-  if(/financial.*to.do|money.*action/.test(n))return'📝';
-  if(/housing|property/.test(n))return'🏠';
-  if(/utilit/.test(n))return'⚡';
-  if(/insurance/.test(n))return'🛡️';
-  // Gaming rooms
-  if(/currently playing|in progress/.test(n))return'🎮';
-  if(/backlog/.test(n))return'📋';
-  if(/wish list|wishlist|to buy/.test(n))return'⭐';
-  if(/completed|finished/.test(n))return'🏆';
-  if(/\bdlc\b|expansion/.test(n))return'📦';
-  // Pet
-  if(/\bpet\b|supply|supplies/.test(n))return'🐾';
-  // Car
-  if(/service history/.test(n))return'🔧';
-  if(/upcoming.*service|service.*due/.test(n))return'⏰';
-  if(/rego|registration|insurance/.test(n))return'📋';
-  if(/tyre|tire|safety/.test(n))return'🛞';
-  if(/fuel|cost/.test(n))return'⛽';
-  if(/car.*clean|clean.*car/.test(n))return'✨';
-  // Study
-  if(/current.*course|course/.test(n))return'📖';
-  if(/reading list|reading/.test(n))return'📚';
-  if(/project|practice/.test(n))return'🔨';
-  if(/note.*review|review.*note/.test(n))return'📝';
-  // Travel
-  if(/booking|document/.test(n))return'📋';
-  if(/packing|luggage/.test(n))return'🧳';
-  if(/itinerary|day trip/.test(n))return'🗺️';
-  if(/pre.depart|before.*trip/.test(n))return'🏠';
-  if(/trip budget|travel budget/.test(n))return'💰';
-  // Health
-  if(/appointment/.test(n))return'🏥';
-  if(/medication|supplement/.test(n))return'💊';
-  if(/exercise|workout|fitness/.test(n))return'🏋️';
-  if(/mental health|mindful|wellbeing/.test(n))return'🧘';
-  if(/wellness goal/.test(n))return'🎯';
-  // Meal planning days
-  if(/monday/.test(n))return'1️⃣';if(/tuesday/.test(n))return'2️⃣';
-  if(/wednesday/.test(n))return'3️⃣';if(/thursday/.test(n))return'4️⃣';
-  if(/friday/.test(n))return'5️⃣';if(/saturday/.test(n))return'6️⃣';
-  if(/sunday/.test(n))return'7️⃣';
-  if(/meal prep|batch/.test(n))return'🍱';if(/week/.test(n))return'📅';
-  return'🏠';
-}
-if(type==='zone'){
-  if(/bill calendar|due date/.test(n))return'📅';
-  if(/weekly/.test(n))return'📅';if(/fortnightly/.test(n))return'📅';
-  if(/monthly/.test(n))return'📆';if(/quarterly/.test(n))return'📅';
-  if(/\bannual\b/.test(n))return'📅';
-  if(/tv|television|media/.test(n))return'📺';
-  if(/general|misc|other/.test(n))return'🗂️';if(/new zone/.test(n))return'🗂️';
-  if(/^bed$|^bed |bedding/.test(n))return'🛏️';
-  if(/clothes|clothing|wardrobe|dresser/.test(n))return'👚';
-  if(/storage/.test(n))return'🗃️';if(/^bins$|^bin$/.test(n))return'🗑️';
-  if(/lawn/.test(n))return'🌱';if(/garden/.test(n))return'🌸';if(/entry/.test(n))return'🚪';
-  if(/floor|carpet|rug/.test(n))return'🧹';
-  if(/counter|bench|surface/.test(n))return'🧽';
-  if(/window/.test(n))return'🪟';if(/shelf|shelv|cabinet/.test(n))return'📚';
-  if(/sink|basin|tap/.test(n))return'💧';if(/toilet/.test(n))return'🚽';
-  if(/shower/.test(n))return'🚿';if(/bath|tub/.test(n))return'🛁';if(/mirror/.test(n))return'🪞';
-  if(/fridge|freezer/.test(n))return'🧊';if(/oven|stove/.test(n))return'🔥';
-  if(/wall/.test(n))return'🧱';if(/light|lamp/.test(n))return'💡';
-  // Finance zones
-  if(/rent|mortgage|housing/.test(n))return'🏠';if(/electricity|power/.test(n))return'⚡';
-  if(/internet|wifi/.test(n))return'🌐';if(/phone|mobile/.test(n))return'📱';
-  if(/insurance/.test(n))return'🛡️';if(/subscri|stream/.test(n))return'📺';
-  if(/credit|card/.test(n))return'💳';if(/loan|finance/.test(n))return'💰';
-  if(/savings|bank/.test(n))return'🏦';if(/i owe|bnpl/.test(n))return'💳';
-  if(/owes me/.test(n))return'🤝';if(/upcoming|instalment/.test(n))return'⏰';
-  if(/emergency fund/.test(n))return'🆘';if(/short term/.test(n))return'🎯';
-  if(/long term/.test(n))return'📈';if(/regular income/.test(n))return'💵';
-  if(/one.off|expected/.test(n))return'💰';if(/food|drink/.test(n))return'🍽️';
-  if(/transport/.test(n))return'🚗';if(/personal/.test(n))return'👤';
-  if(/actions|to.do/.test(n))return'✅';if(/review/.test(n))return'🔍';
-  // Shopping zones
-  if(/fruit/.test(n))return'🍎';if(/veg/.test(n))return'🥦';
-  if(/meat/.test(n))return'🥩';if(/seafood|fish/.test(n))return'🐟';
-  if(/dairy/.test(n))return'🥛';if(/egg/.test(n))return'🥚';
-  if(/bakery|bread/.test(n))return'🍞';if(/dry good|grain/.test(n))return'🌾';
-  if(/canned|sauce/.test(n))return'🥫';if(/snack|sweet/.test(n))return'🍫';
-  if(/drink|bev/.test(n))return'🥤';if(/clean/.test(n))return'🧴';if(/hygiene/.test(n))return'🧼';
-  // Gaming zones
-  if(/main story|story|campaign/.test(n))return'📖';if(/side quest/.test(n))return'📜';
-  if(/collectible/.test(n))return'💎';if(/trophy|achievement/.test(n))return'🏆';
-  if(/up next|queue/.test(n))return'📋';if(/wish list|wishlist/.test(n))return'⭐';
-  if(/story done/.test(n))return'✅';if(/dlc|expansion/.test(n))return'📦';
-  // Pet zones
-  if(/daily care|daily/.test(n))return'⭐';if(/health|medical|vet/.test(n))return'❤️';
-  if(/groom/.test(n))return'✂️';if(/food|treat|feed/.test(n))return'🍽️';
-  if(/litter/.test(n))return'🧹';if(/accessori|toy/.test(n))return'🎾';
-  // Car zones
-  if(/service history/.test(n))return'🔧';if(/upcoming|service due/.test(n))return'⏰';
-  if(/rego|registration/.test(n))return'📋';if(/tyre|tire/.test(n))return'🛞';
-  if(/fuel/.test(n))return'⛽';if(/car.*clean/.test(n))return'✨';
-  // Study zones
-  if(/current.*course/.test(n))return'📖';if(/reading/.test(n))return'📚';
-  if(/project|practice/.test(n))return'🔨';if(/note/.test(n))return'📝';
-  if(/goal/.test(n))return'🎯';
-  // Travel zones
-  if(/booking|document/.test(n))return'📋';if(/packing/.test(n))return'🧳';
-  if(/itinerary/.test(n))return'🗺️';if(/pre.depart/.test(n))return'🏠';
-  if(/trip budget/.test(n))return'💰';
-  // Health zones
-  if(/appointment/.test(n))return'🏥';if(/medication|supplement/.test(n))return'💊';
-  if(/exercise|workout/.test(n))return'🏋️';if(/mental/.test(n))return'🧘';
-  if(/wellness/.test(n))return'🎯';
-  // Meal planning
+// ── EMOJI — universal dynamic matching ────────────────────────────────────────
+// Works for any type: room, zone, task — matches game titles, movies, shows,
+// franchises, genres, activities, food, tech, and hundreds more keywords.
+
+function getEmoji(name, type) {
+  const n = (name || '').toLowerCase();
+  if (!n) return type === 'room' ? '🏠' : type === 'zone' ? '📍' : '✔️';
+
+  // ── UNIVERSAL FRANCHISE / TITLE / KEYWORD MATCHING ──────────────────────────
+  // These apply regardless of type (room name = game title, zone name, task name)
+
+  // ── Video game titles & series ──
+  if (/spider.?man|spiderman/.test(n)) return '🕷️';
+  if (/\bcod\b|call of duty|warzone|modern warfare/.test(n)) return '🔫';
+  if (/fortnite/.test(n)) return '🏗️';
+  if (/minecraft/.test(n)) return '⛏️';
+  if (/\bzelda\b|breath of the wild|tears of the kingdom|botw|totk/.test(n)) return '🗡️';
+  if (/\bpokemon\b|pokémon/.test(n)) return '⚡';
+  if (/\bmario\b|super mario|mario kart|mario party|mario odyssey/.test(n)) return '🍄';
+  if (/god of war|kratos/.test(n)) return '⚔️';
+  if (/elden ring/.test(n)) return '💍';
+  if (/dark souls|darksouls/.test(n)) return '💀';
+  if (/bloodborne/.test(n)) return '🩸';
+  if (/\bsekiro\b/.test(n)) return '⚔️';
+  if (/demon.?s souls/.test(n)) return '👹';
+  if (/hollow knight/.test(n)) return '🦋';
+  if (/cyberpunk/.test(n)) return '🤖';
+  if (/\bwitcher\b/.test(n)) return '⚔️';
+  if (/red dead|rdr\b/.test(n)) return '🤠';
+  if (/\bgta\b|grand theft auto/.test(n)) return '🚗';
+  if (/assassin.?s creed/.test(n)) return '🗡️';
+  if (/\bhalo\b/.test(n)) return '🪖';
+  if (/horizon.?(zero dawn|forbidden west)/.test(n)) return '🏹';
+  if (/\bhorizon\b/.test(n)) return '🏹';
+  if (/the last of us|tlou/.test(n)) return '🍄';
+  if (/ghost of tsushima/.test(n)) return '🗾';
+  if (/final fantasy|\bff\b|\bff\d/.test(n)) return '✨';
+  if (/\bpersona\b/.test(n)) return '🃏';
+  if (/\bdiablo\b/.test(n)) return '👿';
+  if (/\boverwatch\b/.test(n)) return '🎯';
+  if (/\bapex\b|apex legends/.test(n)) return '🏆';
+  if (/\bvalorant\b/.test(n)) return '🎯';
+  if (/league of legends|\blol\b/.test(n)) return '🏆';
+  if (/\bdota\b/.test(n)) return '🏆';
+  if (/world of warcraft|\bwow\b/.test(n)) return '⚔️';
+  if (/hearthstone/.test(n)) return '🃏';
+  if (/street fighter/.test(n)) return '🥊';
+  if (/mortal kombat/.test(n)) return '☠️';
+  if (/\btekken\b/.test(n)) return '🥊';
+  if (/crash bandicoot/.test(n)) return '🦊';
+  if (/\bsonic\b/.test(n)) return '💨';
+  if (/\bkirby\b/.test(n)) return '⭐';
+  if (/\bmetroid\b/.test(n)) return '🤖';
+  if (/animal crossing/.test(n)) return '🌿';
+  if (/stardew valley/.test(n)) return '🌾';
+  if (/\bterraria\b/.test(n)) return '⛏️';
+  if (/\bceleste\b/.test(n)) return '⛰️';
+  if (/\bcuphead\b/.test(n)) return '☕';
+  if (/among us/.test(n)) return '🚀';
+  if (/fall guys/.test(n)) return '🎮';
+  if (/rocket league/.test(n)) return '🚀';
+  if (/dead cells/.test(n)) return '💀';
+  if (/hades\b/.test(n)) return '🔱';
+  if (/undertale/.test(n)) return '❤️';
+  if (/\bsuplex\b|\bfi\b/.test(n)) return '🎮';
+  if (/ratchet.*clank|clank/.test(n)) return '🔧';
+  if (/dragon age/.test(n)) return '🐉';
+  if (/mass effect/.test(n)) return '🚀';
+  if (/\bstarfield\b/.test(n)) return '🌌';
+  if (/\bbaldur.?s gate\b/.test(n)) return '⚔️';
+  if (/\bskyrim\b|elder scrolls/.test(n)) return '🐉';
+  if (/\bfallout\b/.test(n)) return '☢️';
+  if (/\boblivion\b/.test(n)) return '🗡️';
+  if (/\bmorrowind\b/.test(n)) return '🗡️';
+  if (/\bdoom\b/.test(n)) return '💀';
+  if (/\bquake\b/.test(n)) return '💥';
+  if (/\bhalf.?life\b/.test(n)) return '🔬';
+  if (/\bportal\b/.test(n)) return '🌀';
+  if (/\bsource\b|\bvalve\b/.test(n)) return '🎮';
+  if (/\bcs\b|counter.?strike/.test(n)) return '🔫';
+  if (/\bteam fortress/.test(n)) return '🔫';
+  if (/\bleft 4 dead/.test(n)) return '🧟';
+  if (/\bdead space/.test(n)) return '👾';
+  if (/\bresident evil/.test(n)) return '🧟';
+  if (/silent hill/.test(n)) return '🌫️';
+  if (/control\b.*(game|play)|alan wake/.test(n)) return '🔦';
+  if (/\bbioware\b/.test(n)) return '🎮';
+  if (/far cry/.test(n)) return '🔫';
+  if (/\bubisoft\b/.test(n)) return '🎮';
+  if (/\bwatch.?dogs\b/.test(n)) return '🖥️';
+  if (/\bgears\b.*war|gears of war/.test(n)) return '⚙️';
+  if (/\bforza\b/.test(n)) return '🏎️';
+  if (/gran turismo/.test(n)) return '🏎️';
+  if (/need for speed/.test(n)) return '🏎️';
+  if (/\brakings\b|\bnfs\b/.test(n)) return '🏎️';
+  if (/\bfifa\b/.test(n)) return '⚽';
+  if (/\bnba 2k\b/.test(n)) return '🏀';
+  if (/\bmadden\b/.test(n)) return '🏈';
+  if (/\bthe sims\b/.test(n)) return '🏠';
+  if (/cities.?skylines|city builder/.test(n)) return '🏙️';
+  if (/\bcivilization\b|\bciv\b/.test(n)) return '🏛️';
+  if (/age of empires/.test(n)) return '🏰';
+  if (/\bstarcraft\b/.test(n)) return '🚀';
+  if (/\bxcom\b/.test(n)) return '🛸';
+  if (/fire emblem/.test(n)) return '🔥';
+  if (/\btotally accurate\b|tabs\b/.test(n)) return '🎮';
+  if (/\bslay the spire\b/.test(n)) return '🃏';
+  if (/\bpilgrim.?s\b|monster hunter/.test(n)) return '🗡️';
+  if (/\bpath of exile\b/.test(n)) return '💀';
+  if (/\btorchlight\b/.test(n)) return '🔦';
+  if (/\bdragon.?s dogma\b/.test(n)) return '🐉';
+  if (/\bnioh\b/.test(n)) return '⚔️';
+  if (/\bwolverine\b/.test(n)) return '🐺';
+  if (/\bghost runner\b/.test(n)) return '🏃';
+  if (/\bdead island\b/.test(n)) return '🏝️';
+  if (/\bdying light\b/.test(n)) return '🧟';
+  if (/\bcyberpunk\b|\bcd projekt\b/.test(n)) return '🤖';
+  if (/\bclone hero\b|guitar hero/.test(n)) return '🎸';
+  if (/\bbeat saber\b/.test(n)) return '🎵';
+  if (/\bvr\b.*game|game.*\bvr\b/.test(n)) return '🥽';
+  if (/\bpubg\b|playerunknown/.test(n)) return '🔫';
+  if (/\bsurvive\b.*game|survival game/.test(n)) return '🏕️';
+  if (/\brpg\b/.test(n)) return '⚔️';
+  if (/\bfps\b/.test(n)) return '🔫';
+  if (/\bmoba\b/.test(n)) return '🏆';
+  if (/\brts\b/.test(n)) return '⚙️';
+  if (/\bbattle royale\b/.test(n)) return '🏆';
+  if (/\bplatformer\b/.test(n)) return '🎮';
+  if (/\bsandbox\b/.test(n)) return '🏗️';
+  if (/\bindiegame\b|indie game/.test(n)) return '🎮';
+  if (/\bretro game\b|retro gaming/.test(n)) return '👾';
+  if (/\bspeedrun\b/.test(n)) return '⏱️';
+
+  // ── Marvel / DC / Superheroes ──
+  if (/\bavengers\b/.test(n)) return '🦸';
+  if (/iron man/.test(n)) return '🤖';
+  if (/\bthor\b/.test(n)) return '⚡';
+  if (/\bhulk\b/.test(n)) return '💚';
+  if (/captain america/.test(n)) return '🛡️';
+  if (/black widow/.test(n)) return '🕷️';
+  if (/black panther/.test(n)) return '🐾';
+  if (/\bwanda\b|scarlet witch/.test(n)) return '🔴';
+  if (/doctor strange/.test(n)) return '✨';
+  if (/\bantman\b|ant-man/.test(n)) return '🐜';
+  if (/\bdeadpool\b/.test(n)) return '💀';
+  if (/\bthanos\b/.test(n)) return '💜';
+  if (/guardians.*galaxy/.test(n)) return '🌌';
+  if (/\bxmen\b|x-men/.test(n)) return '🧬';
+  if (/\bwolverine\b/.test(n)) return '🐺';
+  if (/\bbatman\b/.test(n)) return '🦇';
+  if (/\bsuperman\b/.test(n)) return '🦸';
+  if (/wonder woman/.test(n)) return '👸';
+  if (/\bjoker\b/.test(n)) return '🃏';
+  if (/\baquaman\b/.test(n)) return '🌊';
+  if (/\bflash\b/.test(n)) return '⚡';
+  if (/green lantern/.test(n)) return '💚';
+  if (/\bvenom\b/.test(n)) return '🕷️';
+  if (/\bgotham\b/.test(n)) return '🦇';
+  if (/\bmarvel\b/.test(n)) return '🦸';
+  if (/\b\bdc\b.*comic|dc universe/.test(n)) return '🦸';
+
+  // ── Star Wars ──
+  if (/star wars/.test(n)) return '⭐';
+  if (/\bjedi\b/.test(n)) return '💚';
+  if (/\bsith\b/.test(n)) return '🔴';
+  if (/\byoda\b/.test(n)) return '💚';
+  if (/\bdarth\b/.test(n)) return '🔴';
+  if (/mandalorian/.test(n)) return '🪖';
+  if (/\bgrogu\b|\bbaby yoda\b/.test(n)) return '💚';
+  if (/\brey\b.*star|star.*\brey\b/.test(n)) return '⭐';
+  if (/\bluke\b.*skywalker|skywalker/.test(n)) return '⭐';
+  if (/millennium falcon/.test(n)) return '🚀';
+  if (/\bdeath star\b/.test(n)) return '💀';
+  if (/lightsaber/.test(n)) return '⚡';
+
+  // ── Harry Potter / Fantasy ──
+  if (/harry potter|hogwarts|dumbledore|hermione|voldemort|slytherin|gryffindor|hufflepuff|ravenclaw/.test(n)) return '🧙';
+  if (/lord of the rings|\bfrodo\b|\bgandalf\b|\bsauron\b|\bhelms deep\b/.test(n)) return '💍';
+  if (/game of thrones|\bgot\b|westeros|\btargaryen\b|\blannister\b|\bstark\b/.test(n)) return '🐉';
+  if (/\bnarnia\b/.test(n)) return '🦁';
+  if (/\bwheelchair\b/.test(n)) return '♿';
+  if (/\bhobbit\b/.test(n)) return '🌄';
+
+  // ── Movies (specific) ──
+  if (/the dark knight|nolan.*batman/.test(n)) return '🦇';
+  if (/\binception\b/.test(n)) return '🌀';
+  if (/\binterstellar\b/.test(n)) return '🌌';
+  if (/\boppenheimer\b/.test(n)) return '☢️';
+  if (/\bbarbie\b/.test(n)) return '💗';
+  if (/top gun/.test(n)) return '✈️';
+  if (/\bmatrix\b/.test(n)) return '💊';
+  if (/\bgladiator\b/.test(n)) return '⚔️';
+  if (/\btitanic\b/.test(n)) return '🚢';
+  if (/pulp fiction/.test(n)) return '💼';
+  if (/the godfather/.test(n)) return '🎩';
+  if (/\bscarface\b/.test(n)) return '🌺';
+  if (/fight club/.test(n)) return '🥊';
+  if (/\bjaws\b/.test(n)) return '🦈';
+  if (/jurassic park|jurassic world/.test(n)) return '🦕';
+  if (/\balien\b/.test(n)) return '👽';
+  if (/\bpredator\b/.test(n)) return '👾';
+  if (/\bterminator\b/.test(n)) return '🤖';
+  if (/\bdune\b/.test(n)) return '🏜️';
+  if (/the social network/.test(n)) return '💻';
+  if (/shutter island/.test(n)) return '🏝️';
+  if (/\bjoker\b.*film|\bjoker\b.*movie/.test(n)) return '🃏';
+  if (/\bsocial network\b/.test(n)) return '💻';
+  if (/saving private ryan/.test(n)) return '🪖';
+  if (/schindler.?s list/.test(n)) return '📜';
+  if (/\bwhiplash\b/.test(n)) return '🥁';
+  if (/la la land/.test(n)) return '🎭';
+  if (/\bparasite\b/.test(n)) return '🐛';
+  if (/the revenant/.test(n)) return '🐻';
+  if (/mad max/.test(n)) return '🏜️';
+  if (/blade runner/.test(n)) return '🤖';
+  if (/2001.*space odyssey/.test(n)) return '🌌';
+  if (/back to the future/.test(n)) return '⏰';
+  if (/\bgrease\b/.test(n)) return '🎤';
+  if (/indiana jones/.test(n)) return '🎩';
+  if (/james bond|\b007\b/.test(n)) return '🔫';
+  if (/mission.?impossible/.test(n)) return '💣';
+  if (/fast.*furious|furious.*fast/.test(n)) return '🏎️';
+  if (/john wick/.test(n)) return '🐶';
+  if (/\bknives out\b/.test(n)) return '🔪';
+  if (/\bget out\b/.test(n)) return '😱';
+  if (/a quiet place/.test(n)) return '🤫';
+  if (/\bhereditary\b/.test(n)) return '👁️';
+  if (/\bmidsommar\b/.test(n)) return '🌸';
+  if (/\bit\b.*pennywise|\bpennywise\b/.test(n)) return '🤡';
+  if (/\bconjuring\b/.test(n)) return '👻';
+  if (/\bannabelle\b/.test(n)) return '🪆';
+  if (/\bscream\b.*horror/.test(n)) return '😱';
+  if (/friday the 13th/.test(n)) return '🔪';
+  if (/nightmare on elm/.test(n)) return '🌙';
+  if (/\bhalloween\b.*michael|\bmichael myers\b/.test(n)) return '🎃';
+  if (/\bexorcist\b/.test(n)) return '👹';
+  if (/the shining/.test(n)) return '🪓';
+  if (/\bpopcorn\b/.test(n)) return '🍿';
+  // Movie genres
+  if (/\bhorror\b/.test(n)) return '👻';
+  if (/\bslasher\b/.test(n)) return '🔪';
+  if (/\bsuspense\b|\bthriller\b/.test(n)) return '😰';
+  if (/\bcomedy\b/.test(n)) return '😂';
+  if (/\bromance\b/.test(n)) return '💕';
+  if (/\baction\b.*film|\baction\b.*movie/.test(n)) return '💥';
+  if (/\bwestern\b.*film|\bwestern\b.*movie/.test(n)) return '🤠';
+  if (/sci.?fi|science fiction/.test(n)) return '🚀';
+  if (/\bdocumentary\b/.test(n)) return '🎬';
+  if (/\banimated\b.*film|animation film/.test(n)) return '🎨';
+  if (/\bpixar\b/.test(n)) return '🎬';
+  if (/\bstudio ghibli\b|ghibli/.test(n)) return '🍃';
+  if (/\bdragon ball\b|goku/.test(n)) return '💥';
+
+  // ── TV Shows ──
+  if (/breaking bad/.test(n)) return '⚗️';
+  if (/better call saul/.test(n)) return '📞';
+  if (/\bwalt\b.*\bwhite\b|heisenberg/.test(n)) return '⚗️';
+  if (/\bgame of thrones\b|\bgot\b/.test(n)) return '🐉';
+  if (/the office/.test(n)) return '📎';
+  if (/\bfriends\b.*show|\bfriends\b.*series/.test(n)) return '👫';
+  if (/\bseinfeld\b/.test(n)) return '🍞';
+  if (/stranger things/.test(n)) return '🔦';
+  if (/\bthe wire\b/.test(n)) return '🔌';
+  if (/\bnarcos\b/.test(n)) return '🌺';
+  if (/\bozark\b/.test(n)) return '💵';
+  if (/\bsuccession\b/.test(n)) return '💼';
+  if (/\beuphoria\b/.test(n)) return '💊';
+  if (/peaky blinders/.test(n)) return '🎩';
+  if (/house of cards/.test(n)) return '🃏';
+  if (/\bwestworld\b/.test(n)) return '🤠';
+  if (/the sopranos/.test(n)) return '🍝';
+  if (/the walking dead/.test(n)) return '🧟';
+  if (/\blost\b.*show|\blost\b.*series/.test(n)) return '🏝️';
+  if (/black mirror/.test(n)) return '📱';
+  if (/\b24\b.*show|jack bauer/.test(n)) return '⏰';
+  if (/\bsuits\b.*show|\bsuits\b.*series/.test(n)) return '👔';
+  if (/grey.?s anatomy/.test(n)) return '🏥';
+  if (/\bhouse\b.*md|\bdr house\b/.test(n)) return '🏥';
+  if (/\berk\b|\bh\.o\.u\.s\.e\b|\bmedical drama/.test(n)) return '🏥';
+  if (/arrested development/.test(n)) return '🍌';
+  if (/\bcommunity\b.*show/.test(n)) return '🎓';
+  if (/parks and rec/.test(n)) return '🏛️';
+  if (/brooklyn nine.?nine/.test(n)) return '👮';
+  if (/how i met your mother|himym/.test(n)) return '💛';
+  if (/big bang theory/.test(n)) return '🔬';
+  if (/rick and morty/.test(n)) return '🧪';
+  if (/south park/.test(n)) return '❄️';
+  if (/family guy/.test(n)) return '🐕';
+  if (/\bsimpsons\b/.test(n)) return '🍩';
+  if (/\bfuturama\b/.test(n)) return '🚀';
+  if (/\bfargo\b.*show/.test(n)) return '❄️';
+  if (/\btrue detective\b/.test(n)) return '🔍';
+  if (/\bmindhunter\b/.test(n)) return '🧠';
+  if (/\bdexter\b/.test(n)) return '🔪';
+  if (/\bhannibal\b.*show/.test(n)) return '🍽️';
+  if (/\bamerican horror\b|ahs/.test(n)) return '👻';
+  if (/\btwisted\b.*tales/.test(n)) return '👻';
+  if (/\bthe crown\b/.test(n)) return '👑';
+  if (/downton abbey/.test(n)) return '🏰';
+  if (/\bvikings\b.*show/.test(n)) return '⚔️';
+  if (/\bthe last of us\b.*show/.test(n)) return '🍄';
+  if (/the boys.*show/.test(n)) return '🦸';
+  if (/\binvincible\b/.test(n)) return '🦸';
+  if (/\bdark\b.*netflix/.test(n)) return '⏳';
+  if (/money heist|la casa de papel/.test(n)) return '💰';
+  if (/\blupín\b|\bnetflix.*lupin\b/.test(n)) return '🎩';
+  if (/squid game/.test(n)) return '🦑';
+  if (/\bsherlock\b/.test(n)) return '🔍';
+  if (/\bmerlin\b.*show/.test(n)) return '🧙';
+  if (/\bskins\b.*show/.test(n)) return '🎭';
+  if (/\bskins\b.*uk/.test(n)) return '🎭';
+  if (/\bsex education\b/.test(n)) return '🎓';
+
+  // ── Anime ──
+  if (/\bnaruto\b/.test(n)) return '🍜';
+  if (/attack on titan|aot\b/.test(n)) return '⚔️';
+  if (/demon slayer|kimetsu/.test(n)) return '⚔️';
+  if (/jujutsu kaisen/.test(n)) return '👊';
+  if (/my hero academia|mha\b|bnha\b/.test(n)) return '💪';
+  if (/one piece/.test(n)) return '🏴‍☠️';
+  if (/death note/.test(n)) return '📓';
+  if (/fullmetal alchemist|fma\b/.test(n)) return '⚗️';
+  if (/hunter.*hunter|hxh\b/.test(n)) return '🎯';
+  if (/\bbleach\b.*anime/.test(n)) return '⚔️';
+  if (/fairy tail/.test(n)) return '🧚';
+  if (/sword art online|sao\b/.test(n)) return '⚔️';
+  if (/code geass/.test(n)) return '👁️';
+  if (/steins.*gate/.test(n)) return '⏳';
+  if (/\bnevermore\b|\bcowboy bebop\b/.test(n)) return '🚀';
+  if (/neon genesis|evangelion/.test(n)) return '🤖';
+  if (/\bsailor moon\b/.test(n)) return '🌙';
+  if (/dragon ball/.test(n)) return '💥';
+  if (/one punch man/.test(n)) return '👊';
+  if (/mob psycho/.test(n)) return '👻';
+  if (/\bvinland saga\b/.test(n)) return '⚔️';
+  if (/violet evergarden/.test(n)) return '✉️';
+  if (/your lie in april/.test(n)) return '🎹';
+
+  // ── Streaming platforms (for movies/TV notes) ──
+  if (/\bnetflix\b/.test(n)) return '🎬';
+  if (/\bhbo\b/.test(n)) return '📺';
+  if (/\bdisney\+?.*show|show.*\bdisney\+?\b/.test(n)) return '✨';
+  if (/amazon prime.*show|prime video/.test(n)) return '📦';
+  if (/apple tv.*show/.test(n)) return '🍎';
+  if (/\bhulu\b.*show/.test(n)) return '📺';
+  if (/\bparamount\+?\b/.test(n)) return '⛰️';
+  if (/\bstan\b.*show/.test(n)) return '📺';
+  if (/\bbinge\b.*watch/.test(n)) return '📺';
+  if (/\bcrunchyroll\b/.test(n)) return '🎌';
+  if (/\bfunimation\b/.test(n)) return '🎌';
+
+  // ── Music genres & artists ──
+  if (/\bmetal\b.*music|metalcore|deathcore|blackmetal/.test(n)) return '🤘';
+  if (/\brock\b.*music|rock band|alt.?rock/.test(n)) return '🎸';
+  if (/\bjazz\b/.test(n)) return '🎷';
+  if (/\bpop\b.*music/.test(n)) return '🎤';
+  if (/hip hop|\brap\b.*music/.test(n)) return '🎤';
+  if (/\bclassical\b.*music/.test(n)) return '🎻';
+  if (/\bcountry\b.*music/.test(n)) return '🤠';
+  if (/\belectronic\b.*music|edm\b/.test(n)) return '🎧';
+  if (/\bpunk\b.*music/.test(n)) return '🤘';
+  if (/\bk.?pop\b/.test(n)) return '💿';
+
+  // ── Sports teams & athletes ──
+  if (/\bmessi\b|\bmbappé\b|\bmbape\b|\bcrystal palace\b/.test(n)) return '⚽';
+  if (/\bcristiano\b|\bsoccer\b.*player|\bfootball\b.*player/.test(n)) return '⚽';
+  if (/\bnba\b.*player|\bbasketball\b.*player/.test(n)) return '🏀';
+  if (/\bnfl\b.*player|\bfootball\b.*nfl/.test(n)) return '🏈';
+
+  // ── Tech brands & products ──
+  if (/\biphone\b/.test(n)) return '📱';
+  if (/\bsamsung\b/.test(n)) return '📱';
+  if (/\bmacbook\b|\bimac\b/.test(n)) return '💻';
+  if (/\bplaystation\b|\bps5\b|\bps4\b/.test(n)) return '🎮';
+  if (/\bxbox\b/.test(n)) return '🎮';
+  if (/nintendo switch|\bswitch\b.*game/.test(n)) return '🎮';
+  if (/\bsteam.?deck\b/.test(n)) return '🎮';
+  if (/\bardunio\b|\braspberry pi\b/.test(n)) return '🔌';
+  if (/\btesla\b/.test(n)) return '⚡';
+  if (/\bapple\b.*product|apple.*watch/.test(n)) return '🍎';
+
+  // ── Colour keywords ──
+  if (/\bred\b/.test(n) && /theme|colour|color/.test(n)) return '🔴';
+  if (/\bblue\b/.test(n) && /theme|colour|color/.test(n)) return '🔵';
+  if (/\bgreen\b/.test(n) && /theme|colour|color/.test(n)) return '🟢';
+
+  // ── Now type-specific matching ──────────────────────────────────────────────
+
+  if(type==='room'){
+    // Personal names on rooms (e.g. "Paigee's bathroom")
+    if(/paigee/.test(n)&&/bath/.test(n))return'👧🛁';
+    if(/paigee/.test(n)&&/bed/.test(n))return'👧🛏️';
+    if(/\bnic\b/.test(n)&&/bath/.test(n))return'👦🛁';
+    if(/\bnic\b/.test(n)&&/bed/.test(n))return'👦🛏️';
+    // Physical rooms
+    if(/kitchen|cook|stove/.test(n))return'🍳';
+    if(/bathroom|ensuite|toilet room|wc/.test(n))return'🛁';
+    if(/bedroom|bed room|master|guest room/.test(n))return'🛏️';
+    if(/living|lounge|sitting|family/.test(n))return'🛋️';
+    if(/girls|girl/.test(n))return'🧸';if(/boys|boy/.test(n))return'🎮';
+    if(/kids|child|nursery|play/.test(n))return'🧸';
+    if(/garage|car port/.test(n))return'🚗';
+    if(/laundry|washing|utility/.test(n))return'🫧';
+    if(/office|study|work/.test(n))return'💻';
+    if(/dining|dinner room/.test(n))return'🍽️';
+    if(/hall|corridor|entry|foyer|stair/.test(n))return'🚪';
+    if(/front yard|front garden/.test(n))return'🏡';
+    if(/backyard|back yard|back garden/.test(n))return'🌳';
+    if(/garden|yard|outdoor|outside|patio|deck/.test(n))return'🌿';
+    if(/basement|cellar/.test(n))return'🏚️';
+    if(/attic|loft|storage|spare/.test(n))return'📦';
+    if(/gym|workout|exercise/.test(n))return'🏋️';
+    if(/pool|spa/.test(n))return'🏊';
+    if(/pantry|cupboard/.test(n))return'🗄️';
+    // Finance room names
+    if(/bill calendar|due date/.test(n))return'📅';
+    if(/fixed bill|recurring bill/.test(n))return'📋';
+    if(/subscri|streaming/.test(n))return'📺';
+    if(/debt|owed|credit/.test(n))return'💳';
+    if(/saving|goal/.test(n))return'🏦';
+    if(/income|earning/.test(n))return'💵';
+    if(/variable expense|spending/.test(n))return'🛒';
+    if(/financial.*to.do|money.*action/.test(n))return'📝';
+    if(/housing|property/.test(n))return'🏠';
+    if(/utilit/.test(n))return'⚡';
+    if(/insurance/.test(n))return'🛡️';
+    // Gaming kanban room categories
+    if(/currently playing|in progress|playing now/.test(n))return'🎮';
+    if(/\bbacklog\b/.test(n))return'📋';
+    if(/wish.?list|to.?buy.*game|want.*play/.test(n))return'⭐';
+    if(/completed|finished.*game/.test(n))return'🏆';
+    if(/\bdlc\b|expansion/.test(n))return'📦';
+    if(/paused|on hold/.test(n))return'⏸️';
+    // Pet rooms
+    if(/\bpet\b|supply|supplies/.test(n))return'🐾';
+    if(/\bcat\b|\bkitten\b/.test(n))return'🐱';
+    if(/\bdog\b|\bpuppy\b/.test(n))return'🐶';
+    if(/\bbunny\b|\brabbit\b/.test(n))return'🐰';
+    if(/\bbird\b|\bparrot\b/.test(n))return'🐦';
+    if(/\bfish\b.*tank|aquarium/.test(n))return'🐠';
+    // Car rooms
+    if(/service history/.test(n))return'🔧';
+    if(/upcoming.*service|service.*due/.test(n))return'⏰';
+    if(/rego|registration|insurance/.test(n))return'📋';
+    if(/tyre|tire|safety/.test(n))return'🛞';
+    if(/fuel|cost/.test(n))return'⛽';
+    if(/car.*clean|clean.*car/.test(n))return'✨';
+    // Study rooms
+    if(/current.*course|course/.test(n))return'📖';
+    if(/reading list|reading/.test(n))return'📚';
+    if(/project|practice/.test(n))return'🔨';
+    if(/note.*review|review.*note/.test(n))return'📝';
+    // Travel rooms
+    if(/booking|document/.test(n))return'📋';
+    if(/packing|luggage/.test(n))return'🧳';
+    if(/itinerary|day trip/.test(n))return'🗺️';
+    if(/pre.depart|before.*trip/.test(n))return'🏠';
+    if(/trip budget|travel budget/.test(n))return'💰';
+    // Health rooms
+    if(/appointment/.test(n))return'🏥';
+    if(/medication|supplement/.test(n))return'💊';
+    if(/exercise|workout|fitness/.test(n))return'🏋️';
+    if(/mental health|mindful|wellbeing/.test(n))return'🧘';
+    if(/wellness goal/.test(n))return'🎯';
+    // Meal planning days
+    if(/monday/.test(n))return'1️⃣';if(/tuesday/.test(n))return'2️⃣';
+    if(/wednesday/.test(n))return'3️⃣';if(/thursday/.test(n))return'4️⃣';
+    if(/friday/.test(n))return'5️⃣';if(/saturday/.test(n))return'6️⃣';
+    if(/sunday/.test(n))return'7️⃣';
+    if(/meal prep|batch/.test(n))return'🍱';if(/week/.test(n))return'📅';
+    return'🏠';
+  }
+
+  if(type==='zone'){
+    if(/\bseason\b|\bepisode\b/.test(n))return'📺';
+    if(/bill calendar|due date/.test(n))return'📅';
+    if(/weekly/.test(n))return'📅';if(/fortnightly/.test(n))return'📅';
+    if(/monthly/.test(n))return'📆';if(/quarterly/.test(n))return'📅';
+    if(/\bannual\b/.test(n))return'📅';
+    if(/tv|television|media/.test(n))return'📺';
+    if(/general|misc|other/.test(n))return'🗂️';
+    if(/^bed$|^bed |bedding/.test(n))return'🛏️';
+    if(/clothes|clothing|wardrobe|dresser/.test(n))return'👚';
+    if(/storage/.test(n))return'🗃️';if(/^bins$|^bin$/.test(n))return'🗑️';
+    if(/lawn/.test(n))return'🌱';if(/garden/.test(n))return'🌸';if(/entry/.test(n))return'🚪';
+    if(/floor|carpet|rug/.test(n))return'🧹';
+    if(/counter|bench|surface/.test(n))return'🧽';
+    if(/window/.test(n))return'🪟';if(/shelf|shelv|cabinet/.test(n))return'📚';
+    if(/sink|basin|tap/.test(n))return'💧';if(/toilet/.test(n))return'🚽';
+    if(/shower/.test(n))return'🚿';if(/bath|tub/.test(n))return'🛁';if(/mirror/.test(n))return'🪞';
+    if(/fridge|freezer/.test(n))return'🧊';if(/oven|stove/.test(n))return'🔥';
+    if(/wall/.test(n))return'🧱';if(/light|lamp/.test(n))return'💡';
+    // Finance zones
+    if(/rent|mortgage|housing/.test(n))return'🏠';if(/electricity|power/.test(n))return'⚡';
+    if(/internet|wifi/.test(n))return'🌐';if(/phone|mobile/.test(n))return'📱';
+    if(/insurance/.test(n))return'🛡️';if(/subscri|stream/.test(n))return'📺';
+    if(/credit|card/.test(n))return'💳';if(/loan|finance/.test(n))return'💰';
+    if(/savings|bank/.test(n))return'🏦';if(/i owe|bnpl/.test(n))return'💳';
+    if(/owes me/.test(n))return'🤝';if(/upcoming|instalment/.test(n))return'⏰';
+    if(/emergency fund/.test(n))return'🆘';if(/short term/.test(n))return'🎯';
+    if(/long term/.test(n))return'📈';if(/regular income/.test(n))return'💵';
+    if(/one.off|expected/.test(n))return'💰';if(/food|drink/.test(n))return'🍽️';
+    if(/transport/.test(n))return'🚗';if(/personal/.test(n))return'👤';
+    if(/actions|to.do/.test(n))return'✅';if(/review/.test(n))return'🔍';
+    // Shopping zones
+    if(/fruit/.test(n))return'🍎';if(/veg/.test(n))return'🥦';
+    if(/meat/.test(n))return'🥩';if(/seafood|fish/.test(n))return'🐟';
+    if(/dairy/.test(n))return'🥛';if(/egg/.test(n))return'🥚';
+    if(/bakery|bread/.test(n))return'🍞';if(/dry good|grain/.test(n))return'🌾';
+    if(/canned|sauce/.test(n))return'🥫';if(/snack|sweet/.test(n))return'🍫';
+    if(/drink|bev/.test(n))return'🥤';if(/clean/.test(n))return'🧴';if(/hygiene/.test(n))return'🧼';
+    // Gaming zones
+    if(/main story|story|campaign/.test(n))return'📖';if(/side quest/.test(n))return'📜';
+    if(/collectible/.test(n))return'💎';if(/trophy|achievement/.test(n))return'🏆';
+    if(/up next|queue/.test(n))return'📋';if(/wish list|wishlist/.test(n))return'⭐';
+    if(/story done/.test(n))return'✅';if(/dlc|expansion/.test(n))return'📦';
+    if(/objective/.test(n))return'🎯';if(/boss/.test(n))return'💀';
+    if(/chapter|act\b/.test(n))return'📑';if(/level/.test(n))return'⬆️';
+    // Pet zones
+    if(/daily care|daily/.test(n))return'⭐';if(/health|medical|vet/.test(n))return'❤️';
+    if(/groom/.test(n))return'✂️';if(/food|treat|feed/.test(n))return'🍽️';
+    if(/litter/.test(n))return'🧹';if(/accessori|toy/.test(n))return'🎾';
+    // Study zones
+    if(/module/.test(n))return'📑';if(/reading/.test(n))return'📚';
+    if(/project|practice/.test(n))return'🔨';if(/note/.test(n))return'📝';
+    if(/goal/.test(n))return'🎯';
+    // Health zones
+    if(/appointment/.test(n))return'🏥';if(/medication|supplement/.test(n))return'💊';
+    if(/exercise|workout/.test(n))return'🏋️';if(/mental/.test(n))return'🧘';
+    if(/wellness/.test(n))return'🎯';
+    // Meal zone names
+    if(/breakfast/.test(n))return'🌅';if(/lunch/.test(n))return'🌤️';
+    if(/dinner|supper/.test(n))return'🌙';if(/meal prep|batch/.test(n))return'🍱';
+    return'📍';
+  }
+
+  // ── TASK-level emoji matching ──────────────────────────────────────────────
+  // Season / episode tracking
+  if(/\bseason\b|\bs\d+\b|\bseries \d/.test(n))return'📺';
+  if(/\bepisode\b|\bep \d|\bep\d/.test(n))return'📺';
+  if(/\bfinale\b/.test(n))return'🎬';
+  if(/\bpilot\b.*episode|episode.*\bpilot\b/.test(n))return'🎬';
+  if(/\bcast\b|\bactor\b|\bactress\b/.test(n))return'🎭';
+  if(/\brating\b.*stars?|stars?.*\brating\b/.test(n))return'⭐';
+  if(/\breview\b/.test(n))return'📝';
+  if(/\brecommend\b/.test(n))return'👍';
+  if(/\bwatch.*again|rewatch/.test(n))return'🔄';
+  if(/\bnext.*watch|watch.*next/.test(n))return'▶️';
+  // Gaming task keywords
+  if(/platinum/.test(n))return'🏅';if(/100%/.test(n))return'💯';
+  if(/final boss|end boss/.test(n))return'💀';if(/\bboss\b/.test(n))return'⚔️';
+  if(/main story|main campaign/.test(n))return'📖';if(/side quest/.test(n))return'📜';
+  if(/collectible|collectable/.test(n))return'💎';if(/trophy|achievement/.test(n))return'🏆';
+  if(/speedrun/.test(n))return'⏱️';if(/secret area|hidden/.test(n))return'🗝️';
+  if(/upgrade|level up/.test(n))return'⬆️';if(/unlock/.test(n))return'🔓';
+  if(/chapter|act \d/.test(n))return'📑';if(/ending|credits/.test(n))return'🎬';
+  if(/bronze/.test(n))return'🥉';if(/silver/.test(n))return'🥈';if(/gold trophy/.test(n))return'🥇';
+  if(/objective/.test(n))return'🎯';if(/quest/.test(n))return'📜';
+  if(/skill tree|skill point/.test(n))return'🌳';if(/perk|ability/.test(n))return'✨';
+  if(/weapon|sword|gun|knife|axe|bow/.test(n))return'⚔️';
+  if(/armour|armor|shield/.test(n))return'🛡️';
+  if(/potion|health pack|medkit/.test(n))return'🧪';
+  if(/map|open world|explore/.test(n))return'🗺️';
+  if(/dungeon|raid|instance/.test(n))return'🏰';
+  if(/multiplayer|co.?op/.test(n))return'👥';
+  if(/dlc|expansion/.test(n))return'📦';
+  if(/new game\+|ng\+/.test(n))return'🔄';
+  if(/challenge mode|hard mode/.test(n))return'💪';
+  // Cleaning/household
+  if(/around toilet/.test(n))return'🧻';if(/coffee table/.test(n))return'☕';
+  if(/bed side|bedside|side table/.test(n))return'🕯️';if(/under bed/.test(n))return'🔦';
+  if(/make bed/.test(n))return'🛌';if(/wash sheet|change sheet/.test(n))return'🛌';
+  if(/dirty clothes|clothes.*basket/.test(n))return'👕';if(/fold.*clothes|put away clothes/.test(n))return'👔';
+  if(/shower glass/.test(n))return'🫧';if(/shower floor/.test(n))return'🚿';
+  if(/bathroom bench|bench wipe/.test(n))return'🧽';if(/bathroom sink/.test(n))return'🚰';
+  if(/rangehood|range hood/.test(n))return'💨';if(/splashback/.test(n))return'🧽';
+  if(/door seal|expiry date/.test(n))return'🧊';if(/skirting board|baseboard/.test(n))return'🧱';
+  if(/lint trap/.test(n))return'🫧';if(/washing machine/.test(n))return'🫧';
+  if(/organise shelf|organise shelve/.test(n))return'📚';
+  if(/organise desk|organize desk/.test(n))return'🖥️';
+  if(/organise toy|organize toy/.test(n))return'🧸';
+  if(/organise entry|organize entry/.test(n))return'🚪';
+  if(/organise shoe|sort shoe/.test(n))return'👟';
+  if(/clear clutter/.test(n))return'🗃️';if(/take out bin/.test(n))return'🗑️';
+  if(/clean bin|bin area/.test(n))return'🧹';
+  if(/throw.*away|throw.*out/.test(n))return'🗑️';
+  if(/clear rubbish/.test(n))return'🗑️';if(/clear/.test(n))return'🧹';
+  if(/mow|mowing/.test(n))return'🌱';if(/edge lawn|edging/.test(n))return'✂️';
+  if(/rake/.test(n))return'🍂';if(/weed/.test(n))return'🌾';
+  if(/water plant|water the|watering/.test(n))return'💧';
+  if(/sweep path|sweep drive/.test(n))return'🧹';
+  // Finance tasks
+  if(/bill calendar|due date|payment date/.test(n))return'📅';
+  if(/start of month|end of month|mid month/.test(n))return'📆';
+  if(/emergency fund/.test(n))return'🆘';if(/house deposit|home deposit/.test(n))return'🏠';
+  if(/holiday fund|travel fund/.test(n))return'✈️';if(/christmas|xmas/.test(n))return'🎄';
+  if(/investment account|investing/.test(n))return'📈';if(/super|retirement/.test(n))return'👴';
+  if(/tax return|lodge tax/.test(n))return'🧾';if(/centrelink|benefit/.test(n))return'🏛️';
+  if(/salary|wages|pay cheque/.test(n))return'💵';if(/side hustle|freelance/.test(n))return'💻';
+  if(/reimbursement/.test(n))return'🤝';if(/selling item/.test(n))return'🏷️';
+  if(/afterpay|zip pay|humm|bnpl/.test(n))return'💳';if(/car loan/.test(n))return'🚗';
+  if(/personal loan/.test(n))return'💰';if(/owes me|owe me/.test(n))return'🤝';
+  if(/credit score/.test(n))return'📊';if(/direct debit|autopay/.test(n))return'🔄';
+  if(/cancel.*sub|unused sub/.test(n))return'❌';
+  if(/high.interest savings|savings account/.test(n))return'🏦';
+  if(/\bfuel\b|petrol/.test(n))return'⛽';if(/car rego|registration/.test(n))return'🚗';
+  if(/car service|mechanic/.test(n))return'🔧';if(/\btoll\b/.test(n))return'🛣️';if(/\bparking\b/.test(n))return'🅿️';
+  if(/public transport|bus pass|train/.test(n))return'🚌';
+  if(/takeaway|takeout/.test(n))return'🥡';if(/eating out|restaurant/.test(n))return'🍽️';
+  if(/haircut|barber/.test(n))return'✂️';if(/income protection/.test(n))return'🛡️';
+  if(/rent|mortgage|lease/.test(n))return'🏠';if(/council rate/.test(n))return'🏛️';
+  if(/electricity|power bill/.test(n))return'⚡';if(/gas bill/.test(n))return'🔥';
+  if(/water bill/.test(n))return'💧';if(/internet|wifi|nbn/.test(n))return'🌐';
+  if(/mobile.*plan|phone.*bill/.test(n))return'📱';
+  if(/car insurance/.test(n))return'🚗';if(/health insurance/.test(n))return'🏥';
+  if(/netflix/.test(n))return'🎬';if(/spotify|apple music/.test(n))return'🎵';
+  if(/disney|stan|binge|prime video/.test(n))return'📺';
+  if(/icloud|google one/.test(n))return'☁️';if(/amazon prime/.test(n))return'📦';
+  if(/gym.*member/.test(n))return'🏋️';if(/credit card|card payment/.test(n))return'💳';
+  if(/savings|transfer/.test(n))return'🏦';if(/insurance/.test(n))return'🛡️';
+  // Car tasks
+  if(/next service due|service.*due/.test(n))return'🔧';
+  if(/tyre rotation|tire rotation/.test(n))return'🛞';
+  if(/brake check/.test(n))return'🛑';if(/air filter|cabin filter/.test(n))return'💨';
+  if(/oil change/.test(n))return'🛢️';if(/spark plug/.test(n))return'⚡';
+  if(/wiper blade/.test(n))return'🌧️';if(/spare tyre|spare tire/.test(n))return'🛞';
+  if(/tyre.*pressure|tire.*pressure/.test(n))return'🛞';
+  if(/battery check|car battery/.test(n))return'🔋';
+  if(/rego expiry|rego due|registration/.test(n))return'🚗';
+  // Study tasks
+  if(/module \d|module complete/.test(n))return'📑';
+  if(/final project|submit.*assign|assignment due/.test(n))return'📋';
+  if(/reading list|book \d|article \d/.test(n))return'📚';
+  if(/build project|build.*app|complete.*exercise/.test(n))return'🔨';
+  if(/get certificate|complete course/.test(n))return'🏆';
+  if(/apply.*skill|start.*course/.test(n))return'🎯';
+  // Travel tasks
+  if(/book flight|flights/.test(n))return'✈️';if(/book.*accommodation|hotel|airbnb/.test(n))return'🏨';
+  if(/travel insurance/.test(n))return'🛡️';if(/passport/.test(n))return'🛂';
+  if(/visa/.test(n))return'📄';if(/travel adapter/.test(n))return'🔌';
+  if(/offline map|download.*map/.test(n))return'🗺️';if(/notify bank/.test(n))return'🏦';
+  if(/house sitter/.test(n))return'🏠';if(/hold mail/.test(n))return'📬';
+  if(/airport transfer/.test(n))return'🚗';
+  if(/day \d|things to do/.test(n))return'🗺️';if(/restaurant booking/.test(n))return'🍽️';
+  if(/packing|pack /.test(n))return'🧳';
+  // Health tasks
+  if(/gp checkup|gp appoint/.test(n))return'🏥';if(/dentist/.test(n))return'🦷';
+  if(/optometrist|eye test/.test(n))return'👁️';if(/specialist/.test(n))return'🏥';
+  if(/blood test/.test(n))return'🩸';if(/flu vaccine|vaccination/.test(n))return'💉';
+  if(/skin check|skin.*cancer/.test(n))return'🔬';
+  if(/prescription refill/.test(n))return'💊';if(/vitamin d/.test(n))return'☀️';
+  if(/fish oil|omega/.test(n))return'🐟';if(/magnesium/.test(n))return'💊';
+  if(/therapy|counselling/.test(n))return'🧠';if(/meditation/.test(n))return'🧘';
+  if(/journal/.test(n))return'📓';if(/reduce screen/.test(n))return'📵';
+  if(/drink.*water|2l water|water daily/.test(n))return'💧';
+  if(/8 hour|good sleep|sleep/.test(n))return'😴';
+  if(/10k step|steps daily/.test(n))return'🚶';if(/reduce caffeine/.test(n))return'☕';
+  // Pet tasks
+  if(/morning feed|evening feed/.test(n))return'🍽️';if(/fresh water|refill water/.test(n))return'💧';
+  if(/litter box|clean litter|scoop litter/.test(n))return'🧹';
+  if(/playtime|play time/.test(n))return'🎾';if(/flea treatment/.test(n))return'🦟';
+  if(/worming|worm tablet/.test(n))return'💊';if(/vet checkup|vet visit/.test(n))return'🏥';
+  if(/vaccination|vaccine/.test(n))return'💉';if(/weight check/.test(n))return'⚖️';
+  if(/brush coat|groom/.test(n))return'✂️';if(/trim nail|clip nail/.test(n))return'✂️';
+  if(/ear check|ear clean/.test(n))return'👂';if(/eye wipe|eye drop/.test(n))return'👁️';
+  if(/dry food|kibble/.test(n))return'🫙';if(/wet food|cat food|dog food/.test(n))return'🥫';
+  if(/\btreat\b/.test(n))return'🦴';if(/water filter/.test(n))return'💧';
+  if(/collar check/.test(n))return'🔗';if(/litter stock/.test(n))return'📦';
+  if(/bedding wash/.test(n))return'🧺';if(/\bfeed\b/.test(n))return'🍽️';
+  if(/\bvet\b/.test(n))return'🏥';if(/\bcat\b|\bkitten\b/.test(n))return'🐱';
+  if(/\bdog\b|\bpuppy\b/.test(n))return'🐶';if(/\bbunny\b|\brabbit\b/.test(n))return'🐰';
+  // Shopping items
+  if(/\bapple/.test(n))return'🍎';if(/banana/.test(n))return'🍌';
+  if(/strawberr/.test(n))return'🍓';if(/blueberr/.test(n))return'🫐';
+  if(/grape/.test(n))return'🍇';if(/lemon/.test(n))return'🍋';if(/orange/.test(n))return'🍊';
+  if(/mango/.test(n))return'🥭';if(/watermelon/.test(n))return'🍉';
+  if(/pineapple/.test(n))return'🍍';if(/avocado/.test(n))return'🥑';
+  if(/tomato/.test(n))return'🍅';if(/carrot/.test(n))return'🥕';
+  if(/broccoli/.test(n))return'🥦';if(/lettuce|spinach|kale/.test(n))return'🥬';
+  if(/potato/.test(n))return'🥔';if(/sweet potato/.test(n))return'🍠';
+  if(/onion/.test(n))return'🧅';if(/garlic/.test(n))return'🧄';
+  if(/capsicum|bell pepper/.test(n))return'🫑';if(/mushroom/.test(n))return'🍄';
+  if(/corn/.test(n))return'🌽';if(/cucumber/.test(n))return'🥒';
+  if(/eggplant|zucchini/.test(n))return'🍆';
+  if(/chicken/.test(n))return'🍗';if(/beef|steak|mince/.test(n))return'🥩';
+  if(/pork/.test(n))return'🥩';if(/lamb/.test(n))return'🥩';
+  if(/bacon|ham/.test(n))return'🥓';if(/sausage|snag/.test(n))return'🌭';
+  if(/salmon/.test(n))return'🐟';if(/tuna/.test(n))return'🐟';
+  if(/prawn|shrimp/.test(n))return'🦐';
+  if(/\bmilk\b/.test(n))return'🥛';if(/cheese/.test(n))return'🧀';
+  if(/butter/.test(n))return'🧈';if(/yogh?urt/.test(n))return'🍦';
+  if(/\begg/.test(n))return'🥚';if(/bread/.test(n))return'🍞';
+  if(/croissant/.test(n))return'🥐';if(/bagel/.test(n))return'🥯';
+  if(/\bpasta\b|spaghetti|penne/.test(n))return'🍝';if(/\brice\b/.test(n))return'🍚';
+  if(/flour/.test(n))return'🌾';if(/\bsugar\b/.test(n))return'🍬';
+  if(/\bsalt\b/.test(n))return'🧂';if(/olive oil|vegetable oil/.test(n))return'🫙';
+  if(/honey/.test(n))return'🍯';if(/jam|vegemite|peanut butter/.test(n))return'🫙';
+  if(/chocolate/.test(n))return'🍫';if(/biscuit|cookie/.test(n))return'🍪';
+  if(/nut|almond|cashew/.test(n))return'🥜';if(/bean|lentil|chickpea/.test(n))return'🫘';
+  if(/cereal|oat/.test(n))return'🥣';if(/coconut milk/.test(n))return'🥥';
+  if(/\bcoffee\b/.test(n))return'☕';if(/\btea\b/.test(n))return'🍵';
+  if(/juice/.test(n))return'🧃';if(/soft drink|soda|cola/.test(n))return'🥤';
+  if(/\bbeer\b/.test(n))return'🍺';if(/\bwine\b/.test(n))return'🍷';
+  if(/dishwash|washing.*up liquid/.test(n))return'🍽️';
+  if(/laundry detergent|washing powder/.test(n))return'🧺';
+  if(/bleach/.test(n))return'🫧';if(/toilet paper|loo paper/.test(n))return'🧻';
+  if(/paper towel/.test(n))return'🧻';if(/bin bag|rubbish bag/.test(n))return'🗑️';
+  if(/\bsponge\b/.test(n))return'🧽';if(/shampoo/.test(n))return'🧴';
+  if(/conditioner/.test(n))return'🧴';if(/body wash|shower gel/.test(n))return'🧼';
+  if(/toothpaste|toothbrush/.test(n))return'🦷';if(/deodorant/.test(n))return'💨';
+  if(/razor/.test(n))return'🪒';if(/sunscreen/.test(n))return'☀️';
+  if(/paracetamol|ibuprofen|medicine|tablet|pill|vitamin/.test(n))return'💊';
+  if(/bandage|plaster/.test(n))return'🩹';if(/makeup|lipstick/.test(n))return'💄';
+  // Meals
   if(/breakfast/.test(n))return'🌅';if(/lunch/.test(n))return'🌤️';
-  if(/dinner|supper/.test(n))return'🌙';if(/meal prep|batch/.test(n))return'🍱';
-  return'📍';
+  if(/dinner|supper/.test(n))return'🌙';if(/meal prep|batch cook/.test(n))return'🍱';
+  if(/pizza/.test(n))return'🍕';if(/burger|hamburger/.test(n))return'🍔';
+  if(/\bsalad\b/.test(n))return'🥗';if(/soup/.test(n))return'🍲';
+  if(/sandwich|wrap/.test(n))return'🥪';if(/taco|burrito/.test(n))return'🌮';
+  if(/curry/.test(n))return'🍛';if(/sushi|ramen/.test(n))return'🍣';
+  if(/noodle|pad thai|pho/.test(n))return'🍜';
+  if(/stir fry|fried rice/.test(n))return'🥘';if(/roast/.test(n))return'🍖';
+  if(/pancake|waffle/.test(n))return'🥞';if(/omelette|scrambled/.test(n))return'🍳';
+  if(/toast/.test(n))return'🍞';if(/dessert|cake/.test(n))return'🍰';
+  if(/ice cream/.test(n))return'🍦';
+  // General fallbacks
+  if(/vacuum|vaccum|hoover/.test(n))return'🌀';if(/\bmop\b/.test(n))return'🪣';
+  if(/sweep|broom/.test(n))return'🧹';if(/\bdust\b/.test(n))return'💨';
+  if(/\bwipe\b/.test(n))return'🧽';if(/scrub/.test(n))return'🪥';
+  if(/wash|rinse/.test(n))return'🧼';if(/dishes|dish|plate/.test(n))return'🍽️';
+  if(/towel|linen/.test(n))return'🧺';if(/toilet/.test(n))return'🚽';
+  if(/bin|trash|rubbish|garbage/.test(n))return'🗑️';
+  if(/window/.test(n))return'🪟';if(/mirror/.test(n))return'🪞';
+  if(/fridge|refrigerator/.test(n))return'🧊';if(/oven|stove/.test(n))return'🔥';
+  if(/organis|organiz|tidy|sort/.test(n))return'📦';
+  if(/\bbed\b/.test(n))return'🛏️';if(/shower/.test(n))return'🚿';
+  if(/\bbath\b/.test(n))return'🛁';if(/sink|tap|basin/.test(n))return'💧';
+  if(/floor|carpet/.test(n))return'🟫';if(/plant/.test(n))return'🌿';
+  if(/garden|outdoor/.test(n))return'🌿';
+  return '✔️';
 }
-// TASKS
-if(/around toilet/.test(n))return'🧻';if(/coffee table/.test(n))return'☕';
-if(/bed side|bedside|side table/.test(n))return'🕯️';if(/under bed/.test(n))return'🔦';
-if(/make bed/.test(n))return'🛌';if(/wash sheet|change sheet/.test(n))return'🛌';
-if(/dirty clothes|clothes.*basket/.test(n))return'👕';if(/fold.*clothes|put away clothes/.test(n))return'👔';
-if(/shower glass/.test(n))return'🫧';if(/shower floor/.test(n))return'🚿';
-if(/bathroom bench|bench wipe/.test(n))return'🧽';if(/bathroom sink/.test(n))return'🚰';
-if(/rangehood|range hood/.test(n))return'💨';if(/splashback/.test(n))return'🧽';
-if(/door seal|expiry date/.test(n))return'🧊';if(/skirting board|baseboard/.test(n))return'🧱';
-if(/lint trap/.test(n))return'🫧';if(/washing machine/.test(n))return'🫧';
-if(/organise shelf|organise shelve/.test(n))return'📚';
-if(/organise desk|organize desk/.test(n))return'🖥️';
-if(/organise drum|organize drum/.test(n))return'🥁';
-if(/organise toy|organize toy/.test(n))return'🧸';
-if(/organise entry|organize entry/.test(n))return'🚪';
-if(/organise shoe|sort shoe/.test(n))return'👟';
-if(/clear clutter/.test(n))return'🗃️';if(/take out bin/.test(n))return'🗑️';
-if(/clean bin|bin area/.test(n))return'🧹';
-if(/throw.*away|throw.*out|throw.*trash/.test(n))return'🗑️';
-if(/clear rubbish/.test(n))return'🗑️';if(/clear/.test(n))return'🧹';
-if(/wall/.test(n))return'🧱';if(/glass/.test(n))return'🫙';
-if(/mow|mowing/.test(n))return'🌱';if(/edge lawn|edging/.test(n))return'✂️';
-if(/rake/.test(n))return'🍂';if(/weed/.test(n))return'🌾';
-if(/water plant|water the|watering/.test(n))return'💧';
-if(/sweep path|sweep drive/.test(n))return'🧹';
-// Finance tasks
-if(/bill calendar|due date|payment date/.test(n))return'📅';
-if(/start of month|end of month|mid month/.test(n))return'📆';
-if(/fortnightly/.test(n))return'📅';if(/quarterly/.test(n))return'📅';if(/\bannual\b/.test(n))return'📅';
-if(/emergency fund/.test(n))return'🆘';if(/house deposit|home deposit/.test(n))return'🏠';
-if(/holiday fund|travel fund/.test(n))return'✈️';if(/christmas|xmas/.test(n))return'🎄';
-if(/investment account|investing/.test(n))return'📈';if(/super|retirement/.test(n))return'👴';
-if(/tax return|lodge tax/.test(n))return'🧾';if(/centrelink|benefit/.test(n))return'🏛️';
-if(/salary|wages|pay cheque/.test(n))return'💵';if(/side hustle|freelance/.test(n))return'💻';
-if(/reimbursement/.test(n))return'🤝';if(/selling item/.test(n))return'🏷️';
-if(/afterpay|zip pay|humm|bnpl/.test(n))return'💳';if(/car loan/.test(n))return'🚗';
-if(/personal loan/.test(n))return'💰';if(/owes me|owe me/.test(n))return'🤝';
-if(/credit score/.test(n))return'📊';if(/direct debit|autopay/.test(n))return'🔄';
-if(/cancel.*sub|unused sub/.test(n))return'❌';
-if(/compare.*plan|better rate/.test(n))return'🔍';
-if(/high.interest savings|savings account/.test(n))return'🏦';
-if(/fuel|petrol/.test(n))return'⛽';if(/car rego|registration/.test(n))return'🚗';
-if(/car service|mechanic/.test(n))return'🔧';if(/\btoll\b/.test(n))return'🛣️';if(/\bparking\b/.test(n))return'🅿️';
-if(/public transport|bus pass|train/.test(n))return'🚌';
-if(/takeaway|takeout/.test(n))return'🥡';if(/eating out|restaurant/.test(n))return'🍽️';
-if(/haircut|barber/.test(n))return'✂️';if(/income protection/.test(n))return'🛡️';
-if(/body corporate|strata/.test(n))return'🏢';
-if(/rent|mortgage|lease/.test(n))return'🏠';if(/council rate/.test(n))return'🏛️';
-if(/electricity|power bill/.test(n))return'⚡';if(/gas bill/.test(n))return'🔥';
-if(/water bill/.test(n))return'💧';if(/internet|wifi|nbn/.test(n))return'🌐';
-if(/mobile.*plan|phone.*bill/.test(n))return'📱';
-if(/car insurance/.test(n))return'🚗';if(/health insurance/.test(n))return'🏥';
-if(/netflix/.test(n))return'🎬';if(/spotify|apple music/.test(n))return'🎵';
-if(/disney|stan|binge|prime video/.test(n))return'📺';
-if(/icloud|google one/.test(n))return'☁️';if(/amazon prime/.test(n))return'📦';
-if(/gym.*member/.test(n))return'🏋️';if(/credit card|card payment/.test(n))return'💳';
-if(/savings|transfer/.test(n))return'🏦';if(/insurance/.test(n))return'🛡️';
-// Car maintenance tasks
-if(/next service due|service.*due/.test(n))return'🔧';
-if(/tyre rotation|tire rotation/.test(n))return'🛞';
-if(/brake check/.test(n))return'🛑';if(/air filter|cabin filter/.test(n))return'💨';
-if(/oil change/.test(n))return'🛢️';if(/spark plug/.test(n))return'⚡';
-if(/wiper blade/.test(n))return'🌧️';if(/spare tyre|spare tire/.test(n))return'🛞';
-if(/tyre.*pressure|tire.*pressure/.test(n))return'🛞';
-if(/tyre.*tread|tire.*tread/.test(n))return'🛞';
-if(/battery check|car battery/.test(n))return'🔋';
-if(/rego expiry|rego due|registration/.test(n))return'🚗';
-if(/green slip|ctp/.test(n))return'📋';if(/roadside assist/.test(n))return'🆘';
-if(/toll account/.test(n))return'🛣️';if(/parking fine/.test(n))return'🅿️';
-if(/exterior wash|car wash/.test(n))return'🫧';
-if(/interior vacuum|car vacuum/.test(n))return'🌀';
-if(/wipe dashboard/.test(n))return'🧽';if(/clean windows.*car|car.*windows/.test(n))return'🪟';
-if(/wheel clean/.test(n))return'🛞';
-// Study tasks
-if(/module \d|module complete/.test(n))return'📑';
-if(/final project|submit.*assign|assignment due/.test(n))return'📋';
-if(/reading list|book \d|article \d/.test(n))return'📚';
-if(/build project|build.*app|complete.*exercise/.test(n))return'🔨';
-if(/revision session|review.*notes/.test(n))return'📝';
-if(/get certificate|complete course/.test(n))return'🏆';
-if(/apply.*skill|start.*course/.test(n))return'🎯';
-// Travel tasks
-if(/book flight|flights/.test(n))return'✈️';if(/book.*accommodation|hotel|airbnb/.test(n))return'🏨';
-if(/travel insurance/.test(n))return'🛡️';if(/passport/.test(n))return'🛂';
-if(/visa/.test(n))return'📄';if(/travel adapter/.test(n))return'🔌';
-if(/offline map|download.*map/.test(n))return'🗺️';if(/notify bank/.test(n))return'🏦';
-if(/house sitter/.test(n))return'🏠';if(/hold mail/.test(n))return'📬';
-if(/airport transfer/.test(n))return'🚗';if(/pet care.*trip|trip.*pet/.test(n))return'🐾';
-if(/day \d|things to do/.test(n))return'🗺️';if(/restaurant booking/.test(n))return'🍽️';
-if(/packing|pack /.test(n))return'🧳';
-if(/flight cost|accommodation cost|travel budget|activities budget/.test(n))return'💰';
-// Health tasks
-if(/gp checkup|gp appoint/.test(n))return'🏥';if(/dentist/.test(n))return'🦷';
-if(/optometrist|eye test/.test(n))return'👁️';if(/specialist/.test(n))return'🏥';
-if(/blood test/.test(n))return'🩸';if(/flu vaccine|vaccination/.test(n))return'💉';
-if(/skin check|skin.*cancer/.test(n))return'🔬';
-if(/prescription refill/.test(n))return'💊';if(/vitamin d/.test(n))return'☀️';
-if(/fish oil|omega/.test(n))return'🐟';if(/magnesium/.test(n))return'💊';
-if(/therapy|counselling/.test(n))return'🧠';if(/meditation/.test(n))return'🧘';
-if(/journal/.test(n))return'📓';if(/reduce screen/.test(n))return'📵';
-if(/social connection|catch up/.test(n))return'👥';
-if(/drink.*water|2l water|water daily/.test(n))return'💧';
-if(/8 hour|good sleep|sleep/.test(n))return'😴';
-if(/10k step|steps daily/.test(n))return'🚶';if(/reduce caffeine/.test(n))return'☕';
-if(/meal prep.*health|healthy meal/.test(n))return'🥗';
-// Gaming tasks
-if(/platinum/.test(n))return'🏅';if(/100%/.test(n))return'💯';
-if(/final boss|end boss/.test(n))return'💀';if(/\bboss\b/.test(n))return'⚔️';
-if(/main story|main campaign/.test(n))return'📖';if(/side quest/.test(n))return'📜';
-if(/collectible|collectable/.test(n))return'💎';if(/trophy|achievement/.test(n))return'🏆';
-if(/speedrun/.test(n))return'⏱️';if(/secret area|hidden/.test(n))return'🗝️';
-if(/upgrade|level up/.test(n))return'⬆️';if(/unlock/.test(n))return'🔓';
-if(/chapter|act \d/.test(n))return'📑';if(/ending|credits/.test(n))return'🎬';
-if(/bronze/.test(n))return'🥉';if(/silver/.test(n))return'🥈';if(/gold trophy/.test(n))return'🥇';
-if(/spider.?man|spiderman/.test(n))return'🕷️';if(/call of duty|cod|warzone/.test(n))return'🔫';
-if(/fortnite/.test(n))return'🏗️';if(/minecraft/.test(n))return'⛏️';
-if(/zelda/.test(n))return'🗡️';if(/pokemon/.test(n))return'⚡';
-if(/mario/.test(n))return'🍄';if(/god of war|elden ring/.test(n))return'⚔️';
-if(/clone hero|guitar hero/.test(n))return'🎸';
-if(/wishlist|wish list/.test(n))return'⭐';if(/on sale watch|price drop/.test(n))return'🏷️';
-if(/reinstall/.test(n))return'💿';
-// Pet tasks
-if(/morning feed|evening feed/.test(n))return'🍽️';if(/fresh water|refill water/.test(n))return'💧';
-if(/litter box|clean litter|scoop litter/.test(n))return'🧹';
-if(/playtime|play time/.test(n))return'🎾';if(/flea treatment/.test(n))return'🦟';
-if(/worming|worm tablet/.test(n))return'💊';if(/vet checkup|vet visit/.test(n))return'🏥';
-if(/vaccination|vaccine/.test(n))return'💉';if(/weight check/.test(n))return'⚖️';
-if(/brush coat|groom/.test(n))return'✂️';if(/trim nail|clip nail/.test(n))return'✂️';
-if(/ear check|ear clean/.test(n))return'👂';if(/eye wipe|eye drop/.test(n))return'👁️';
-if(/dry food|kibble/.test(n))return'🫙';if(/wet food|cat food|dog food/.test(n))return'🥫';
-if(/\btreat\b/.test(n))return'🦴';if(/water filter/.test(n))return'💧';
-if(/collar check/.test(n))return'🔗';if(/litter stock/.test(n))return'📦';
-if(/bedding wash/.test(n))return'🧺';if(/\bfeed\b/.test(n))return'🍽️';
-if(/\bvet\b/.test(n))return'🏥';if(/\bcat\b|\bkitten\b/.test(n))return'🐱';
-if(/\bdog\b|\bpuppy\b/.test(n))return'🐶';if(/\bbunny\b|\brabbit\b/.test(n))return'🐰';
-// Shopping — produce
-if(/\bapple/.test(n))return'🍎';if(/banana/.test(n))return'🍌';
-if(/strawberr/.test(n))return'🍓';if(/blueberr/.test(n))return'🫐';
-if(/grape/.test(n))return'🍇';if(/lemon/.test(n))return'🍋';if(/orange/.test(n))return'🍊';
-if(/mango/.test(n))return'🥭';if(/watermelon/.test(n))return'🍉';
-if(/pineapple/.test(n))return'🍍';if(/avocado/.test(n))return'🥑';
-if(/tomato/.test(n))return'🍅';if(/carrot/.test(n))return'🥕';
-if(/broccoli/.test(n))return'🥦';if(/lettuce|spinach|kale/.test(n))return'🥬';
-if(/potato/.test(n))return'🥔';if(/sweet potato/.test(n))return'🍠';
-if(/onion/.test(n))return'🧅';if(/garlic/.test(n))return'🧄';
-if(/capsicum|bell pepper/.test(n))return'🫑';if(/mushroom/.test(n))return'🍄';
-if(/corn/.test(n))return'🌽';if(/cucumber/.test(n))return'🥒';
-if(/eggplant|zucchini/.test(n))return'🍆';
-// Shopping — meat/dairy/bakery
-if(/chicken/.test(n))return'🍗';if(/beef|steak|mince/.test(n))return'🥩';
-if(/pork/.test(n))return'🥩';if(/lamb/.test(n))return'🥩';
-if(/bacon|ham/.test(n))return'🥓';if(/sausage|snag/.test(n))return'🌭';
-if(/salmon/.test(n))return'🐟';if(/tuna/.test(n))return'🐟';
-if(/prawn|shrimp/.test(n))return'🦐';
-if(/\bmilk\b/.test(n))return'🥛';if(/cheese/.test(n))return'🧀';
-if(/butter/.test(n))return'🧈';if(/yogh?urt/.test(n))return'🍦';
-if(/\begg/.test(n))return'🥚';if(/bread/.test(n))return'🍞';
-if(/croissant/.test(n))return'🥐';if(/bagel/.test(n))return'🥯';
-// Shopping — pantry
-if(/\bpasta\b|spaghetti|penne/.test(n))return'🍝';if(/\brice\b/.test(n))return'🍚';
-if(/flour/.test(n))return'🌾';if(/\bsugar\b/.test(n))return'🍬';
-if(/\bsalt\b/.test(n))return'🧂';if(/olive oil|vegetable oil/.test(n))return'🫙';
-if(/honey/.test(n))return'🍯';if(/jam|vegemite|peanut butter/.test(n))return'🫙';
-if(/chocolate/.test(n))return'🍫';if(/biscuit|cookie/.test(n))return'🍪';
-if(/nut|almond|cashew/.test(n))return'🥜';if(/bean|lentil|chickpea/.test(n))return'🫘';
-if(/cereal|oat/.test(n))return'🥣';if(/coconut milk/.test(n))return'🥥';
-if(/\bcoffee\b/.test(n))return'☕';if(/\btea\b/.test(n))return'🍵';
-if(/juice/.test(n))return'🧃';if(/soft drink|soda|cola/.test(n))return'🥤';
-if(/\bbeer\b/.test(n))return'🍺';if(/\bwine\b/.test(n))return'🍷';
-// Cleaning supplies / personal care
-if(/dishwash|washing.*up liquid/.test(n))return'🍽️';
-if(/laundry detergent|washing powder/.test(n))return'🧺';
-if(/bleach/.test(n))return'🫧';if(/toilet paper|loo paper/.test(n))return'🧻';
-if(/paper towel/.test(n))return'🧻';if(/bin bag|rubbish bag/.test(n))return'🗑️';
-if(/\bsponge\b/.test(n))return'🧽';if(/shampoo/.test(n))return'🧴';
-if(/conditioner/.test(n))return'🧴';if(/body wash|shower gel/.test(n))return'🧼';
-if(/toothpaste|toothbrush/.test(n))return'🦷';if(/deodorant/.test(n))return'💨';
-if(/razor/.test(n))return'🪒';if(/sunscreen/.test(n))return'☀️';
-if(/paracetamol|ibuprofen|medicine|tablet|pill|vitamin/.test(n))return'💊';
-if(/bandage|plaster/.test(n))return'🩹';if(/makeup|lipstick/.test(n))return'💄';
-// Meals
-if(/breakfast/.test(n))return'🌅';if(/lunch/.test(n))return'🌤️';
-if(/dinner|supper/.test(n))return'🌙';if(/meal prep|batch cook/.test(n))return'🍱';
-if(/pizza/.test(n))return'🍕';if(/burger|hamburger/.test(n))return'🍔';
-if(/\bsalad\b/.test(n))return'🥗';if(/soup/.test(n))return'🍲';
-if(/sandwich|wrap/.test(n))return'🥪';if(/taco|burrito/.test(n))return'🌮';
-if(/curry/.test(n))return'🍛';if(/sushi|ramen/.test(n))return'🍣';
-if(/noodle|pad thai|pho/.test(n))return'🍜';
-if(/stir fry|fried rice/.test(n))return'🥘';if(/roast/.test(n))return'🍖';
-if(/pancake|waffle/.test(n))return'🥞';if(/omelette|scrambled/.test(n))return'🍳';
-if(/toast/.test(n))return'🍞';if(/dessert|cake/.test(n))return'🍰';
-if(/ice cream/.test(n))return'🍦';
-// General fallbacks
-if(/vacuum|vaccum|hoover/.test(n))return'🌀';if(/\bmop\b/.test(n))return'🪣';
-if(/sweep|broom/.test(n))return'🧹';if(/\bdust\b/.test(n))return'💨';
-if(/\bwipe\b/.test(n))return'🧽';if(/scrub/.test(n))return'🪥';
-if(/wash|rinse/.test(n))return'🧼';if(/dishes|dish|plate/.test(n))return'🍽️';
-if(/towel|linen/.test(n))return'🧺';if(/toilet/.test(n))return'🚽';
-if(/bin|trash|rubbish|garbage/.test(n))return'🗑️';
-if(/window/.test(n))return'🪟';if(/mirror/.test(n))return'🪞';
-if(/fridge|refrigerator/.test(n))return'🧊';if(/oven|stove/.test(n))return'🔥';
-if(/organis|organiz|tidy|sort/.test(n))return'📦';
-if(/\bbed\b/.test(n))return'🛏️';if(/shower/.test(n))return'🚿';
-if(/\bbath\b/.test(n))return'🛁';if(/sink|tap|basin/.test(n))return'💧';
-if(/floor|carpet/.test(n))return'🟫';if(/plant/.test(n))return'🌿';
-if(/garden|outdoor/.test(n))return'🌿';
-return'✔️';
-}
+</script>
 </script>
 
 <script>
