@@ -203,7 +203,7 @@ body.readonly .add-row{display:none;}
 .mv-status-bar{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none;margin-bottom:4px;}
 .mv-status-bar::-webkit-scrollbar{display:none;}
 .mv-stab{flex-shrink:0;padding:6px 14px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);font-family:var(--mono);font-size:12px;color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:6px;-webkit-tap-highlight-color:transparent;}
-.mv-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);margin-bottom:10px;overflow:hidden;}
+.mv-card{display:block;width:100%;box-sizing:border-box;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);margin-bottom:10px;overflow:hidden;}
 .mv-card-header{display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;}
 .mv-card-meta{flex:1;min-width:0;}
 .mv-title{width:100%;background:transparent;border:none;color:var(--text);font-family:var(--display);font-size:17px;font-weight:700;outline:none;}
@@ -265,7 +265,7 @@ body.readonly .add-row{display:none;}
 .kb-status-bar::-webkit-scrollbar{display:none;}
 .kb-stab{flex-shrink:0;padding:6px 14px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);font-family:var(--mono);font-size:12px;color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:6px;-webkit-tap-highlight-color:transparent;}
 .kb-stab .kb-n{background:var(--surface2);border-radius:99px;padding:1px 7px;font-size:10px;}
-.kb-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);margin-bottom:10px;overflow:hidden;}
+.kb-card{display:block;width:100%;box-sizing:border-box;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);margin-bottom:10px;overflow:hidden;}
 .kb-card-header{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;cursor:pointer;}
 .kb-card-meta{flex:1;min-width:0;}
 .kb-game-name{width:100%;background:transparent;border:none;color:var(--text);font-family:var(--display);font-size:17px;font-weight:700;outline:none;}
@@ -1270,36 +1270,30 @@ function renderKanban(){
   const main=document.getElementById('main');
   const rooms=getActiveRooms();
   rooms.forEach(r=>{if(!r.gameStatus)r.gameStatus='playing';});
+  // Fixed: each tab properly closed with </div>
   const tabs=KB_STATUSES.map(s=>{
     const m=KB_META[s],cnt=rooms.filter(r=>r.gameStatus===s).length;
     const active=s===_kanbanStatus;
-    return `<div class="kb-stab" style="${active?`border-color:${m.color};color:${m.color}`:''}" onclick="setKanbanStatus('${s}')">${m.icon} ${m.label}${cnt?`<span class="kb-n">${cnt}</span>`:''}`;
-  }).join('</div>');
+    return `<div class="kb-stab" style="${active?`border-color:${m.color};color:${m.color}`:''}" onclick="setKanbanStatus('${s}')">${m.icon} ${m.label}${cnt?`<span class="kb-n">${cnt}</span>`:''}</div>`;
+  }).join('');
   const visible=rooms.filter(r=>r.gameStatus===_kanbanStatus);
   const cards=visible.map(room=>{
-    let total=0,done=0;room.zones.forEach(z=>z.tasks.forEach(t=>{total++;if(t.completed)done++;}));
+    let total=0,done=0;(room.zones||[]).forEach(z=>(z.tasks||[]).forEach(t=>{total++;if(t.completed)done++;}));
     const pct=total?Math.round(done/total*100):0;
-    const zonesHtml=room.expanded?room.zones.map(zone=>{
-      const th=zone.tasks.map(task=>`<div class="task-item"><div class="task-row"><div class="task-check${task.completed?' done':''}" onclick="toggleTask('${room.id}','${zone.id}','${task.id}')"></div><span class="task-emoji">${getEmoji(task.name,'task')}</span><input class="task-name-input${task.completed?' done':''}" data-task-name="${task.id}" value="${escHtml(task.name)}" placeholder="objective…" oninput="renameTask('${room.id}','${zone.id}','${task.id}',this.value)"/><button class="btn ghost" onclick="removeTask('${room.id}','${zone.id}','${task.id}')">✕</button></div></div>`).join('');
+    const zonesHtml=room.expanded?(room.zones||[]).map(zone=>{
+      const th=(zone.tasks||[]).map(task=>`<div class="task-item"><div class="task-row"><div class="task-check${task.completed?' done':''}" onclick="toggleTask('${room.id}','${zone.id}','${task.id}')"></div><span class="task-emoji">${getEmoji(task.name,'task')}</span><input class="task-name-input${task.completed?' done':''}" data-task-name="${task.id}" value="${escHtml(task.name)}" placeholder="objective…" oninput="renameTask('${room.id}','${zone.id}','${task.id}',this.value)"/><button class="btn ghost" onclick="removeTask('${room.id}','${zone.id}','${task.id}')">✕</button></div></div>`).join('');
       return `<div class="zone"><div class="zone-header"><span class="zone-emoji">${getEmoji(zone.name,'zone')}</span><input class="zone-name-input" value="${escHtml(zone.name)}" oninput="renameZone('${room.id}','${zone.id}',this.value)"/><button class="btn ghost" onclick="removeZone('${room.id}','${zone.id}')">✕</button></div><div class="task-list">${th}</div><div class="add-row" onclick="addTask('${room.id}','${zone.id}')"> Add objective</div></div>`;
     }).join(''):'';
-    const sbns=KB_STATUSES.map(s=>{const m=KB_META[s],act=room.gameStatus===s;return `<button class="kb-sbn${act?' active':''}" style="${act?`background:${m.color};border-color:${m.color};color:#000`:''}" onclick="setGameStatus('${room.id}','${s}')" title="${m.label}">${m.icon}</button>`;}).join('');
-    return `<div class="kb-card">
-      <div class="kb-card-header" onclick="toggleRoom('${room.id}')">
-        <span class="room-emoji" style="font-size:20px">${getEmoji(room.name,'room')}</span>
-        <div class="kb-card-meta">
-          <input class="kb-game-name" value="${escHtml(room.name)}" placeholder="Game name…" oninput="renameRoom('${room.id}',this.value)" onclick="event.stopPropagation()"/>
-          ${total?`<div class="kb-prog-wrap"><div class="kb-prog-bar" style="width:${pct}%"></div></div><div class="kb-prog-lbl">${done}/${total} · ${pct}%</div>`:`<div class="kb-prog-lbl" style="color:var(--muted)">No objectives yet</div>`}
-        </div>
-        <div class="kb-sbns" onclick="event.stopPropagation()">${sbns}</div>
-      </div>
-      ${room.expanded?`<div class="kb-body">${zonesHtml}<div style="display:flex;gap:6px;margin-top:4px"><button class="btn" style="font-size:12px" onclick="addZone('${room.id}')">＋ Zone</button><button class="btn danger" style="font-size:12px" onclick="removeRoom('${room.id}')">✕ Remove</button></div></div>`:''}
-    </div>`;
+    const sbns=KB_STATUSES.map(s=>{
+      const m=KB_META[s],act=room.gameStatus===s;
+      return `<button class="kb-sbn${act?' active':''}" style="${act?`background:${m.color};border-color:${m.color};color:#000`:''}" onclick="setGameStatus('${room.id}','${s}')" title="${m.label}">${m.icon}</button>`;
+    }).join('');
+    return `<div class="kb-card"><div class="kb-card-header" onclick="toggleRoom('${room.id}')"><span style="font-size:20px;flex-shrink:0">${getEmoji(room.name,'room')}</span><div class="kb-card-meta"><input class="kb-game-name" value="${escHtml(room.name)}" placeholder="Game title…" oninput="renameRoom('${room.id}',this.value)" onclick="event.stopPropagation()"/>${total?`<div class="kb-prog-wrap"><div class="kb-prog-bar" style="width:${pct}%"></div></div><div class="kb-prog-lbl">${done}/${total} · ${pct}%</div>`:`<div class="kb-prog-lbl" style="color:var(--muted)">tap to add objectives</div>`}</div><div class="kb-sbns" onclick="event.stopPropagation()">${sbns}</div></div>${room.expanded?`<div class="kb-body">${zonesHtml}<div style="display:flex;gap:6px;margin-top:4px"><button class="btn" style="font-size:12px" onclick="addZone('${room.id}')">＋ Zone</button><button class="btn danger" style="font-size:12px" onclick="removeRoom('${room.id}')">✕ Remove</button></div></div>`:''}</div>`;
   }).join('');
-  main.innerHTML=`<div class="kb-status-bar">${tabs}</div>${cards||`<div class="empty-state"><div class="big">${KB_META[_kanbanStatus].icon}</div><p>No games in ${KB_META[_kanbanStatus].label}.</p></div>`}<button class="btn" style="width:100%;margin-top:4px" onclick="addRoom()">＋ Add Game</button>`;
+  const emptyHtml=`<div class="empty-state"><div class="big">${KB_META[_kanbanStatus].icon}</div><p>No games in ${KB_META[_kanbanStatus].label}.</p></div>`;
+  main.innerHTML=`<div style="width:100%"><div class="kb-status-bar">${tabs}</div><div style="display:flex;flex-direction:column;gap:0">${cards||emptyHtml}</div><button class="btn" style="width:100%;margin-top:8px" onclick="addRoom()">＋ Add Game</button></div>`;
   updateStats();
 }
-
 // ── STUDY PROGRESS ────────────────────────────────────────────────────────────
 function renderStudyProgress(){
   const main=document.getElementById('main');
@@ -1932,17 +1926,16 @@ function buildSeed(tpl){
       mz('Shopping Needed','')),
   ]};
 
-  if(tpl==='gaming')return{...base,rooms:[
-    mr('Currently Playing',true,
-      mz('Main Story','Act 1 complete','Act 2 complete','Act 3 complete','Final boss','Ending'),
-      mz('Side Quests','Side quest 1','Side quest 2','Side quest 3','Side quest 4'),
-      mz('Collectibles','Collectible set 1','Collectible set 2','Secret area 1','Hidden item 1'),
-      mz('Trophies & Achievements','Bronze set','Silver set','Gold trophy','Platinum / 100%')),
-    mr('Backlog',false,mz('Up Next','Next game','Game after that','Then this one'),mz('Reinstall','Unfinished run 1','Unfinished run 2')),
-    mr('Wish List',false,mz('To Buy','Wishlist game 1','Wishlist game 2','Wishlist game 3'),mz('Wait for Sale','On sale watch 1','On sale watch 2')),
-    mr('Completed',false,mz('Story Done',''),mz('100% / Platinum','')),
-    mr('DLC & Expansions',false,mz('Owned',''),mz('To Buy','')),
-  ]};
+  if(tpl==='gaming'){
+    const mrg=(name,status)=>({id:uid2(),name,expanded:false,gameStatus:status,zones:[{id:uid2(),name:'Objectives',tasks:[]}]});
+    return{...base,rooms:[
+      mrg('My Current Game','playing'),
+      mrg('Game 2 — Playing','playing'),
+      mrg('Game on hold','paused'),
+      mrg('Game I want to play','wishlist'),
+      mrg('Game I finished','done'),
+    ]};
+  }
 
   if(tpl==='petcare')return{...base,rooms:[
     mr('Pet 1',true,
