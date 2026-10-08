@@ -829,8 +829,7 @@ async function init(){
   const res=await apiGet().catch(()=>null);
   if(!res){setSyncBadge('error');showScreen('screen-app');return;}
   if(res.status==='unclaimed'){
-    if(SPACE_ID===1){selectedTemplates.add('cleaning');selectedTpl='cleaning';showAuthSetup();}
-    else{document.getElementById('tpl-space-label').textContent=`Space /${SPACE_ID} is unclaimed — pick your templates`;showScreen('screen-template');}
+    document.getElementById('tpl-space-label').textContent=`Space /${SPACE_ID} is unclaimed — pick your templates`;showScreen('screen-template');
     return;
   }
   if(res.status==='locked'){showAuthLogin('owner');return;}
