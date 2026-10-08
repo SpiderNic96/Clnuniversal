@@ -1,5 +1,5 @@
 {
   "name": "adhd-cleaning-command-center",
   "version": "1.0.0",
-  "description": "Shared persistent ADHD Cleaning Command Center — Upstash Redis"
+  "description": "Shared persistent ADHD Cleaning Command Center — Supabase"
 }

@@ -1,22 +1,6 @@
 const KEY = 'cleaning-data';
 
-function getRedis() {
-  return {
-    url:   process.env.KV_REST_API_URL   || process.env.UPSTASH_REDIS_REST_URL,
-    token: process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN,
-  };
-}
-
-async function redisCmd(...args) {
-  const { url, token } = getRedis();
-  const res = await fetch(url, {
-    method:  'POST',
-    headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-    body:    JSON.stringify(args),
-  });
-  const json = await res.json();
-  return json.result;
-}
+const { kv: redisCmd } = require('../lib/kv');
 
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin',  '*');

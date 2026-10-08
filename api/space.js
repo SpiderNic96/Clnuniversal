@@ -1,13 +1,4 @@
-const BASE_URL = process.env.KV_REST_API_URL   || process.env.UPSTASH_REDIS_REST_URL;
-const TOKEN    = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
-
-async function kv(...args) {
-  const r = await fetch(BASE_URL, {
-    method:'POST', headers:{'Authorization':`Bearer ${TOKEN}`,'Content-Type':'application/json'},
-    body: JSON.stringify(args),
-  });
-  return (await r.json()).result;
-}
+const { kv } = require('../lib/kv');
 
 function filterTabs(data, visibilityKey, markReadOnly) {
   if (data.type !== 'all') return markReadOnly ? {...data, readOnly:true} : data;

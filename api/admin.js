@@ -1,14 +1,4 @@
-const BASE_URL = process.env.KV_REST_API_URL   || process.env.UPSTASH_REDIS_REST_URL;
-const TOKEN    = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
-
-async function kv(...args) {
-  const r = await fetch(BASE_URL, {
-    method: 'POST',
-    headers: { 'Authorization': `Bearer ${TOKEN}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify(args),
-  });
-  return (await r.json()).result;
-}
+const { kv } = require('../lib/kv');
 
 function uid() { return Math.random().toString(36).slice(2) + Date.now().toString(36); }
 function mk(name){ return { id: uid(), name: name||'', completed: false, note: '' }; }
