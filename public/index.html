@@ -768,6 +768,63 @@ let state={rooms:[],version:0};
 let passwordHash = SPACE_ID ? (sessionStorage.getItem(`pwd-${SPACE_ID}`)||null) : null;
 let selectedTpl=null, authMode='setup';
 let saveTimer=null, pollTimer=null, hasPendingChanges=false, lastKnownVersion=0;
+let baseState=null;      // last copy this device knows the server has (used to work out "my changes")
+let saveInFlight=false, resaveQueued=false;
+
+// ── SYNC HELPERS ─────────────────────────────────────────────────────────────
+const deepClone=o=>o===undefined?undefined:JSON.parse(JSON.stringify(o));
+const sameJSON=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+function isIdList(a){return Array.isArray(a)&&a.every(x=>x&&typeof x==='object'&&!Array.isArray(x)&&x.id!=null);}
+// Three-way merge: apply what THIS device changed (base→local) on top of the latest server copy (remote).
+// Lists of items with ids (rooms/zones/tasks) merge item by item, so two people editing
+// different things both keep their edits. If both changed the exact same value, this device wins.
+function merge3(base,local,remote){
+  if(sameJSON(local,base)) return deepClone(remote);
+  if(sameJSON(remote,base)||sameJSON(local,remote)) return deepClone(local);
+  if(isIdList(local)&&isIdList(remote)){
+    const b=isIdList(base)?base:[];
+    const bm=new Map(b.map(x=>[x.id,x])), lm=new Map(local.map(x=>[x.id,x])), rm=new Map(remote.map(x=>[x.id,x]));
+    const out=[];
+    remote.forEach(r=>{
+      if(lm.has(r.id)) out.push(merge3(bm.get(r.id),lm.get(r.id),r));
+      else if(!bm.has(r.id)) out.push(deepClone(r));          // added on the other device
+      // else: deleted on this device → stays deleted
+    });
+    local.forEach((l,i)=>{                                    // added on this device
+      if(rm.has(l.id)||bm.has(l.id)) return;
+      const prev=local[i-1]; const at=prev?out.findIndex(x=>x.id===prev.id):-1;
+      out.splice(at+1,0,deepClone(l));
+    });
+    return out;
+  }
+  const isObj=v=>v&&typeof v==='object'&&!Array.isArray(v);
+  if(isObj(local)&&isObj(remote)){
+    const b=isObj(base)?base:{}, out={};
+    new Set([...Object.keys(local),...Object.keys(remote)]).forEach(k=>{
+      const inL=k in local, inR=k in remote, inB=k in b;
+      if(inL&&inR) out[k]=merge3(b[k],local[k],remote[k]);
+      else if(inL){ if(!inB||!sameJSON(b[k],local[k])) out[k]=deepClone(local[k]); }
+      else        { if(!inB||!sameJSON(b[k],remote[k])) out[k]=deepClone(remote[k]); }
+    });
+    return out;
+  }
+  return deepClone(local);
+}
+// Which tab is open is per device, not shared — opening a tab must never change or save the list.
+const TAB_KEY=()=>`tab-${SPACE_ID}`;
+function rememberTab(t){try{localStorage.setItem(TAB_KEY(),t);}catch(e){}}
+function restoreLocalTab(){
+  if(state.type!=='all')return;
+  let t=null; try{t=localStorage.getItem(TAB_KEY());}catch(e){}
+  const tabs=state.tabs||{};
+  if(t&&tabs[t]) state.activeTab=t;
+  else if(!tabs[state.activeTab]) state.activeTab=(state.selectedTabs||Object.keys(tabs)).find(x=>tabs[x])||state.activeTab;
+}
+// Take a fresh copy from the server as this device's state.
+function adoptServerData(data){
+  state=data; baseState=deepClone(data); lastKnownVersion=data.version||0;
+  restoreLocalTab();
+}
 let isOwner=false, isViewMode=false, isCollabMode=false;
 let selectedTemplates=new Set(); // for multi-select picker
 
@@ -809,8 +866,8 @@ async function apiSetup(pwdHash,data){
   const r=await fetch(`/api/space?id=${SPACE_ID}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'setup',passwordHash:pwdHash,data})});
   return r.json();
 }
-async function apiSave(data){
-  const r=await fetch(`/api/space?id=${SPACE_ID}`,{method:'POST',headers:{'Content-Type':'application/json',Authorization:`Bearer ${passwordHash}`},body:JSON.stringify({action:'save',data})});
+async function apiSave(data,baseVersion){
+  const r=await fetch(`/api/space?id=${SPACE_ID}`,{method:'POST',headers:{'Content-Type':'application/json',Authorization:`Bearer ${passwordHash}`},body:JSON.stringify({action:'save',data,baseVersion})});
   return r.json();
 }
 
@@ -834,8 +891,7 @@ async function init(){
   }
   if(res.status==='locked'){showAuthLogin('owner');return;}
   if(res.status==='ok'){
-    state=res.data; isOwner=res.isOwner===true; isViewMode=!!res.isView; isCollabMode=!!res.isCollab;
-    lastKnownVersion=state.version||0;
+    adoptServerData(res.data); isOwner=res.isOwner===true; isViewMode=!!res.isView; isCollabMode=!!res.isCollab;
     applyTheme(detectTheme()); renderTabBar(); showSharingBtn(); showScreen('screen-app'); render(); setSyncBadge('synced'); startPolling();
   }
 }
@@ -907,7 +963,7 @@ async function submitAuth(){
     const res=await apiSetup(hash,seed).catch(()=>null);
     if(!res||!res.ok){showErr(res?.error||'Setup failed');return;}
     passwordHash=hash; sessionStorage.setItem(`pwd-${SPACE_ID}`,hash);
-    state=seed; lastKnownVersion=0; isOwner=true; isViewMode=false; isCollabMode=false;
+    adoptServerData(seed); isOwner=true; isViewMode=false; isCollabMode=false;
     applyTheme(detectTheme()); renderTabBar(); showSharingBtn(); showScreen('screen-app'); render(); setSyncBadge('synced'); startPolling();
     toast(`✅ Space /${SPACE_ID} is yours!`);
   } else {
@@ -915,14 +971,13 @@ async function submitAuth(){
     const res=await apiGet().catch(()=>null);
     if(!res||res.status!=='ok'){passwordHash=null;showErr('Wrong password');return;}
     sessionStorage.setItem(`pwd-${SPACE_ID}`,hash);
-    state=res.data; isOwner=res.isOwner===true; isViewMode=!!res.isView; isCollabMode=!!res.isCollab;
-    lastKnownVersion=state.version||0;
+    adoptServerData(res.data); isOwner=res.isOwner===true; isViewMode=!!res.isView; isCollabMode=!!res.isCollab;
     document.body.classList.toggle('readonly', isViewMode);
     const badge=document.getElementById('roBadge');
     badge.style.display=(isViewMode||isCollabMode)?'':'none';
     badge.textContent=isViewMode?'👁 View Only':'👥 Collaborator';
     applyTheme(detectTheme()); renderTabBar(); showSharingBtn(); showScreen('screen-app'); render(); setSyncBadge('synced');
-    if(!isViewMode) startPolling();
+    startPolling();
   }
 }
 function showErr(m){const e=document.getElementById('auth-err');e.textContent=m;e.style.display='block';}
@@ -1041,10 +1096,10 @@ function copyReadOnly(){ copyViewLink(); }
 function switchTab(tab){
   if(!isAllMode())return;
   state.activeTab=tab;
+  rememberTab(tab);      // per device only — viewing a tab never saves
   applyTheme(tab);
   renderTabBar();
   render();
-  scheduleSave();
 }
 
 // ── SAVE/POLL ─────────────────────────────────────────────────────────────────
@@ -1053,25 +1108,61 @@ function setSyncBadge(s){
   const m={loading:['Loading…',''],saving:['Saving…','saving'],synced:['✓ Synced','synced'],error:['✗ Error','error']};
   const[t,c]=m[s]||['',''];el.textContent=t;if(c)el.classList.add(c);
 }
+// Don't redraw the list under someone's thumb while they're typing in it — wait until they leave the field.
+let pendingRender=false;
+function isEditing(){const a=document.activeElement;return !!a&&(a.tagName==='INPUT'||a.tagName==='TEXTAREA'||a.isContentEditable)&&!!a.closest('#screen-app');}
+function renderWhenIdle(){ if(isEditing()){pendingRender=true;return;} pendingRender=false; render(); }
+document.addEventListener('focusout',()=>setTimeout(()=>{ if(pendingRender&&!isEditing()) renderWhenIdle(); },0));
+
 function scheduleSave(){
-  if(IS_READONLY)return;
+  if(IS_READONLY||isViewMode)return;
   hasPendingChanges=true; clearTimeout(saveTimer);
-  saveTimer=setTimeout(async()=>{
-    hasPendingChanges=false; state.version=(state.version||0)+1; setSyncBadge('saving');
-    const res=await apiSave(state).catch(()=>null);
-    if(res?.ok){lastKnownVersion=state.version;setSyncBadge('synced');}else setSyncBadge('error');
-  },400);
+  saveTimer=setTimeout(doSave,400);
+}
+async function doSave(){
+  if(saveInFlight){resaveQueued=true;return;}
+  saveInFlight=true; hasPendingChanges=false; setSyncBadge('saving');
+  let ok=false, offline=false;
+  try{
+    for(let attempt=0;attempt<4&&!ok;attempt++){
+      const sent=deepClone(state);
+      const res=await apiSave(sent, baseState?.version||0).catch(()=>null);
+      if(!res){offline=true;break;}
+      if(res?.ok){
+        sent.version=res.version; baseState=sent;
+        state.version=res.version; lastKnownVersion=res.version; ok=true;
+      } else if(res?.conflict&&res.data){
+        // Another device saved first: keep their changes, re-apply mine on top, then try again.
+        const myTab=state.activeTab;
+        const merged=merge3(baseState, state, res.data);
+        merged.version=res.data.version||0;
+        state=merged; baseState=deepClone(res.data); lastKnownVersion=state.version;
+        if(myTab!==undefined) state.activeTab=myTab;
+        restoreLocalTab(); applyTheme(detectTheme()); renderTabBar(); renderWhenIdle();
+      } else break;
+    }
+  } finally {
+    saveInFlight=false;
+    setSyncBadge(ok?'synced':'error');
+    if(offline){ hasPendingChanges=true; clearTimeout(saveTimer); saveTimer=setTimeout(doSave,3000); }   // no signal: keep trying
+    else if(resaveQueued){resaveQueued=false;scheduleSave();}
+  }
+}
+async function pollOnce(){
+  if(hasPendingChanges||saveInFlight||document.hidden)return;
+  const res=await apiGet().catch(()=>null);
+  if(hasPendingChanges||saveInFlight)return;   // they edited while we were fetching — their save will merge
+  if(res?.status==='ok'&&(res.data.version||0)>lastKnownVersion){
+    adoptServerData(res.data);
+    applyTheme(detectTheme()); renderTabBar(); renderWhenIdle(); toast('🔄 Updated from another device');
+  }
 }
 function startPolling(){
-  pollTimer=setInterval(async()=>{
-    if(hasPendingChanges)return;
-    const res=await apiGet().catch(()=>null);
-    if(res?.status==='ok'&&(res.data.version||0)>lastKnownVersion){
-      state=res.data; lastKnownVersion=state.version;
-      applyTheme(detectTheme()); renderTabBar(); render(); toast('🔄 Updated from another device');
-    }
-  },12000);
+  clearInterval(pollTimer);
+  pollTimer=setInterval(pollOnce,4000);
 }
+// Check straight away when someone switches back to the app on their phone
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden&&pollTimer) pollOnce(); });
 
 // ── ROOM / ZONE / TASK OPS ────────────────────────────────────────────────────
 function uid(){return crypto.randomUUID?crypto.randomUUID():Math.random().toString(36).slice(2)+Date.now().toString(36);}
@@ -1116,7 +1207,7 @@ function clearCompleted(){let c=0;getActiveRooms().forEach(r=>r.zones.forEach(z=
 // copyShareLink replaced by copyReadOnly + openSharing
 function openReset(){document.getElementById('resetModal').classList.add('open');}
 function closeReset(){document.getElementById('resetModal').classList.remove('open');}
-function confirmReset(){state={...state,rooms:[],version:(state.version||0)+1};if(isAllMode())state.tabs[state.activeTab].rooms=[];closeReset();render();apiSave(state);toast('🗑 Reset');}
+function confirmReset(){state={...state,rooms:[]};if(isAllMode())state.tabs[state.activeTab].rooms=[];closeReset();render();scheduleSave();toast('🗑 Reset');}
 function openMonthReset(){document.getElementById('monthResetModal').classList.add('open');}
 function closeMonthReset(){document.getElementById('monthResetModal').classList.remove('open');}
 function confirmMonthReset(){getActiveRooms().forEach(r=>r.zones.forEach(z=>z.tasks.forEach(t=>t.completed=false)));closeMonthReset();render();scheduleSave();toast('🔄 Progress reset — new month!');}

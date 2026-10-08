@@ -83,44 +83,73 @@ module.exports = async function handler(req, res) {
 
     if (body.action === 'save') {
       try {
-        const raw = await kv('GET', KEY);
-        if (!raw) return res.status(404).json({ error:'Space not found' });
-        const space = JSON.parse(raw);
+        const row = await kv('GETMETA', KEY);
+        if (!row) return res.status(404).json({ error:'Space not found' });
+        const space = JSON.parse(row.value);
         const isOwnerAuth  = auth === space.passwordHash;
-        const isCollabAuth = space.collabHash && auth === space.collabHash;
+        const isCollabAuth = !isOwnerAuth && space.collabHash && auth === space.collabHash;
         if (!isOwnerAuth && !isCollabAuth) return res.status(401).json({ error:'Wrong password' });
 
-        if (isCollabAuth && body.data.type === 'all') {
+        const currentVersion = space.data?.version || 0;
+
+        // The device's copy is out of date: send it the latest so it can merge its own changes and retry.
+        const conflict = () => res.status(409).json({
+          conflict: true,
+          version: currentVersion,
+          data: isCollabAuth ? filterTabs(space.data, 'collabVisible', false) : space.data,
+        });
+        if (body.baseVersion !== undefined && body.baseVersion !== currentVersion) return conflict();
+
+        if (isCollabAuth) {
           const current = space.data;
-          const selected = current.selectedTabs || Object.keys(current.tabs || {});
-          selected.forEach(t => {
-            const tab = current.tabs?.[t];
-            if (tab && tab.collabVisible !== false && tab.collabEditable !== false && body.data.tabs?.[t]) {
-              tab.rooms = body.data.tabs[t].rooms;
-            }
-          });
-          current.version = (current.version || 0) + 1;
+          if (current.type === 'all') {
+            const selected = current.selectedTabs || Object.keys(current.tabs || {});
+            selected.forEach(t => {
+              const tab = current.tabs?.[t];
+              if (tab && tab.collabVisible !== false && tab.collabEditable !== false && body.data.tabs?.[t]) {
+                tab.rooms = body.data.tabs[t].rooms;
+              }
+            });
+          } else if (Array.isArray(body.data.rooms)) {
+            current.rooms = body.data.rooms;   // single-template space: collaborators edit its rooms
+          }
           space.data = current;
-        } else if (isOwnerAuth) {
+        } else {
           space.data = body.data;
         }
 
-        await kv('SET', KEY, JSON.stringify(space));
-        return res.status(200).json({ ok:true });
+        // The server owns the version number
+        const newVersion = currentVersion + 1;
+        space.data.version = newVersion;
+
+        // Only write if nobody else saved since we read (closes the race between two phones)
+        const written = await kv('CAS', KEY, JSON.stringify(space), row.updated_at);
+        if (!written) {
+          const fresh = JSON.parse((await kv('GET', KEY)) || '{}');
+          const v = fresh.data?.version || 0;
+          return res.status(409).json({
+            conflict: true, version: v,
+            data: isCollabAuth ? filterTabs(fresh.data, 'collabVisible', false) : fresh.data,
+          });
+        }
+        return res.status(200).json({ ok:true, version: newVersion });
       } catch(e) { return res.status(500).json({ error:e.message }); }
     }
 
     if (body.action === 'set_sharing') {
       try {
-        const raw = await kv('GET', KEY);
-        if (!raw) return res.status(404).json({ error:'Space not found' });
-        const space = JSON.parse(raw);
-        if (auth !== space.passwordHash) return res.status(401).json({ error:'Owner access required' });
-        if (body.viewHash  !== undefined) space.viewHash  = body.viewHash  || null;
-        if (body.collabHash !== undefined) space.collabHash = body.collabHash || null;
-        space.data = body.data;
-        await kv('SET', KEY, JSON.stringify(space));
-        return res.status(200).json({ ok:true });
+        // Only changes the passwords. The tab visibility flags travel with the normal
+        // (conflict-checked) save the page sends straight after, so no list data is overwritten here.
+        for (let attempt = 0; attempt < 3; attempt++) {
+          const row = await kv('GETMETA', KEY);
+          if (!row) return res.status(404).json({ error:'Space not found' });
+          const space = JSON.parse(row.value);
+          if (auth !== space.passwordHash) return res.status(401).json({ error:'Owner access required' });
+          if (body.viewHash  !== undefined) space.viewHash  = body.viewHash  || null;
+          if (body.collabHash !== undefined) space.collabHash = body.collabHash || null;
+          if (await kv('CAS', KEY, JSON.stringify(space), row.updated_at)) return res.status(200).json({ ok:true });
+        }
+        return res.status(409).json({ error:'Busy, try again' });
       } catch(e) { return res.status(500).json({ error:e.message }); }
     }
 
